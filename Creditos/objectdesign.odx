@@ -1,0 +1,1431 @@
+<project>
+  <packages>
+    <javaPackage name="com.jgroup.creditos.util">
+      <projectName>Creditos</projectName>
+      <path>src/com/jgroup/creditos/util</path>
+      <classes>
+        <classifier name="HibernateHelper">
+          <stereotype>Persistence Helper</stereotype>
+          <variables>
+            <variable name="singleton">
+              <type class="com.jgroup.creditos.util.HibernateHelper"/>
+              <multiplicity>0..1</multiplicity>
+              <modifiers>8</modifiers>
+              <access>2</access>
+              <value>new HibernateHelper()</value>
+            </variable>
+            <variable name="factory">
+              <type>javax.persistence.EntityManagerFactory</type>
+              <multiplicity>0..1</multiplicity>
+              <access>2</access>
+            </variable>
+            <variable name="currentEntityManager">
+              <type>ThreadLocal</type>
+              <multiplicity>0..1</multiplicity>
+              <access>2</access>
+              <value>new ThreadLocal();</value>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>2</access>
+              <generatedName>HibernateHelper</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="main">
+              <type basicType="void"/>
+              <multiplicity>0</multiplicity>
+              <modifiers>8</modifiers>
+              <access>1</access>
+              <generatedName>main</generatedName>
+              <parameters>
+                <variable name="args">
+                  <type>String</type>
+                  <multiplicity>*</multiplicity>
+                  <access>1</access>
+                  <arrayCount>1</arrayCount>
+                </variable>
+              </parameters>
+              <exceptions>
+                <exception>Exception</exception>
+              </exceptions>
+              <method>
+                <statements>
+                  <javaCode>String sqlFile = null;</javaCode>
+                  <javaCode>if(args.length &gt; 0) { sqlFile = args[0]; }</javaCode>
+                  <javaCode>boolean print = (sqlFile == null);</javaCode>
+                  <javaCode>boolean export = (sqlFile == null);</javaCode>
+                  <javaCode></javaCode>
+                  <javaCode>org.hibernate.cfg.Configuration config = getInstance().getConfiguration();</javaCode>
+                  <javaCode>org.hibernate.tool.hbm2ddl.SchemaExport exporter = new org.hibernate.tool.hbm2ddl.SchemaExport(config);</javaCode>
+                  <javaCode>if(sqlFile != null) { exporter.setOutputFile(sqlFile); }</javaCode>
+                  <javaCode>exporter.create(print, export);</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="getInstance">
+              <type class="com.jgroup.creditos.util.HibernateHelper"/>
+              <multiplicity>0..1</multiplicity>
+              <modifiers>8</modifiers>
+              <access>1</access>
+              <generatedName>getInstance</generatedName>
+              <method>
+                <statements>
+                  <javaCode>return singleton;</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="getFactory">
+              <type>javax.persistence.EntityManagerFactory</type>
+              <multiplicity>0..1</multiplicity>
+              <modifiers>32</modifiers>
+              <access>1</access>
+              <generatedName>getFactory</generatedName>
+              <method>
+                <statements>
+                  <javaCode>if(factory == null) { factory=javax.persistence.Persistence.createEntityManagerFactory(&quot;Creditos&quot;); }</javaCode>
+                  <javaCode>return factory;</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="close">
+              <type basicType="void"/>
+              <multiplicity>0</multiplicity>
+              <modifiers>32</modifiers>
+              <access>1</access>
+              <generatedName>close</generatedName>
+              <method>
+                <statements>
+                  <javaCode>closeEntityManager();</javaCode>
+                  <javaCode>if (factory != null) { factory.close(); factory = null; }</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="getConfiguration">
+              <type>org.hibernate.cfg.Configuration</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getConfiguration</generatedName>
+              <exceptions>
+                <exception>org.hibernate.MappingException</exception>
+              </exceptions>
+              <method>
+                <statements>
+                  <javaCode>org.hibernate.cfg.AnnotationConfiguration config = new org.hibernate.cfg.AnnotationConfiguration();</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Prestamo.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.PlanPagos.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Banco.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Contrato.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Cotizacion.class);</javaCode>
+                  <javaCode>return config;</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="getEntityManager">
+              <type>javax.persistence.EntityManager</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getEntityManager</generatedName>
+              <method>
+                <statements>
+                  <javaCode>javax.persistence.EntityManager entityManager=(javax.persistence.EntityManager)currentEntityManager.get();</javaCode>
+                  <javaCode>if(entityManager == null || !entityManager.isOpen()) { entityManager=getFactory().createEntityManager(); currentEntityManager.set(entityManager); }</javaCode>
+                  <javaCode>return entityManager;</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="closeEntityManager">
+              <type>void</type>
+              <multiplicity>0</multiplicity>
+              <access>1</access>
+              <generatedName>closeEntityManager</generatedName>
+              <method>
+                <statements>
+                  <javaCode>javax.persistence.EntityManager entityManager = (javax.persistence.EntityManager)currentEntityManager.get();</javaCode>
+                  <javaCode>if (entityManager != null &amp;&amp; entityManager.isOpen()) { entityManager.close(); }</javaCode>
+                  <javaCode>currentEntityManager.set(null);</javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>HibernateHelper.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.util{HibernateHelper.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+      </classes>
+      <rootName>src</rootName>
+      <generateHibernateHelper>true</generateHibernateHelper>
+    </javaPackage>
+    <javaPackage name="com.jgroup.creditos.model">
+      <projectName>Creditos</projectName>
+      <path>src/com/jgroup/creditos/model</path>
+      <classes>
+        <classifier name="Prestamo">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1818225879</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="nombreCompleto">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="edadActual">
+              <type class="java.lang.Integer"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="fechaNacimiento">
+              <type class="java.util.Date"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="ingresoBase">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="nroCuotas">
+              <type class="java.lang.Integer"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="capacidadPago">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="banco">
+              <type class="com.jgroup.creditos.model.Banco"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.Banco" name="cotizacion"/>
+            </variable>
+            <variable name="nroCotizacion">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="fechaCotizacion">
+              <type class="java.util.Date"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="PERSISTENT_TEST_CLASS">
+              <type class="com.jgroup.creditos.model.CotizacionPersistentTest"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.CotizacionPersistentTest" name="PERSISTENT_TEST_TARGET"/>
+              <association>persistentTest</association>
+              <type>5</type>
+            </variable>
+            <variable name="montoPrestamo">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="montoBaseCouta">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="documentoIdentidad">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="planesPagos">
+              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new com.jgroup.creditos.model.PlanPagos()</value>
+              <inverse class="com.jgroup.creditos.model.PlanPagos" name="prestamo"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Prestamo</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Prestamo.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Prestamo.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="PlanPagos">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1828800409</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="nroCuota">
+              <type class="java.lang.Integer"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="fechaVencimiento">
+              <type class="java.util.Date"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="montoCapital">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="interes">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="primaDesgravamen">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="totalCuota">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="saldoCapital">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="prestamo">
+              <type class="com.jgroup.creditos.model.Prestamo"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
+            </variable>
+            <variable name="nroRecibo">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="fechaPago">
+              <type class="java.util.Date"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>PlanPagos</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>PlanPagos.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{PlanPagos.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Banco">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1491374895</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="nombre">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="tasaInteres">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="primaDesgravamen">
+              <type class="java.lang.Float"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="cotizacion">
+              <type class="com.jgroup.creditos.model.Prestamo"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new com.jgroup.creditos.model.Cotizacion()</value>
+              <inverse class="com.jgroup.creditos.model.Prestamo" name="banco"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Banco</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Banco.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Banco.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="CotizacionPersistentTest">
+          <superclass>junit.framework.TestCase</superclass>
+          <stereotype>Persistent Test</stereotype>
+          <variables>
+            <variable name="PERSISTENT_TEST_TARGET">
+              <type class="com.jgroup.creditos.model.Prestamo"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.Prestamo" name="PERSISTENT_TEST_CLASS"/>
+              <association>persistentTest</association>
+              <type>4</type>
+            </variable>
+            <variable name="persistenceHelper">
+              <type>com.jgroup.creditos.util.HibernateHelper</type>
+              <multiplicity>1</multiplicity>
+              <access>2</access>
+            </variable>
+            <variable name="banco">
+              <type class="com.jgroup.creditos.model.Banco"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="banco1">
+              <type class="com.jgroup.creditos.model.Banco"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="banco2">
+              <type class="com.jgroup.creditos.model.Banco"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="planPagos">
+              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="planPagos1">
+              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="planPagos2">
+              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="cotizacion1">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>CotizacionPersistentTest</generatedName>
+              <method>
+                <statements>
+                  <javaCode>persistenceHelper = com.jgroup.creditos.util.HibernateHelper.getInstance();</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="initObjects">
+              <type basicType="void"/>
+              <multiplicity>0</multiplicity>
+              <access>2</access>
+              <generatedName>initObjects</generatedName>
+              <objects>
+                <object name="banco">
+                  <type class="com.jgroup.creditos.model.Banco"/>
+                  <values>
+                    <nombre>&quot;BNB&quot;</nombre>
+                    <tasaInteres>0.20</tasaInteres>
+                    <primaDesgravamen>1.7</primaDesgravamen>
+                  </values>
+                </object>
+                <object name="banco1">
+                  <type class="com.jgroup.creditos.model.Banco"/>
+                  <values>
+                    <nombre>&quot;Mercantil Santa Cruz&quot;</nombre>
+                    <tasaInteres>0.19</tasaInteres>
+                    <primaDesgravamen>1.8</primaDesgravamen>
+                  </values>
+                </object>
+                <object name="banco2">
+                  <type class="com.jgroup.creditos.model.Banco"/>
+                  <values>
+                    <nombre>&quot;Bisa&quot;</nombre>
+                    <tasaInteres>0.18</tasaInteres>
+                    <primaDesgravamen>1.9</primaDesgravamen>
+                  </values>
+                </object>
+                <object name="planPagos">
+                  <type class="com.jgroup.creditos.model.PlanPagos"/>
+                  <values>
+                    <nroCuota>1</nroCuota>
+                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/2/2017&quot;)</fechaVencimiento>
+                    <montoCapital>283.33</montoCapital>
+                    <primaDesgravamen>1.7</primaDesgravamen>
+                    <interes>166.67</interes>
+                    <totalCuota>451.7</totalCuota>
+                    <saldoCapital>9716.67</saldoCapital>
+                  </values>
+                </object>
+                <object name="planPagos1">
+                  <type class="com.jgroup.creditos.model.PlanPagos"/>
+                  <values>
+                    <nroCuota>2</nroCuota>
+                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/3/2017&quot;)</fechaVencimiento>
+                    <montoCapital>288.06</montoCapital>
+                    <interes>161.94</interes>
+                    <primaDesgravamen>1.7</primaDesgravamen>
+                    <totalCuota>451.54</totalCuota>
+                    <saldoCapital>9428.61</saldoCapital>
+                  </values>
+                </object>
+                <object name="planPagos2">
+                  <type class="com.jgroup.creditos.model.PlanPagos"/>
+                  <values>
+                    <nroCuota>3</nroCuota>
+                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/4/2017&quot;)</fechaVencimiento>
+                    <montoCapital>292.86</montoCapital>
+                    <interes>157.14</interes>
+                    <primaDesgravamen>1.7</primaDesgravamen>
+                    <totalCuota>451.7</totalCuota>
+                    <saldoCapital>9135.75</saldoCapital>
+                  </values>
+                </object>
+                <object name="cotizacion1">
+                  <type class="com.jgroup.creditos.model.Cotizacion"/>
+                  <values>
+                    <estado>&apos;P&apos;</estado>
+                    <nombreCompleto>&quot;Juan Perez&quot;</nombreCompleto>
+                    <edadActual>50</edadActual>
+                    <fechaNacimiento>new java.util.Date(&quot;00:00:00 1/2/1966&quot;)</fechaNacimiento>
+                    <ingresoBase>1800</ingresoBase>
+                    <nroCuotas>24</nroCuotas>
+                    <capacidadPago>0.25</capacidadPago>
+                    <nroCotizacion>&quot;C001&quot;</nroCotizacion>
+                    <fechaCotizacion>new java.util.Date()</fechaCotizacion>
+                    <montoPrestamo>10000</montoPrestamo>
+                    <montoBaseCouta>450</montoBaseCouta>
+                    <documentoIdentidad>&quot;512454578 PL&quot;</documentoIdentidad>
+                    <banco ref="banco"/>
+                    <planesPagos ref="planPagos"/>
+                    <planesPagos ref="planPagos1"/>
+                    <planesPagos ref="planPagos2"/>
+                  </values>
+                </object>
+                <objectDiagram name="Objects">
+                  <objectSymbol id="1">
+                    <x>371</x>
+                    <y>77</y>
+                    <object>cotizacion1</object>
+                    <showTypes>false</showTypes>
+                    <showObjectName>true</showObjectName>
+                    <attributesVisible>ALL</attributesVisible>
+                  </objectSymbol>
+                  <objectSymbol id="2">
+                    <x>634</x>
+                    <y>486</y>
+                    <object>planPagos2</object>
+                    <showTypes>false</showTypes>
+                    <showObjectName>true</showObjectName>
+                    <attributesVisible>ALL</attributesVisible>
+                  </objectSymbol>
+                  <objectSymbol id="3">
+                    <x>331</x>
+                    <y>474</y>
+                    <object>planPagos1</object>
+                    <showTypes>false</showTypes>
+                    <showObjectName>true</showObjectName>
+                    <attributesVisible>ALL</attributesVisible>
+                  </objectSymbol>
+                  <objectSymbol id="4">
+                    <x>17</x>
+                    <y>468</y>
+                    <object>planPagos</object>
+                    <showTypes>false</showTypes>
+                    <showObjectName>true</showObjectName>
+                    <attributesVisible>ALL</attributesVisible>
+                  </objectSymbol>
+                  <objectSymbol id="5">
+                    <x>1180</x>
+                    <y>184</y>
+                    <object>banco2</object>
+                    <showTypes>false</showTypes>
+                    <showObjectName>true</showObjectName>
+                    <attributesVisible>ALL</attributesVisible>
+                  </objectSymbol>
+                  <objectSymbol id="6">
+                    <x>1169</x>
+                    <y>31</y>
+                    <object>banco1</object>
+                    <showTypes>false</showTypes>
+                    <showObjectName>true</showObjectName>
+                    <attributesVisible>ALL</attributesVisible>
+                  </objectSymbol>
+                  <objectSymbol id="7">
+                    <x>821</x>
+                    <y>76</y>
+                    <object>banco</object>
+                    <showTypes>false</showTypes>
+                    <showObjectName>true</showObjectName>
+                    <attributesVisible>ALL</attributesVisible>
+                  </objectSymbol>
+                  <link id="8">
+                    <x>563</x>
+                    <y>129</y>
+                    <association class="com.jgroup.creditos.model.Prestamo" name="banco"/>
+                    <point>
+                      <connectX symbol="1"/>
+                      <connectY symbol="1"/>
+                      <x>68</x>
+                      <y>-59</y>
+                      <atX>0.49799198</atX>
+                      <atY>0.49775785</atY>
+                    </point>
+                    <point>
+                      <connectX symbol="7"/>
+                      <connectY symbol="7"/>
+                      <x>0</x>
+                      <y>0</y>
+                      <atX>0.057971016</atX>
+                      <atY>0.54285717</atY>
+                    </point>
+                    <end-1>
+                      <x>620</x>
+                      <y>125</y>
+                      <connectedSymbol symbol="1"/>
+                      <text>cotizacion</text>
+                    </end-1>
+                    <end-2>
+                      <x>821</x>
+                      <y>114</y>
+                      <connectedSymbol symbol="7"/>
+                      <text>banco</text>
+                    </end-2>
+                    <style>STRAIGHT</style>
+                  </link>
+                  <link id="9">
+                    <x>477</x>
+                    <y>232</y>
+                    <highlited>true</highlited>
+                    <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
+                    <point>
+                      <connectX symbol="1"/>
+                      <connectY symbol="1"/>
+                      <x>-18</x>
+                      <y>44</y>
+                      <atX>0.49799198</atX>
+                      <atY>0.49775785</atY>
+                    </point>
+                    <point>
+                      <connectX symbol="4"/>
+                      <connectY symbol="4"/>
+                      <x>0</x>
+                      <y>0</y>
+                      <atX>0.26771653</atX>
+                      <atY>0.22580644</atY>
+                    </point>
+                    <end-1>
+                      <x>379</x>
+                      <y>300</y>
+                      <connectedSymbol symbol="1"/>
+                      <text>prestamo</text>
+                    </end-1>
+                    <end-2>
+                      <x>139</x>
+                      <y>468</y>
+                      <connectedSymbol symbol="4"/>
+                      <text>planesPagos</text>
+                    </end-2>
+                    <style>STRAIGHT</style>
+                  </link>
+                  <link id="10">
+                    <x>492</x>
+                    <y>230</y>
+                    <highlited>true</highlited>
+                    <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
+                    <point>
+                      <connectX symbol="1"/>
+                      <connectY symbol="1"/>
+                      <x>-3</x>
+                      <y>42</y>
+                      <atX>0.49799198</atX>
+                      <atY>0.49775785</atY>
+                    </point>
+                    <point>
+                      <connectX symbol="3"/>
+                      <connectY symbol="3"/>
+                      <x>0</x>
+                      <y>0</y>
+                      <atX>0.5866142</atX>
+                      <atY>0.14193548</atY>
+                    </point>
+                    <end-1>
+                      <x>488</x>
+                      <y>300</y>
+                      <connectedSymbol symbol="1"/>
+                      <text>prestamo</text>
+                    </end-1>
+                    <end-2>
+                      <x>481</x>
+                      <y>474</y>
+                      <connectedSymbol symbol="3"/>
+                      <text>planesPagos</text>
+                    </end-2>
+                    <style>STRAIGHT</style>
+                  </link>
+                  <link id="11">
+                    <x>604</x>
+                    <y>168</y>
+                    <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
+                    <point>
+                      <connectX symbol="1"/>
+                      <connectY symbol="1"/>
+                      <x>109</x>
+                      <y>-20</y>
+                      <atX>0.49799198</atX>
+                      <atY>0.49775785</atY>
+                    </point>
+                    <point>
+                      <connectX symbol="2"/>
+                      <connectY symbol="2"/>
+                      <x>0</x>
+                      <y>0</y>
+                      <atX>0.4566929</atX>
+                      <atY>0.4064516</atY>
+                    </point>
+                    <end-1>
+                      <x>620</x>
+                      <y>210</y>
+                      <connectedSymbol symbol="1"/>
+                      <text>prestamo</text>
+                    </end-1>
+                    <end-2>
+                      <x>723</x>
+                      <y>486</y>
+                      <connectedSymbol symbol="2"/>
+                      <text>planesPagos</text>
+                    </end-2>
+                    <style>STRAIGHT</style>
+                  </link>
+                  <width>1400</width>
+                  <height>1000</height>
+                  <lineStyle>STRAIGHT</lineStyle>
+                  <attributeTypesVisible>true</attributeTypesVisible>
+                </objectDiagram>
+              </objects>
+            </operation>
+            <operation name="tearDown">
+              <type>void</type>
+              <multiplicity>0</multiplicity>
+              <access>4</access>
+              <generatedName>tearDown</generatedName>
+              <exceptions>
+                <exception>Exception</exception>
+              </exceptions>
+              <method>
+                <statements>
+                  <javaCode>if(persistenceHelper != null) { persistenceHelper.close(); }
+super.tearDown();
+</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="setUp">
+              <type>void</type>
+              <multiplicity>0</multiplicity>
+              <access>4</access>
+              <generatedName>setUp</generatedName>
+              <exceptions>
+                <exception>Exception</exception>
+              </exceptions>
+              <method>
+                <statements>
+                  <javaCode>super.setUp(); initObjects();
+</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="test1">
+              <type basicType="void"/>
+              <multiplicity>0</multiplicity>
+              <access>1</access>
+              <generatedName>test1</generatedName>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>CotizacionPersistentTest.java</name>
+            <compilationUnitId>=Creditos/test&lt;com.jgroup.creditos.model{CotizacionPersistentTest.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="ServicioCotizacion">
+          <interface>true</interface>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </operation>
+            <operation name="buscarCotizacion">
+              <type>java.util.List&lt;Cotizacion&gt;</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>buscarCotizacion</generatedName>
+              <parameters>
+                <variable name="nroDocumento">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="getCotizacion">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getCotizacion</generatedName>
+              <parameters>
+                <variable name="nroCotizacion">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="nuevaCotizacion">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>nuevaCotizacion</generatedName>
+              <parameters>
+                <variable name="cotizacion">
+                  <type class="com.jgroup.creditos.model.Cotizacion"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="emitirCredito">
+              <type basicType="void"/>
+              <multiplicity>0</multiplicity>
+              <access>1</access>
+              <generatedName>emitirCredito</generatedName>
+              <parameters>
+                <variable name="idCotizacion">
+                  <type class="java.lang.Long"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="getBancos">
+              <type>java.util.List&lt;Banco&gt;</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getBancos</generatedName>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>ServicioCotizacion.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{ServicioCotizacion.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Contrato">
+          <superclass class="com.jgroup.creditos.model.Prestamo"/>
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1108940986</value>
+            </variable>
+            <variable name="cotizacion">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.Cotizacion" name="contrato"/>
+            </variable>
+            <variable name="nroPrestamo">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="fechaLiquidacion">
+              <type class="java.util.Date"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Contrato</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Contrato.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Contrato.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Cotizacion">
+          <superclass class="com.jgroup.creditos.model.Prestamo"/>
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>382447927</value>
+            </variable>
+            <variable name="contrato">
+              <type class="com.jgroup.creditos.model.Contrato"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.Contrato" name="cotizacion"/>
+            </variable>
+            <variable name="estado">
+              <type class="java.lang.Character"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Cotizacion</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Cotizacion.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Cotizacion.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="ServicioCredito">
+          <interface>true</interface>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </operation>
+            <operation name="buscarCredito">
+              <type>java.util.List&lt;Contrato&gt;</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>buscarCredito</generatedName>
+              <parameters>
+                <variable name="nroDocumento">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="getContrato">
+              <type class="com.jgroup.creditos.model.Contrato"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getContrato</generatedName>
+              <parameters>
+                <variable name="nroContrato">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>ServicioCredito.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{ServicioCredito.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+      </classes>
+      <diagrams>
+        <classDiagram name="Model">
+          <showAttributes>true</showAttributes>
+          <showOperations>true</showOperations>
+          <classSymbol id="1">
+            <x>32</x>
+            <y>582</y>
+            <class class="com.jgroup.creditos.model.ServicioCredito"/>
+            <attributes autoDisplay="289" accessVisible="true"/>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
+              <operation>buscarCredito(java.lang.String)</operation>
+              <operation>getContrato(java.lang.String)</operation>
+            </operations>
+          </classSymbol>
+          <classSymbol id="2">
+            <x>665</x>
+            <y>51</y>
+            <class class="com.jgroup.creditos.model.Cotizacion"/>
+            <attributes autoDisplay="353" accessVisible="true">
+              <attribute>estado</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="3">
+            <x>662</x>
+            <y>309</y>
+            <class class="com.jgroup.creditos.model.Contrato"/>
+            <attributes autoDisplay="353" accessVisible="true">
+              <attribute>nroPrestamo</attribute>
+              <attribute>fechaLiquidacion</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="4">
+            <x>29</x>
+            <y>430</y>
+            <class class="com.jgroup.creditos.model.ServicioCotizacion"/>
+            <attributes autoDisplay="289" accessVisible="true"/>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
+              <operation>buscarCotizacion(java.lang.String)</operation>
+              <operation>getCotizacion(java.lang.String)</operation>
+              <operation>nuevaCotizacion(com.jgroup.creditos.model.Cotizacion)</operation>
+              <operation>emitirCredito(java.lang.Long)</operation>
+              <operation>getBancos()</operation>
+            </operations>
+          </classSymbol>
+          <classSymbol id="5">
+            <y>55</y>
+            <class class="com.jgroup.creditos.model.CotizacionPersistentTest"/>
+            <attributes autoDisplay="289" accessVisible="true"/>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
+              <operation>initObjects()</operation>
+              <operation>tearDown()</operation>
+              <operation>setUp()</operation>
+              <operation>test1()</operation>
+            </operations>
+          </classSymbol>
+          <classSymbol id="6">
+            <x>8</x>
+            <y>251</y>
+            <class class="com.jgroup.creditos.model.Banco"/>
+            <attributes autoDisplay="353" accessVisible="true">
+              <attribute>id</attribute>
+              <attribute>nombre</attribute>
+              <attribute>tasaInteres</attribute>
+              <attribute>primaDesgravamen</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="7">
+            <x>354</x>
+            <y>502</y>
+            <class class="com.jgroup.creditos.model.PlanPagos"/>
+            <attributes autoDisplay="353" accessVisible="true">
+              <attribute>id</attribute>
+              <attribute>nroCuota</attribute>
+              <attribute>fechaVencimiento</attribute>
+              <attribute>montoCapital</attribute>
+              <attribute>interes</attribute>
+              <attribute>primaDesgravamen</attribute>
+              <attribute>totalCuota</attribute>
+              <attribute>saldoCapital</attribute>
+              <attribute>nroRecibo</attribute>
+              <attribute>fechaPago</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="8">
+            <x>342</x>
+            <y>49</y>
+            <class class="com.jgroup.creditos.model.Prestamo"/>
+            <attributes autoDisplay="353" accessVisible="true">
+              <attribute>id</attribute>
+              <attribute>nombreCompleto</attribute>
+              <attribute>edadActual</attribute>
+              <attribute>fechaNacimiento</attribute>
+              <attribute>ingresoBase</attribute>
+              <attribute>nroCuotas</attribute>
+              <attribute>capacidadPago</attribute>
+              <attribute>nroCotizacion</attribute>
+              <attribute>fechaCotizacion</attribute>
+              <attribute>montoPrestamo</attribute>
+              <attribute>montoBaseCouta</attribute>
+              <attribute>documentoIdentidad</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <association id="9">
+            <x>493</x>
+            <y>204</y>
+            <assocEnd-0 class="com.jgroup.creditos.model.Banco" name="cotizacion"/>
+            <assocEnd-1 class="com.jgroup.creditos.model.Prestamo" name="banco"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.9127517</atX>
+              <atY>0.6257669</atY>
+            </point>
+            <point>
+              <connectX symbol="6"/>
+              <connectY symbol="6"/>
+              <x>1</x>
+              <y>0</y>
+              <atX>0.17763157</atX>
+              <atY>0.6339286</atY>
+            </point>
+            <end-1>
+              <x>342</x>
+              <y>242</y>
+              <w>62</w>
+              <h>34</h>
+              <connectedSymbol symbol="8"/>
+              <text>+cotizacion</text>
+              <text>*</text>
+            </end-1>
+            <end-2>
+              <x>160</x>
+              <y>289</y>
+              <w>41</w>
+              <h>34</h>
+              <connectedSymbol symbol="6"/>
+              <text>+banco</text>
+              <text>0..1</text>
+            </end-2>
+            <style>STRAIGHT</style>
+          </association>
+          <association id="10">
+            <x>74</x>
+            <y>111</y>
+            <assocEnd-0 class="com.jgroup.creditos.model.Prestamo" name="PERSISTENT_TEST_CLASS"/>
+            <assocEnd-1 class="com.jgroup.creditos.model.CotizacionPersistentTest" name="PERSISTENT_TEST_TARGET"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="5"/>
+              <connectY symbol="5"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.5</atX>
+              <atY>0.5</atY>
+            </point>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.4966443</atX>
+              <atY>0.49746192</atY>
+            </point>
+            <end-1>
+              <x>149</x>
+              <y>124</y>
+              <connectedSymbol symbol="5"/>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>342</x>
+              <y>157</y>
+              <connectedSymbol symbol="8"/>
+              <symbolType>2</symbolType>
+              <symbolLength>8</symbolLength>
+            </end-2>
+            <dashed>true</dashed>
+            <style>STRAIGHT</style>
+          </association>
+          <association id="11">
+            <x>448</x>
+            <y>238</y>
+            <assocEnd-0 class="com.jgroup.creditos.model.PlanPagos" name="prestamo"/>
+            <assocEnd-1 class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.6385542</atX>
+              <atY>0.76603776</atY>
+            </point>
+            <point>
+              <connectX symbol="7"/>
+              <connectY symbol="7"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.6513158</atX>
+              <atY>0.17222223</atY>
+            </point>
+            <end-1>
+              <x>448</x>
+              <y>297</y>
+              <w>58</w>
+              <h>34</h>
+              <connectedSymbol symbol="8"/>
+              <text>+prestamo</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>452</x>
+              <y>502</y>
+              <w>74</w>
+              <h>34</h>
+              <connectedSymbol symbol="7"/>
+              <text>+planesPagos</text>
+              <text>*</text>
+            </end-2>
+            <style>STRAIGHT</style>
+          </association>
+          <generalization id="12">
+            <x>694</x>
+            <y>83</y>
+            <point>
+              <connectX symbol="2"/>
+              <connectY symbol="2"/>
+              <x>-24</x>
+              <y>2</y>
+              <atX>0.4952381</atX>
+              <atY>0.4918033</atY>
+            </point>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.8674699</atX>
+              <atY>0.36226416</atY>
+            </point>
+            <end-1>
+              <x>665</x>
+              <y>90</y>
+              <connectedSymbol symbol="2"/>
+            </end-1>
+            <end-2>
+              <x>508</x>
+              <y>132</y>
+              <connectedSymbol symbol="8"/>
+              <symbolType>1</symbolType>
+              <symbolLength>12</symbolLength>
+            </end-2>
+            <style>STRAIGHT</style>
+          </generalization>
+          <generalization id="13">
+            <x>752</x>
+            <y>348</y>
+            <point>
+              <connectX symbol="3"/>
+              <connectY symbol="3"/>
+              <x>22</x>
+              <y>1</y>
+              <atX>0.4952381</atX>
+              <atY>0.4918033</atY>
+            </point>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.6626506</atX>
+              <atY>0.6037736</atY>
+            </point>
+            <end-1>
+              <x>674</x>
+              <y>309</y>
+              <connectedSymbol symbol="3"/>
+            </end-1>
+            <end-2>
+              <x>508</x>
+              <y>226</y>
+              <connectedSymbol symbol="8"/>
+              <symbolType>1</symbolType>
+              <symbolLength>12</symbolLength>
+            </end-2>
+            <style>STRAIGHT</style>
+          </generalization>
+          <association id="14">
+            <x>731</x>
+            <y>339</y>
+            <assocEnd-0 class="com.jgroup.creditos.model.Cotizacion" name="contrato"/>
+            <assocEnd-1 class="com.jgroup.creditos.model.Contrato" name="cotizacion"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="3"/>
+              <connectY symbol="3"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.50526315</atX>
+              <atY>0.39215687</atY>
+            </point>
+            <point>
+              <connectX symbol="2"/>
+              <connectY symbol="2"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.5473684</atX>
+              <atY>0.8039216</atY>
+            </point>
+            <end-1>
+              <x>730</x>
+              <y>309</y>
+              <w>53</w>
+              <h>34</h>
+              <connectedSymbol symbol="3"/>
+              <text>+contrato</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>724</x>
+              <y>112</y>
+              <w>62</w>
+              <h>34</h>
+              <connectedSymbol symbol="2"/>
+              <text>+cotizacion</text>
+              <text>0..1</text>
+            </end-2>
+            <style>STRAIGHT</style>
+          </association>
+          <width>1400</width>
+          <height>1000</height>
+          <lineStyle>STRAIGHT</lineStyle>
+        </classDiagram>
+      </diagrams>
+      <rootName>src</rootName>
+    </javaPackage>
+  </packages>
+  <basicTypes>
+    <basicType>void</basicType>
+    <basicType>int</basicType>
+  </basicTypes>
+  <codeGenerators>
+    <Java-Bean>
+      <generate-property-support>false</generate-property-support>
+    </Java-Bean>
+    <Unit-Test>
+      <src-dir>test</src-dir>
+      <add-junit3-libraries>false</add-junit3-libraries>
+    </Unit-Test>
+    <Persistent>
+      <create-hibernate-cfg-xml>false</create-hibernate-cfg-xml>
+      <add-hsqldb-libraries>true</add-hsqldb-libraries>
+      <platform>Java Persistence API</platform>
+      <create-persistence-xml>true</create-persistence-xml>
+      <src-dir>(default)</src-dir>
+      <create-helper-main>true</create-helper-main>
+      <annotate-getters>true</annotate-getters>
+      <generate-dto-associations-many>false</generate-dto-associations-many>
+      <generate-collections-as-set>true</generate-collections-as-set>
+      <generate-full-classnames>true</generate-full-classnames>
+      <add-hibernate3-libraries>true</add-hibernate3-libraries>
+      <generate-dto>false</generate-dto>
+      <generate-interfaces>false</generate-interfaces>
+    </Persistent>
+    <DAO>
+      <src-dir>(default)</src-dir>
+      <generate-interfaces>false</generate-interfaces>
+      <use-spring-templates>false</use-spring-templates>
+    </DAO>
+    <GWT-Service>
+      <version>1.5</version>
+    </GWT-Service>
+  </codeGenerators>
+  <properties>
+    <conf-dir>conf</conf-dir>
+    <platform>Java Persistence API</platform>
+    <root-package>com.jgroup.creditos</root-package>
+    <create-hibernate-properties>true</create-hibernate-properties>
+    <create-log4j-properties>true</create-log4j-properties>
+    <project-name>Creditos</project-name>
+    <create-model-diagram>true</create-model-diagram>
+  </properties>
+  <codeGeneration>
+    <generate-equals-and-hashcode>true</generate-equals-and-hashcode>
+    <source-compatibility>5.0</source-compatibility>
+    <grammar>None</grammar>
+  </codeGeneration>
+  <diagramProperties>
+    <link-with-java-editor>false</link-with-java-editor>
+  </diagramProperties>
+</project>
