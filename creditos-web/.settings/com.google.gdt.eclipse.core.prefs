@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=
+launchConfigExternalUrlPrefix=http\://localhost\:8090/creditos-web/
+warSrcDir=WebContent
+warSrcDirIsOutput=true
