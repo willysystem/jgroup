@@ -8,10 +8,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.jgroup.creditos.endpoint.ServicioCotizacion;
+import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Cotizacion;
 
+
 @Stateless
-public class ServicioCotizacionImpl implements ServicioCotizacion{
+public class ServicioCotizacionImpl implements ServicioCotizacion {
 
 	@PersistenceContext(unitName="PUnitCreditos")
 	private EntityManager em;
@@ -53,6 +56,12 @@ public class ServicioCotizacionImpl implements ServicioCotizacion{
 	public void emitirCredito(Long idCotizacion) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Banco> getBancos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
