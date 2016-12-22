@@ -11,5 +11,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/JBoss EAP 6.3 Runtime"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/creditos-ejb"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

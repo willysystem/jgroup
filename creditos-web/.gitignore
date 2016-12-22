@@ -1,0 +1,34 @@
+
+# Created by https://www.gitignore.io/api/gwt
+
+### GWT ###
+*.class
+
+# Package Files #
+*.jar
+*.war
+
+# gwt caches and compiled units #
+WebContent/gwt_bree/
+gwt-unitCache/
+
+# boilerplate generated classes #
+.apt_generated/
+
+# more caches and things from deploy #
+WebContent/WEB-INF/deploy/
+WebContent/WEB-INF/classes/
+WebContent/creditos_web
+
+#compilation logs
+.gwt/
+
+#caching for already compiled files
+
+#gwt junit compilation files
+www-test/
+
+#old GWT (1.5) created this dir
+.gwt-tmp/
+
+# End of https://www.gitignore.io/api/gwt

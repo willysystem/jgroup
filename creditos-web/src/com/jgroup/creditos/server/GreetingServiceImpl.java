@@ -1,14 +1,12 @@
 package com.jgroup.creditos.server;
 
 import com.jgroup.creditos.client.GreetingService;
+import com.jgroup.creditos.endpoint.ServicioCotizacion;
 import com.jgroup.creditos.model.Cotizacion;
-import com.jgroup.creditos.servicios.ServicioCotizacion;
 import com.jgroup.creditos.shared.FieldVerifier;
+import com.jgroup.creditos.util.ServiceLocator;
 
 import java.util.List;
-
-import javax.ejb.EJB;
-import javax.inject.Inject;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -18,10 +16,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
-	@EJB 
-	private ServicioCotizacion servicioCotizacion;
+	 
+	private ServicioCotizacion servicioCotizacion = ServiceLocator.lookupService(ServicioCotizacion.class); 
 	
 	public String greetServer(String input) throws IllegalArgumentException {
+		
+		//servicioCotizacion = ServiceLocator.lookupService(ServicioCotizacion.class);
 		
 		List<Cotizacion> cotizacion = servicioCotizacion.buscarCotizacion(input);
 		
