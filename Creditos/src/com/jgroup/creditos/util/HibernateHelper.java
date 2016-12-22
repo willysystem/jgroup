@@ -56,7 +56,6 @@ public class HibernateHelper {
 	 */
 	public synchronized javax.persistence.EntityManagerFactory getFactory() {
 		if (factory == null) {
-			
 			factory = javax.persistence.Persistence
 					.createEntityManagerFactory("Creditos");
 		}

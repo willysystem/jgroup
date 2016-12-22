@@ -683,7 +683,6 @@
                   <link id="9">
                     <x>477</x>
                     <y>232</y>
-                    <highlited>true</highlited>
                     <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
                     <point>
                       <connectX symbol="1"/>
@@ -718,7 +717,6 @@
                   <link id="10">
                     <x>492</x>
                     <y>230</y>
-                    <highlited>true</highlited>
                     <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
                     <point>
                       <connectX symbol="1"/>
@@ -834,73 +832,6 @@ super.tearDown();
             <compilationUnitId>=Creditos/test&lt;com.jgroup.creditos.model{CotizacionPersistentTest.java</compilationUnitId>
           </generatedFiles>
         </classifier>
-        <classifier name="ServicioCotizacion">
-          <interface>true</interface>
-          <operations>
-            <operation name="constructor">
-              <multiplicity>1</multiplicity>
-              <access>1</access>
-            </operation>
-            <operation name="buscarCotizacion">
-              <type>java.util.List&lt;Cotizacion&gt;</type>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-              <generatedName>buscarCotizacion</generatedName>
-              <parameters>
-                <variable name="nroDocumento">
-                  <type class="java.lang.String"/>
-                  <multiplicity>0..1</multiplicity>
-                </variable>
-              </parameters>
-            </operation>
-            <operation name="getCotizacion">
-              <type class="com.jgroup.creditos.model.Cotizacion"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-              <generatedName>getCotizacion</generatedName>
-              <parameters>
-                <variable name="nroCotizacion">
-                  <type class="java.lang.String"/>
-                  <multiplicity>0..1</multiplicity>
-                </variable>
-              </parameters>
-            </operation>
-            <operation name="nuevaCotizacion">
-              <type class="com.jgroup.creditos.model.Cotizacion"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-              <generatedName>nuevaCotizacion</generatedName>
-              <parameters>
-                <variable name="cotizacion">
-                  <type class="com.jgroup.creditos.model.Cotizacion"/>
-                  <multiplicity>0..1</multiplicity>
-                </variable>
-              </parameters>
-            </operation>
-            <operation name="emitirCredito">
-              <type basicType="void"/>
-              <multiplicity>0</multiplicity>
-              <access>1</access>
-              <generatedName>emitirCredito</generatedName>
-              <parameters>
-                <variable name="idCotizacion">
-                  <type class="java.lang.Long"/>
-                  <multiplicity>0..1</multiplicity>
-                </variable>
-              </parameters>
-            </operation>
-            <operation name="getBancos">
-              <type>java.util.List&lt;Banco&gt;</type>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-              <generatedName>getBancos</generatedName>
-            </operation>
-          </operations>
-          <generatedFiles>
-            <name>ServicioCotizacion.java</name>
-            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{ServicioCotizacion.java</compilationUnitId>
-          </generatedFiles>
-        </classifier>
         <classifier name="Contrato">
           <superclass class="com.jgroup.creditos.model.Prestamo"/>
           <stereotype>Persistent</stereotype>
@@ -992,43 +923,6 @@ super.tearDown();
             <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Cotizacion.java</compilationUnitId>
           </generatedFiles>
         </classifier>
-        <classifier name="ServicioCredito">
-          <interface>true</interface>
-          <operations>
-            <operation name="constructor">
-              <multiplicity>1</multiplicity>
-              <access>1</access>
-            </operation>
-            <operation name="buscarCredito">
-              <type>java.util.List&lt;Contrato&gt;</type>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-              <generatedName>buscarCredito</generatedName>
-              <parameters>
-                <variable name="nroDocumento">
-                  <type class="java.lang.String"/>
-                  <multiplicity>0..1</multiplicity>
-                </variable>
-              </parameters>
-            </operation>
-            <operation name="getContrato">
-              <type class="com.jgroup.creditos.model.Contrato"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-              <generatedName>getContrato</generatedName>
-              <parameters>
-                <variable name="nroContrato">
-                  <type class="java.lang.String"/>
-                  <multiplicity>0..1</multiplicity>
-                </variable>
-              </parameters>
-            </operation>
-          </operations>
-          <generatedFiles>
-            <name>ServicioCredito.java</name>
-            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{ServicioCredito.java</compilationUnitId>
-          </generatedFiles>
-        </classifier>
       </classes>
       <diagrams>
         <classDiagram name="Model">
@@ -1037,7 +931,7 @@ super.tearDown();
           <classSymbol id="1">
             <x>32</x>
             <y>582</y>
-            <class class="com.jgroup.creditos.model.ServicioCredito"/>
+            <class class="com.jgroup.creditos.endpoint.ServicioCredito"/>
             <attributes autoDisplay="289" accessVisible="true"/>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
               <operation>buscarCredito(java.lang.String)</operation>
@@ -1065,8 +959,8 @@ super.tearDown();
           </classSymbol>
           <classSymbol id="4">
             <x>29</x>
-            <y>430</y>
-            <class class="com.jgroup.creditos.model.ServicioCotizacion"/>
+            <y>410</y>
+            <class class="com.jgroup.creditos.endpoint.ServicioCotizacion"/>
             <attributes autoDisplay="289" accessVisible="true"/>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
               <operation>buscarCotizacion(java.lang.String)</operation>
@@ -1372,6 +1266,117 @@ super.tearDown();
           <lineStyle>STRAIGHT</lineStyle>
         </classDiagram>
       </diagrams>
+      <rootName>src</rootName>
+    </javaPackage>
+    <javaPackage name="com.jgroup.creditos.endpoint">
+      <projectName>Creditos</projectName>
+      <path>src/com/jgroup/creditos/endpoint</path>
+      <classes>
+        <classifier name="ServicioCotizacion">
+          <interface>true</interface>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </operation>
+            <operation name="buscarCotizacion">
+              <type>java.util.List&lt;Cotizacion&gt;</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>buscarCotizacion</generatedName>
+              <parameters>
+                <variable name="nroDocumento">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="getCotizacion">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getCotizacion</generatedName>
+              <parameters>
+                <variable name="nroCotizacion">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="nuevaCotizacion">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>nuevaCotizacion</generatedName>
+              <parameters>
+                <variable name="cotizacion">
+                  <type class="com.jgroup.creditos.model.Cotizacion"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="emitirCredito">
+              <type basicType="void"/>
+              <multiplicity>0</multiplicity>
+              <access>1</access>
+              <generatedName>emitirCredito</generatedName>
+              <parameters>
+                <variable name="idCotizacion">
+                  <type class="java.lang.Long"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="getBancos">
+              <type>java.util.List&lt;Banco&gt;</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getBancos</generatedName>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>ServicioCotizacion.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.endpoint{ServicioCotizacion.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="ServicioCredito">
+          <interface>true</interface>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </operation>
+            <operation name="buscarCredito">
+              <type>java.util.List&lt;Contrato&gt;</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>buscarCredito</generatedName>
+              <parameters>
+                <variable name="nroDocumento">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+            <operation name="getContrato">
+              <type class="com.jgroup.creditos.model.Contrato"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getContrato</generatedName>
+              <parameters>
+                <variable name="nroContrato">
+                  <type class="java.lang.String"/>
+                  <multiplicity>0..1</multiplicity>
+                </variable>
+              </parameters>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>ServicioCredito.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.endpoint{ServicioCredito.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+      </classes>
       <rootName>src</rootName>
     </javaPackage>
   </packages>
