@@ -20,7 +20,7 @@ public interface ServicioCotizacion {
 	/**
 	 * @generated
 	 */
-	com.jgroup.creditos.model.Cotizacion nuevaCotizacion(com.jgroup.creditos.model.Cotizacion cotizacion);
+	com.jgroup.creditos.model.Cotizacion tarifarCotizacion(com.jgroup.creditos.model.Cotizacion cotizacion);
 
 	/**
 	 * @generated
