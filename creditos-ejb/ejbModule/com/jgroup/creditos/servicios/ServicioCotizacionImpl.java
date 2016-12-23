@@ -2,7 +2,9 @@ package com.jgroup.creditos.servicios;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -79,7 +81,7 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		// DEfinir el monto de prestamo por VA = 0
 		Double montoPrestamo = montoBaseCuota * cuotas;
 		Double saldoCapital = montoPrestamo;
-		List<PlanPagos> planPagos = new ArrayList<PlanPagos>();
+		Set<PlanPagos> planPagos = new HashSet<PlanPagos>();
 		for (int quota = 1; quota <= cuotas; quota++) {
 			Double montoInteres = saldoCapital * (tasaInteres / 12);
 			Double montoCapital = montoBaseCuota - montoInteres;
@@ -96,7 +98,7 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			pago.setTotalCuota(montoCuota.floatValue());
 			planPagos.add(pago);
 		}
-
+		cotizacion.setPlanesPagos(planPagos);
 		return cotizacion;
 	}
 }
