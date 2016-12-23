@@ -1,6 +1,7 @@
 package com.jgroup.creditos.servicios;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -11,21 +12,22 @@ import javax.persistence.Query;
 import com.jgroup.creditos.endpoint.ServicioCotizacion;
 import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Cotizacion;
-
+import com.jgroup.creditos.model.PlanPagos;
+import com.jgroup.creditos.utils.Tools;
 
 @Stateless
 public class ServicioCotizacionImpl implements ServicioCotizacion {
 
-	@PersistenceContext(unitName="PUnitCreditos")
+	@PersistenceContext(unitName = "PUnitCreditos")
 	private EntityManager em;
 
 	@Override
 	public List<Cotizacion> buscarCotizacion(String nroDocumento) {
 		Query query = em.createQuery("SELECT c FROM Cotizacion c WHERE c.documentoIdentidad LIKE :documentoIdentidad");
-		query.setParameter("documentoIdentidad", "%"+nroDocumento+"%");
-		
+		query.setParameter("documentoIdentidad", "%" + nroDocumento + "%");
+
 		@SuppressWarnings("unchecked")
-		List<Cotizacion> cotizacionesP = (List<Cotizacion>)query.getResultList();
+		List<Cotizacion> cotizacionesP = (List<Cotizacion>) query.getResultList();
 		List<Cotizacion> cotizacionesDTO = new ArrayList<Cotizacion>();
 		Cotizacion cotizacionDTO = null;
 		for (Cotizacion cotizacionP : cotizacionesP) {
@@ -34,8 +36,8 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			cotizacionDTO.setEdadActual(cotizacionP.getEdadActual());
 			cotizacionDTO.setFechaNacimiento(cotizacionP.getFechaNacimiento());
 			cotizacionesDTO.add(cotizacionDTO);
-		}		
-		
+		}
+
 		// Serializacion
 		return cotizacionesDTO;
 	}
@@ -47,15 +49,15 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 	}
 
 	@Override
-	public Cotizacion nuevaCotizacion(Cotizacion cotizacion) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cotizacion tarifarCotizacion(Cotizacion cotizacion) {
+
+		return calcularPrestamo(cotizacion);
 	}
 
 	@Override
 	public void emitirCredito(Long idCotizacion) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -63,7 +65,38 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
+
+	private Cotizacion calcularPrestamo(Cotizacion cotizacion) {
+		if (cotizacion.getNroCotizacion() != null) {
+			cotizacion.setNroCotizacion("COT" + Tools.getInstance().date2String(cotizacion.getFechaCotizacion()));
+		}
+		int cuotas = cotizacion.getNroCuotas();
+		double ingresoBase = cotizacion.getIngresoBase();
+		double capacidadPago = cotizacion.getCapacidadPago();
+		Double montoBaseCuota = ingresoBase * capacidadPago;
+		cotizacion.setMontoBaseCouta(montoBaseCuota.floatValue());
+		double tasaInteres = 18.00d;
+		// DEfinir el monto de prestamo por VA = 0
+		Double montoPrestamo = montoBaseCuota * cuotas;
+		Double saldoCapital = montoPrestamo;
+		List<PlanPagos> planPagos = new ArrayList<PlanPagos>();
+		for (int quota = 1; quota <= cuotas; quota++) {
+			Double montoInteres = saldoCapital * (tasaInteres / 12);
+			Double montoCapital = montoBaseCuota - montoInteres;
+			Double primaDesgravamen = 1.21D;
+			Double montoCuota = montoCapital + montoInteres + primaDesgravamen;
+			saldoCapital = saldoCapital - montoCapital;
+			PlanPagos pago = new PlanPagos();
+			pago.setFechaPago(new Date());
+			pago.setFechaVencimiento(new Date());
+			pago.setInteres(montoInteres.floatValue());
+			pago.setPrimaDesgravamen(primaDesgravamen.floatValue());
+			pago.setNroCuota(quota);
+			pago.setSaldoCapital(saldoCapital.floatValue());
+			pago.setTotalCuota(montoCuota.floatValue());
+			planPagos.add(pago);
+		}
+
+		return cotizacion;
+	}
 }
