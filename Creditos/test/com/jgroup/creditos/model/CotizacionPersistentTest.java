@@ -28,22 +28,22 @@ public class CotizacionPersistentTest extends junit.framework.TestCase {
 	/**
 	 * @generated
 	 */
-	public PlanPagos planPagos;
-
-	/**
-	 * @generated
-	 */
-	public PlanPagos planPagos1;
-
-	/**
-	 * @generated
-	 */
-	public PlanPagos planPagos2;
-
-	/**
-	 * @generated
-	 */
 	public Cotizacion cotizacion1;
+
+	/**
+	 * @generated
+	 */
+	public PlanPagosCotizacion planPagosCotizacion;
+
+	/**
+	 * @generated
+	 */
+	public PlanPagosCotizacion planPagosCotizacion1;
+
+	/**
+	 * @generated
+	 */
+	public PlanPagosCotizacion planPagosCotizacion2;
 
 	/**
 	 * @generated
@@ -64,10 +64,10 @@ public class CotizacionPersistentTest extends junit.framework.TestCase {
 		banco = new com.jgroup.creditos.model.Banco();
 		banco1 = new com.jgroup.creditos.model.Banco();
 		banco2 = new com.jgroup.creditos.model.Banco();
-		planPagos = new com.jgroup.creditos.model.PlanPagos();
-		planPagos1 = new com.jgroup.creditos.model.PlanPagos();
-		planPagos2 = new com.jgroup.creditos.model.PlanPagos();
 		cotizacion1 = new com.jgroup.creditos.model.Cotizacion();
+		planPagosCotizacion = new com.jgroup.creditos.model.PlanPagosCotizacion();
+		planPagosCotizacion1 = new com.jgroup.creditos.model.PlanPagosCotizacion();
+		planPagosCotizacion2 = new com.jgroup.creditos.model.PlanPagosCotizacion();
 		banco.setNombre("BNB");
 		banco.setTasaInteres(0.20f);
 		banco.setPrimaDesgravamen(1.7f);
@@ -77,27 +77,6 @@ public class CotizacionPersistentTest extends junit.framework.TestCase {
 		banco2.setNombre("Bisa");
 		banco2.setTasaInteres(0.18f);
 		banco2.setPrimaDesgravamen(1.9f);
-		planPagos.setNroCuota(1);
-		planPagos.setFechaVencimiento(new java.util.Date("00:00:00 1/2/2017"));
-		planPagos.setMontoCapital(283.33f);
-		planPagos.setInteres(166.67f);
-		planPagos.setPrimaDesgravamen(1.7f);
-		planPagos.setTotalCuota(451.7f);
-		planPagos.setSaldoCapital(9716.67f);
-		planPagos1.setNroCuota(2);
-		planPagos1.setFechaVencimiento(new java.util.Date("00:00:00 1/3/2017"));
-		planPagos1.setMontoCapital(288.06f);
-		planPagos1.setInteres(161.94f);
-		planPagos1.setPrimaDesgravamen(1.7f);
-		planPagos1.setTotalCuota(451.54f);
-		planPagos1.setSaldoCapital(9428.61f);
-		planPagos2.setNroCuota(3);
-		planPagos2.setFechaVencimiento(new java.util.Date("00:00:00 1/4/2017"));
-		planPagos2.setMontoCapital(292.86f);
-		planPagos2.setInteres(157.14f);
-		planPagos2.setPrimaDesgravamen(1.7f);
-		planPagos2.setTotalCuota(451.7f);
-		planPagos2.setSaldoCapital(9135.75f);
 		cotizacion1.setEstado('P');
 		cotizacion1.setNombreCompleto("Juan Perez");
 		cotizacion1.setEdadActual(50);
@@ -110,15 +89,45 @@ public class CotizacionPersistentTest extends junit.framework.TestCase {
 		cotizacion1.setMontoPrestamo(10000.0f);
 		cotizacion1.setMontoBaseCouta(450.0f);
 		cotizacion1.setDocumentoIdentidad("512454578 PL");
+		planPagosCotizacion.setNroCuota(1);
+		planPagosCotizacion.setFechaVencimiento(new java.util.Date(
+				"00:00:00 1/2/2017"));
+		planPagosCotizacion.setMontoCapital(283.33f);
+		planPagosCotizacion.setInteres(166.67f);
+		planPagosCotizacion.setPrimaDesgravamen(1.7f);
+		planPagosCotizacion.setTotalCuota(451.7f);
+		planPagosCotizacion.setSaldoCapital(9716.67f);
+		planPagosCotizacion1.setNroCuota(2);
+		planPagosCotizacion1.setFechaVencimiento(new java.util.Date(
+				"00:00:00 1/3/2017"));
+		planPagosCotizacion1.setMontoCapital(288.06f);
+		planPagosCotizacion1.setInteres(161.94f);
+		planPagosCotizacion1.setPrimaDesgravamen(1.7f);
+		planPagosCotizacion1.setTotalCuota(451.54f);
+		planPagosCotizacion1.setSaldoCapital(9428.61f);
+		planPagosCotizacion2.setNroCuota(3);
+		planPagosCotizacion2.setFechaVencimiento(new java.util.Date(
+				"00:00:00 1/4/2017"));
+		planPagosCotizacion2.setMontoCapital(292.86f);
+		planPagosCotizacion2.setInteres(157.14f);
+		planPagosCotizacion2.setPrimaDesgravamen(1.7f);
+		planPagosCotizacion2.setTotalCuota(451.7f);
+		planPagosCotizacion2.setSaldoCapital(9135.75f);
 		entityManager.persist(banco);
 		entityManager.persist(banco1);
 		entityManager.persist(banco2);
-		entityManager.persist(planPagos);
-		entityManager.persist(planPagos1);
-		entityManager.persist(planPagos2);
 		entityManager.persist(cotizacion1);
+		entityManager.persist(planPagosCotizacion);
+		entityManager.persist(planPagosCotizacion1);
+		entityManager.persist(planPagosCotizacion2);
 		cotizacion1.setBanco(banco);
 		banco.getCotizacion().add(cotizacion1);
+		planPagosCotizacion.setCotizacion(cotizacion1);
+		cotizacion1.getPlanPagosCotizacion().add(planPagosCotizacion);
+		planPagosCotizacion1.setCotizacion(cotizacion1);
+		cotizacion1.getPlanPagosCotizacion().add(planPagosCotizacion1);
+		planPagosCotizacion2.setCotizacion(cotizacion1);
+		cotizacion1.getPlanPagosCotizacion().add(planPagosCotizacion2);
 		tx.commit();
 		entityManager.close();
 	}

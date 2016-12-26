@@ -459,23 +459,23 @@
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
-            <variable name="planPagos">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-            </variable>
-            <variable name="planPagos1">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-            </variable>
-            <variable name="planPagos2">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-            </variable>
             <variable name="cotizacion1">
               <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="planPagosCotizacion">
+              <type class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="planPagosCotizacion1">
+              <type class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="planPagosCotizacion2">
+              <type class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
@@ -521,42 +521,6 @@
                     <primaDesgravamen>1.9</primaDesgravamen>
                   </values>
                 </object>
-                <object name="planPagos">
-                  <type class="com.jgroup.creditos.model.PlanPagos"/>
-                  <values>
-                    <nroCuota>1</nroCuota>
-                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/2/2017&quot;)</fechaVencimiento>
-                    <montoCapital>283.33</montoCapital>
-                    <primaDesgravamen>1.7</primaDesgravamen>
-                    <interes>166.67</interes>
-                    <totalCuota>451.7</totalCuota>
-                    <saldoCapital>9716.67</saldoCapital>
-                  </values>
-                </object>
-                <object name="planPagos1">
-                  <type class="com.jgroup.creditos.model.PlanPagos"/>
-                  <values>
-                    <nroCuota>2</nroCuota>
-                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/3/2017&quot;)</fechaVencimiento>
-                    <montoCapital>288.06</montoCapital>
-                    <interes>161.94</interes>
-                    <primaDesgravamen>1.7</primaDesgravamen>
-                    <totalCuota>451.54</totalCuota>
-                    <saldoCapital>9428.61</saldoCapital>
-                  </values>
-                </object>
-                <object name="planPagos2">
-                  <type class="com.jgroup.creditos.model.PlanPagos"/>
-                  <values>
-                    <nroCuota>3</nroCuota>
-                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/4/2017&quot;)</fechaVencimiento>
-                    <montoCapital>292.86</montoCapital>
-                    <interes>157.14</interes>
-                    <primaDesgravamen>1.7</primaDesgravamen>
-                    <totalCuota>451.7</totalCuota>
-                    <saldoCapital>9135.75</saldoCapital>
-                  </values>
-                </object>
                 <object name="cotizacion1">
                   <type class="com.jgroup.creditos.model.Cotizacion"/>
                   <values>
@@ -575,35 +539,74 @@
                     <banco ref="banco"/>
                   </values>
                 </object>
+                <object name="planPagosCotizacion">
+                  <type class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
+                  <values>
+                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/2/2017&quot;)</fechaVencimiento>
+                    <montoCapital>283.33</montoCapital>
+                    <interes>166.67</interes>
+                    <primaDesgravamen>1.7</primaDesgravamen>
+                    <totalCuota>451.7</totalCuota>
+                    <saldoCapital>9716.67</saldoCapital>
+                    <nroCuota>1</nroCuota>
+                    <cotizacion ref="cotizacion1"/>
+                  </values>
+                </object>
+                <object name="planPagosCotizacion1">
+                  <type class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
+                  <values>
+                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/3/2017&quot;)</fechaVencimiento>
+                    <montoCapital>288.06</montoCapital>
+                    <interes>161.94</interes>
+                    <primaDesgravamen>1.7</primaDesgravamen>
+                    <totalCuota>451.54</totalCuota>
+                    <saldoCapital>9428.61</saldoCapital>
+                    <nroCuota>2</nroCuota>
+                    <cotizacion ref="cotizacion1"/>
+                  </values>
+                </object>
+                <object name="planPagosCotizacion2">
+                  <type class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
+                  <values>
+                    <nroCuota>3</nroCuota>
+                    <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/4/2017&quot;)</fechaVencimiento>
+                    <montoCapital>292.86</montoCapital>
+                    <interes>157.14</interes>
+                    <primaDesgravamen>1.7</primaDesgravamen>
+                    <totalCuota>451.7</totalCuota>
+                    <saldoCapital>9135.75</saldoCapital>
+                    <cotizacion ref="cotizacion1"/>
+                  </values>
+                </object>
                 <objectDiagram name="Objects">
                   <objectSymbol id="1">
-                    <x>371</x>
-                    <y>77</y>
-                    <object>cotizacion1</object>
+                    <x>816</x>
+                    <y>379</y>
+                    <object>planPagosCotizacion2</object>
                     <showTypes>false</showTypes>
                     <showObjectName>true</showObjectName>
                     <attributesVisible>ALL</attributesVisible>
                   </objectSymbol>
                   <objectSymbol id="2">
-                    <x>634</x>
-                    <y>486</y>
-                    <object>planPagos2</object>
+                    <x>430</x>
+                    <y>373</y>
+                    <object>planPagosCotizacion1</object>
                     <showTypes>false</showTypes>
                     <showObjectName>true</showObjectName>
                     <attributesVisible>ALL</attributesVisible>
                   </objectSymbol>
                   <objectSymbol id="3">
-                    <x>331</x>
-                    <y>474</y>
-                    <object>planPagos1</object>
+                    <x>24</x>
+                    <y>378</y>
+                    <object>planPagosCotizacion</object>
                     <showTypes>false</showTypes>
                     <showObjectName>true</showObjectName>
                     <attributesVisible>ALL</attributesVisible>
                   </objectSymbol>
                   <objectSymbol id="4">
-                    <x>17</x>
-                    <y>468</y>
-                    <object>planPagos</object>
+                    <x>396</x>
+                    <y>23</y>
+                    <object>cotizacion1</object>
                     <showTypes>false</showTypes>
                     <showObjectName>true</showObjectName>
                     <attributesVisible>ALL</attributesVisible>
@@ -625,22 +628,126 @@
                     <attributesVisible>ALL</attributesVisible>
                   </objectSymbol>
                   <objectSymbol id="7">
-                    <x>821</x>
-                    <y>76</y>
+                    <x>957</x>
+                    <y>97</y>
                     <object>banco</object>
                     <showTypes>false</showTypes>
                     <showObjectName>true</showObjectName>
                     <attributesVisible>ALL</attributesVisible>
                   </objectSymbol>
                   <link id="8">
-                    <x>563</x>
-                    <y>129</y>
-                    <association class="com.jgroup.creditos.model.Prestamo" name="banco"/>
+                    <x>970</x>
+                    <y>396</y>
+                    <highlited>true</highlited>
+                    <association class="com.jgroup.creditos.model.PlanPagosCotizacion" name="cotizacion"/>
                     <point>
                       <connectX symbol="1"/>
                       <connectY symbol="1"/>
-                      <x>68</x>
+                      <x>27</x>
+                      <y>-69</y>
+                      <atX>0.5</atX>
+                      <atY>0.5</atY>
+                    </point>
+                    <point>
+                      <connectX symbol="4"/>
+                      <connectY symbol="4"/>
+                      <x>0</x>
+                      <y>0</y>
+                      <atX>0.8634538</atX>
+                      <atY>0.48430493</atY>
+                    </point>
+                    <end-1>
+                      <x>946</x>
+                      <y>379</y>
+                      <connectedSymbol symbol="1"/>
+                      <text>planPagosCotizacion</text>
+                    </end-1>
+                    <end-2>
+                      <x>645</x>
+                      <y>156</y>
+                      <connectedSymbol symbol="4"/>
+                      <text>cotizacion</text>
+                    </end-2>
+                    <style>STRAIGHT</style>
+                  </link>
+                  <link id="9">
+                    <x>558</x>
+                    <y>400</y>
+                    <highlited>true</highlited>
+                    <association class="com.jgroup.creditos.model.PlanPagosCotizacion" name="cotizacion"/>
+                    <point>
+                      <connectX symbol="2"/>
+                      <connectY symbol="2"/>
+                      <x>1</x>
                       <y>-59</y>
+                      <atX>0.5</atX>
+                      <atY>0.5</atY>
+                    </point>
+                    <point>
+                      <connectX symbol="4"/>
+                      <connectY symbol="4"/>
+                      <x>0</x>
+                      <y>0</y>
+                      <atX>0.6345382</atX>
+                      <atY>0.94170403</atY>
+                    </point>
+                    <end-1>
+                      <x>557</x>
+                      <y>373</y>
+                      <connectedSymbol symbol="2"/>
+                      <text>planPagosCotizacion</text>
+                    </end-1>
+                    <end-2>
+                      <x>554</x>
+                      <y>246</y>
+                      <connectedSymbol symbol="4"/>
+                      <text>cotizacion</text>
+                    </end-2>
+                    <style>STRAIGHT</style>
+                  </link>
+                  <link id="10">
+                    <x>139</x>
+                    <y>390</y>
+                    <association class="com.jgroup.creditos.model.PlanPagosCotizacion" name="cotizacion"/>
+                    <point>
+                      <connectX symbol="3"/>
+                      <connectY symbol="3"/>
+                      <x>-12</x>
+                      <y>-74</y>
+                      <atX>0.5</atX>
+                      <atY>0.5</atY>
+                    </point>
+                    <point>
+                      <connectX symbol="4"/>
+                      <connectY symbol="4"/>
+                      <x>0</x>
+                      <y>0</y>
+                      <atX>0.20883535</atX>
+                      <atY>0.9192825</atY>
+                    </point>
+                    <end-1>
+                      <x>161</x>
+                      <y>378</y>
+                      <connectedSymbol symbol="3"/>
+                      <text>planPagosCotizacion</text>
+                    </end-1>
+                    <end-2>
+                      <x>413</x>
+                      <y>246</y>
+                      <connectedSymbol symbol="4"/>
+                      <text>cotizacion</text>
+                    </end-2>
+                    <style>STRAIGHT</style>
+                  </link>
+                  <link id="11">
+                    <x>637</x>
+                    <y>118</y>
+                    <association class="com.jgroup.creditos.model.Prestamo" name="banco"/>
+                    <point>
+                      <connectX symbol="4"/>
+                      <connectY symbol="4"/>
+                      <x>117</x>
+                      <y>-16</y>
                       <atX>0.49799198</atX>
                       <atY>0.49775785</atY>
                     </point>
@@ -649,18 +756,18 @@
                       <connectY symbol="7"/>
                       <x>0</x>
                       <y>0</y>
-                      <atX>0.057971016</atX>
-                      <atY>0.54285717</atY>
+                      <atX>0.036231883</atX>
+                      <atY>0.25714287</atY>
                     </point>
                     <end-1>
-                      <x>620</x>
-                      <y>125</y>
-                      <connectedSymbol symbol="1"/>
+                      <x>645</x>
+                      <y>117</y>
+                      <connectedSymbol symbol="4"/>
                       <text>cotizacion</text>
                     </end-1>
                     <end-2>
-                      <x>821</x>
-                      <y>114</y>
+                      <x>957</x>
+                      <y>115</y>
                       <connectedSymbol symbol="7"/>
                       <text>banco</text>
                     </end-2>
@@ -983,8 +1090,8 @@ super.tearDown();
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
           </classSymbol>
           <classSymbol id="16">
-            <x>1244</x>
-            <y>130</y>
+            <x>1173</x>
+            <y>113</y>
             <class class="com.jgroup.creditos.model.PlanPagos"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>id</attribute>
@@ -1229,13 +1336,13 @@ super.tearDown();
               <atY>0.42990655</atY>
             </point>
             <end-1>
-              <x>1065</x>
-              <y>59</y>
+              <x>1061</x>
+              <y>62</y>
               <connectedSymbol symbol="2"/>
             </end-1>
             <end-2>
-              <x>1244</x>
-              <y>200</y>
+              <x>1173</x>
+              <y>177</y>
               <connectedSymbol symbol="16"/>
               <symbolType>1</symbolType>
               <symbolLength>12</symbolLength>
@@ -1262,13 +1369,13 @@ super.tearDown();
               <atY>0.7616823</atY>
             </point>
             <end-1>
-              <x>1042</x>
+              <x>1037</x>
               <y>409</y>
               <connectedSymbol symbol="1"/>
             </end-1>
             <end-2>
-              <x>1244</x>
-              <y>298</y>
+              <x>1173</x>
+              <y>285</y>
               <connectedSymbol symbol="16"/>
               <symbolType>1</symbolType>
               <symbolLength>12</symbolLength>

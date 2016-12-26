@@ -1,11 +1,15 @@
 package com.jgroup.creditos.model;
 
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 
 /**
  * @generated
  */
 @javax.persistence.Entity
-public class Prestamo implements java.io.Serializable {
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public abstract class Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
