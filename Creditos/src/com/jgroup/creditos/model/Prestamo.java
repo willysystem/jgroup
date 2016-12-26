@@ -7,8 +7,8 @@ import javax.persistence.InheritanceType;
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@javax.persistence.Entity
 public abstract class Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
@@ -78,7 +78,7 @@ public abstract class Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	private java.util.Set<PlanPagos> planesPagos = new java.util.HashSet<PlanPagos>();
+	private java.util.List<PlanPagos> planesPagos = new java.util.ArrayList<PlanPagos>();
 
 	/**
 	 * @generated
@@ -289,14 +289,14 @@ public abstract class Prestamo implements java.io.Serializable {
 	 * @generated
 	 */
 	@javax.persistence.OneToMany(mappedBy = "prestamo")
-	public java.util.Set<PlanPagos> getPlanesPagos() {
+	public java.util.List<PlanPagos> getPlanesPagos() {
 		return this.planesPagos;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setPlanesPagos(java.util.Set<PlanPagos> planesPagos) {
+	public void setPlanesPagos(java.util.List<PlanPagos> planesPagos) {
 		this.planesPagos = planesPagos;
 	}
 

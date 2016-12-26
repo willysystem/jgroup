@@ -81,7 +81,7 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		// DEfinir el monto de prestamo por VA = 0
 		Double montoPrestamo = montoBaseCuota * cuotas;
 		Double saldoCapital = montoPrestamo;
-		Set<PlanPagos> planPagos = new HashSet<PlanPagos>();
+		List<PlanPagos> planPagos = new ArrayList<PlanPagos>();
 		for (int quota = 1; quota <= cuotas; quota++) {
 			Double montoInteres = saldoCapital * (tasaInteres / 12);
 			Double montoCapital = montoBaseCuota - montoInteres;
@@ -96,6 +96,7 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			pago.setNroCuota(quota);
 			pago.setSaldoCapital(saldoCapital.floatValue());
 			pago.setTotalCuota(montoCuota.floatValue());
+			pago.setMontoCapital(montoCapital.floatValue());
 			planPagos.add(pago);
 		}
 		cotizacion.setPlanesPagos(planPagos);

@@ -1292,7 +1292,7 @@ super.tearDown();
               </parameters>
             </operation>
             <operation name="getCotizacion">
-              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <type>Cotizacion</type>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
               <generatedName>getCotizacion</generatedName>
@@ -1401,7 +1401,7 @@ super.tearDown();
       <create-helper-main>true</create-helper-main>
       <annotate-getters>true</annotate-getters>
       <generate-dto-associations-many>false</generate-dto-associations-many>
-      <generate-collections-as-set>true</generate-collections-as-set>
+      <generate-collections-as-set>false</generate-collections-as-set>
       <generate-full-classnames>true</generate-full-classnames>
       <add-hibernate3-libraries>true</add-hibernate3-libraries>
       <generate-dto>false</generate-dto>

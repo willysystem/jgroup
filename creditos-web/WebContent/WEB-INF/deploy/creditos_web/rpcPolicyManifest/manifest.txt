@@ -1,2 +1,3 @@
 # Module creditos_web
 # RPC service class, partial path of RPC policy file
+com.jgroup.creditos.client.CotizacionService, F1F6C3A792985DF4D9C69A030C8BEF40.gwt.rpc

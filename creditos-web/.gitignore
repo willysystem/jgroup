@@ -18,7 +18,7 @@ gwt-unitCache/
 # more caches and things from deploy #
 WebContent/WEB-INF/deploy/
 WebContent/WEB-INF/classes/
-WebContent/creditos_web
+WebContent/creditos_web/
 
 #compilation logs
 .gwt/
