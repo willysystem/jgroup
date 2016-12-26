@@ -5,6 +5,7 @@ package com.jgroup.creditos.model;
  * @generated
  */
 @javax.persistence.Entity
+@javax.persistence.Table(name="j_banco")
 public class Banco implements java.io.Serializable {
 	/**
 	 * @generated
@@ -14,7 +15,6 @@ public class Banco implements java.io.Serializable {
 	 * @generated
 	 */
 	private Long id;
-
 	/**
 	 * @generated
 	 */
@@ -52,14 +52,6 @@ public class Banco implements java.io.Serializable {
 	 */
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	/**
-	 * @generated
-	 */
-	public String toString() {
-		return "Banco" + " id=" + id + " nombre=" + nombre + " tasaInteres="
-				+ tasaInteres + " primaDesgravamen=" + primaDesgravamen;
 	}
 
 	/**
@@ -133,5 +125,13 @@ public class Banco implements java.io.Serializable {
 	public void removeCotizacion(Prestamo cotizacion) {
 		getCotizacion().remove(cotizacion);
 		cotizacion.setBanco(null);
+	}
+
+	/**
+	 * @generated
+	 */
+	public String toString() {
+		return "Banco" + " id=" + id + " nombre=" + nombre + " tasaInteres="
+				+ tasaInteres + " primaDesgravamen=" + primaDesgravamen;
 	}
 }

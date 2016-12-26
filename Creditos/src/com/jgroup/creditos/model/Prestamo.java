@@ -1,15 +1,11 @@
 package com.jgroup.creditos.model;
 
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-
 
 /**
  * @generated
  */
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @javax.persistence.Entity
-public abstract class Prestamo implements java.io.Serializable {
+public class Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
@@ -18,12 +14,10 @@ public abstract class Prestamo implements java.io.Serializable {
 	 * @generated
 	 */
 	private Long id;
-
 	/**
 	 * @generated
 	 */
 	private String nombreCompleto;
-
 	/**
 	 * @generated
 	 */
@@ -40,7 +34,6 @@ public abstract class Prestamo implements java.io.Serializable {
 	 * @generated
 	 */
 	private Integer nroCuotas;
-
 	/**
 	 * @generated
 	 */
@@ -49,27 +42,22 @@ public abstract class Prestamo implements java.io.Serializable {
 	 * @generated
 	 */
 	private Banco banco;
-
 	/**
 	 * @generated
 	 */
 	private String nroCotizacion;
-
 	/**
 	 * @generated
 	 */
 	private java.util.Date fechaCotizacion;
-
 	/**
 	 * @generated
 	 */
 	private Float montoPrestamo;
-
 	/**
 	 * @generated
 	 */
 	private Float montoBaseCouta;
-
 	/**
 	 * @generated
 	 */
@@ -78,20 +66,7 @@ public abstract class Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	private java.util.List<PlanPagos> planesPagos = new java.util.ArrayList<PlanPagos>();
-
-	/**
-	 * @generated
-	 */
-	public String toString() {
-		return "Prestamo" + " id=" + id + " nombreCompleto=" + nombreCompleto
-				+ " edadActual=" + edadActual + " fechaNacimiento="
-				+ fechaNacimiento + " ingresoBase=" + ingresoBase
-				+ " nroCuotas=" + nroCuotas + " capacidadPago=" + capacidadPago
-				+ " nroCotizacion=" + nroCotizacion + " fechaCotizacion="
-				+ fechaCotizacion + " montoPrestamo=" + montoPrestamo
-				+ " montoBaseCouta=" + montoBaseCouta + " documentoIdentidad="
-				+ documentoIdentidad;
+	public Prestamo() {
 	}
 
 	/**
@@ -282,37 +257,14 @@ public abstract class Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	public Prestamo() {
-	}
-
-	/**
-	 * @generated
-	 */
-	@javax.persistence.OneToMany(mappedBy = "prestamo")
-	public java.util.List<PlanPagos> getPlanesPagos() {
-		return this.planesPagos;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setPlanesPagos(java.util.List<PlanPagos> planesPagos) {
-		this.planesPagos = planesPagos;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void addPlanesPagos(PlanPagos planesPagos) {
-		getPlanesPagos().add(planesPagos);
-		planesPagos.setPrestamo(this);
-	}
-
-	/**
-	 * @generated
-	 */
-	public void removePlanesPagos(PlanPagos planesPagos) {
-		getPlanesPagos().remove(planesPagos);
-		planesPagos.setPrestamo(null);
+	public String toString() {
+		return "Prestamo" + " id=" + id + " nombreCompleto=" + nombreCompleto
+				+ " edadActual=" + edadActual + " fechaNacimiento="
+				+ fechaNacimiento + " ingresoBase=" + ingresoBase
+				+ " nroCuotas=" + nroCuotas + " capacidadPago=" + capacidadPago
+				+ " nroCotizacion=" + nroCotizacion + " fechaCotizacion="
+				+ fechaCotizacion + " montoPrestamo=" + montoPrestamo
+				+ " montoBaseCouta=" + montoBaseCouta + " documentoIdentidad="
+				+ documentoIdentidad;
 	}
 }

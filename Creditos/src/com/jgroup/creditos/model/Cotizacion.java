@@ -4,6 +4,7 @@ package com.jgroup.creditos.model;
 /**
  * @generated
  */
+@javax.persistence.Table(name="j_cotizacion")
 @javax.persistence.Entity
 public class Cotizacion extends Prestamo implements java.io.Serializable {
 	/**
@@ -14,11 +15,15 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	 * @generated
 	 */
 	private Contrato contrato;
-
 	/**
 	 * @generated
 	 */
 	private Character estado;
+
+	/**
+	 * @generated
+	 */
+	private java.util.List<PlanPagosCotizacion> planPagosCotizacion = new java.util.ArrayList<PlanPagosCotizacion>();
 
 	/**
 	 * @generated
@@ -41,27 +46,6 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 		this.contrato = contrato;
 	}
 
-	@Override
-	public String toString() {
-		return "Cotizacion [contrato=" + contrato + ", estado=" + estado
-				+ ", getContrato()=" + getContrato() + ", getEstado()="
-				+ getEstado() + ", toString()=" + super.toString()
-				+ ", getId()=" + getId() + ", getNombreCompleto()="
-				+ getNombreCompleto() + ", getEdadActual()=" + getEdadActual()
-				+ ", getFechaNacimiento()=" + getFechaNacimiento()
-				+ ", getIngresoBase()=" + getIngresoBase()
-				+ ", getNroCuotas()=" + getNroCuotas()
-				+ ", getCapacidadPago()=" + getCapacidadPago()
-				+ ", getBanco()=" + getBanco() + ", getNroCotizacion()="
-				+ getNroCotizacion() + ", getFechaCotizacion()="
-				+ getFechaCotizacion() + ", getMontoPrestamo()="
-				+ getMontoPrestamo() + ", getMontoBaseCouta()="
-				+ getMontoBaseCouta() + ", getDocumentoIdentidad()="
-				+ getDocumentoIdentidad() + ", getPlanesPagos()="
-				+ getPlanesPagos() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + "]";
-	}
-
 	/**
 	 * @generated
 	 */
@@ -75,8 +59,44 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	public void setEstado(Character estado) {
 		this.estado = estado;
 	}
-	
-	
-	
-	
+
+	/**
+	 * @generated
+	 */
+	public String toString() {
+		return "Cotizacion" + " estado=" + estado;
+	}
+
+	/**
+	 * @generated
+	 */
+	@javax.persistence.OneToMany(mappedBy = "cotizacion")
+	public java.util.List<PlanPagosCotizacion> getPlanPagosCotizacion() {
+		return this.planPagosCotizacion;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setPlanPagosCotizacion(
+			java.util.List<PlanPagosCotizacion> planPagosCotizacion) {
+				this.planPagosCotizacion = planPagosCotizacion;
+			}
+
+	/**
+	 * @generated
+	 */
+	public void addPlanPagosCotizacion(PlanPagosCotizacion planPagosCotizacion) {
+		getPlanPagosCotizacion().add(planPagosCotizacion);
+		planPagosCotizacion.setCotizacion(this);
+	}
+
+	/**
+	 * @generated
+	 */
+	public void removePlanPagosCotizacion(
+			PlanPagosCotizacion planPagosCotizacion) {
+				getPlanPagosCotizacion().remove(planPagosCotizacion);
+				planPagosCotizacion.setCotizacion(null);
+			}
 }

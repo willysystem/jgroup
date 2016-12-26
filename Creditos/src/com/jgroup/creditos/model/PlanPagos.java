@@ -26,7 +26,6 @@ public class PlanPagos implements java.io.Serializable {
 	 * @generated
 	 */
 	private Float montoCapital;
-
 	/**
 	 * @generated
 	 */
@@ -46,29 +45,11 @@ public class PlanPagos implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	private Prestamo prestamo;
-
-	/**
-	 * @generated
-	 */
 	private String nroRecibo;
-
 	/**
 	 * @generated
 	 */
 	private java.util.Date fechaPago;
-
-	/**
-	 * @generated
-	 */
-	public String toString() {
-		return "PlanPagos" + " id=" + id + " nroCuota=" + nroCuota
-				+ " fechaVencimiento=" + fechaVencimiento + " montoCapital="
-				+ montoCapital + " interes=" + interes + " primaDesgravamen="
-				+ primaDesgravamen + " totalCuota=" + totalCuota
-				+ " saldoCapital=" + saldoCapital + " nroRecibo=" + nroRecibo
-				+ " fechaPago=" + fechaPago;
-	}
 
 	/**
 	 * @generated
@@ -193,21 +174,6 @@ public class PlanPagos implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	@javax.persistence.ManyToOne
-	public Prestamo getPrestamo() {
-		return this.prestamo;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setPrestamo(Prestamo prestamo) {
-		this.prestamo = prestamo;
-	}
-
-	/**
-	 * @generated
-	 */
 	public String getNroRecibo() {
 		return this.nroRecibo;
 	}
@@ -231,5 +197,17 @@ public class PlanPagos implements java.io.Serializable {
 	 */
 	public void setFechaPago(java.util.Date fechaPago) {
 		this.fechaPago = fechaPago;
+	}
+
+	/**
+	 * @generated
+	 */
+	public String toString() {
+		return "PlanPagos" + " id=" + id + " nroCuota=" + nroCuota
+				+ " fechaVencimiento=" + fechaVencimiento + " montoCapital="
+				+ montoCapital + " interes=" + interes + " primaDesgravamen="
+				+ primaDesgravamen + " totalCuota=" + totalCuota
+				+ " saldoCapital=" + saldoCapital + " nroRecibo=" + nroRecibo
+				+ " fechaPago=" + fechaPago;
 	}
 }

@@ -84,6 +84,8 @@ public class HibernateHelper {
 				config.addAnnotatedClass(com.jgroup.creditos.model.Banco.class);
 				config.addAnnotatedClass(com.jgroup.creditos.model.Contrato.class);
 				config.addAnnotatedClass(com.jgroup.creditos.model.Cotizacion.class);
+				config.addAnnotatedClass(com.jgroup.creditos.model.PlanPagosCotizacion.class);
+				config.addAnnotatedClass(com.jgroup.creditos.model.PlanPagosContrato.class);
 				return config;
 			}
 

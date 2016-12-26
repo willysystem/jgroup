@@ -122,6 +122,8 @@
                   <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Banco.class);</javaCode>
                   <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Contrato.class);</javaCode>
                   <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Cotizacion.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.PlanPagosCotizacion.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.PlanPagosContrato.class);</javaCode>
                   <javaCode>return config;</javaCode>
                 </statements>
               </method>
@@ -258,13 +260,6 @@
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
-            <variable name="planesPagos">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
-              <multiplicity>*</multiplicity>
-              <access>1</access>
-              <value>new com.jgroup.creditos.model.PlanPagos()</value>
-              <inverse class="com.jgroup.creditos.model.PlanPagos" name="prestamo"/>
-            </variable>
           </variables>
           <operations>
             <operation name="constructor">
@@ -340,12 +335,6 @@
               <type class="java.lang.Float"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
-            </variable>
-            <variable name="prestamo">
-              <type class="com.jgroup.creditos.model.Prestamo"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-              <inverse class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
             </variable>
             <variable name="nroRecibo">
               <type class="java.lang.String"/>
@@ -584,9 +573,6 @@
                     <montoBaseCouta>450</montoBaseCouta>
                     <documentoIdentidad>&quot;512454578 PL&quot;</documentoIdentidad>
                     <banco ref="banco"/>
-                    <planesPagos ref="planPagos"/>
-                    <planesPagos ref="planPagos1"/>
-                    <planesPagos ref="planPagos2"/>
                   </values>
                 </object>
                 <objectDiagram name="Objects">
@@ -669,132 +655,14 @@
                     <end-1>
                       <x>620</x>
                       <y>125</y>
-                      <w>54</w>
-                      <h>17</h>
                       <connectedSymbol symbol="1"/>
                       <text>cotizacion</text>
                     </end-1>
                     <end-2>
                       <x>821</x>
                       <y>114</y>
-                      <w>33</w>
-                      <h>17</h>
                       <connectedSymbol symbol="7"/>
                       <text>banco</text>
-                    </end-2>
-                    <style>STRAIGHT</style>
-                  </link>
-                  <link id="9">
-                    <x>477</x>
-                    <y>232</y>
-                    <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
-                    <point>
-                      <connectX symbol="1"/>
-                      <connectY symbol="1"/>
-                      <x>-18</x>
-                      <y>44</y>
-                      <atX>0.49799198</atX>
-                      <atY>0.49775785</atY>
-                    </point>
-                    <point>
-                      <connectX symbol="4"/>
-                      <connectY symbol="4"/>
-                      <x>0</x>
-                      <y>0</y>
-                      <atX>0.26771653</atX>
-                      <atY>0.22580644</atY>
-                    </point>
-                    <end-1>
-                      <x>379</x>
-                      <y>300</y>
-                      <w>50</w>
-                      <h>17</h>
-                      <connectedSymbol symbol="1"/>
-                      <text>prestamo</text>
-                    </end-1>
-                    <end-2>
-                      <x>139</x>
-                      <y>468</y>
-                      <w>66</w>
-                      <h>17</h>
-                      <connectedSymbol symbol="4"/>
-                      <text>planesPagos</text>
-                    </end-2>
-                    <style>STRAIGHT</style>
-                  </link>
-                  <link id="10">
-                    <x>492</x>
-                    <y>230</y>
-                    <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
-                    <point>
-                      <connectX symbol="1"/>
-                      <connectY symbol="1"/>
-                      <x>-3</x>
-                      <y>42</y>
-                      <atX>0.49799198</atX>
-                      <atY>0.49775785</atY>
-                    </point>
-                    <point>
-                      <connectX symbol="3"/>
-                      <connectY symbol="3"/>
-                      <x>0</x>
-                      <y>0</y>
-                      <atX>0.5866142</atX>
-                      <atY>0.14193548</atY>
-                    </point>
-                    <end-1>
-                      <x>488</x>
-                      <y>300</y>
-                      <w>50</w>
-                      <h>17</h>
-                      <connectedSymbol symbol="1"/>
-                      <text>prestamo</text>
-                    </end-1>
-                    <end-2>
-                      <x>481</x>
-                      <y>474</y>
-                      <w>66</w>
-                      <h>17</h>
-                      <connectedSymbol symbol="3"/>
-                      <text>planesPagos</text>
-                    </end-2>
-                    <style>STRAIGHT</style>
-                  </link>
-                  <link id="11">
-                    <x>604</x>
-                    <y>168</y>
-                    <association class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
-                    <point>
-                      <connectX symbol="1"/>
-                      <connectY symbol="1"/>
-                      <x>109</x>
-                      <y>-20</y>
-                      <atX>0.49799198</atX>
-                      <atY>0.49775785</atY>
-                    </point>
-                    <point>
-                      <connectX symbol="2"/>
-                      <connectY symbol="2"/>
-                      <x>0</x>
-                      <y>0</y>
-                      <atX>0.4566929</atX>
-                      <atY>0.4064516</atY>
-                    </point>
-                    <end-1>
-                      <x>620</x>
-                      <y>210</y>
-                      <w>50</w>
-                      <h>17</h>
-                      <connectedSymbol symbol="1"/>
-                      <text>prestamo</text>
-                    </end-1>
-                    <end-2>
-                      <x>723</x>
-                      <y>486</y>
-                      <w>66</w>
-                      <h>17</h>
-                      <connectedSymbol symbol="2"/>
-                      <text>planesPagos</text>
                     </end-2>
                     <style>STRAIGHT</style>
                   </link>
@@ -873,15 +741,17 @@ super.tearDown();
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
-            <variable name="fechaEmision">
-              <type class="java.util.Date"/>
-              <multiplicity>0..1</multiplicity>
-              <access>1</access>
-            </variable>
             <variable name="fechaLiquidacion">
               <type class="java.util.Date"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
+            </variable>
+            <variable name="planPagosCotnrato">
+              <type class="com.jgroup.creditos.model.PlanPagosContrato"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new com.jgroup.creditos.model.PlanPagosCotnrato()</value>
+              <inverse class="com.jgroup.creditos.model.PlanPagosContrato" name="contrato"/>
             </variable>
           </variables>
           <operations>
@@ -926,6 +796,13 @@ super.tearDown();
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
+            <variable name="planPagosCotizacion">
+              <type class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new com.jgroup.creditos.model.PlanPagosCotizacion()</value>
+              <inverse class="com.jgroup.creditos.model.PlanPagosCotizacion" name="cotizacion"/>
+            </variable>
           </variables>
           <operations>
             <operation name="constructor">
@@ -944,12 +821,102 @@ super.tearDown();
             <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Cotizacion.java</compilationUnitId>
           </generatedFiles>
         </classifier>
+        <classifier name="PlanPagosCotizacion">
+          <superclass class="com.jgroup.creditos.model.PlanPagos"/>
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1995653292</value>
+            </variable>
+            <variable name="cotizacion">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.Cotizacion" name="planPagosCotizacion"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>PlanPagosCotizacion</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>PlanPagosCotizacion.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{PlanPagosCotizacion.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="PlanPagosContrato">
+          <superclass class="com.jgroup.creditos.model.PlanPagos"/>
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>1851709603</value>
+            </variable>
+            <variable name="contrato">
+              <type class="com.jgroup.creditos.model.Contrato"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="com.jgroup.creditos.model.Contrato" name="planPagosCotnrato"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>PlanPagosContrato</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>PlanPagosContrato.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{PlanPagosContrato.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
       </classes>
       <diagrams>
         <classDiagram name="Model">
           <showAttributes>true</showAttributes>
           <showOperations>true</showOperations>
           <classSymbol id="1">
+            <x>931</x>
+            <y>409</y>
+            <class class="com.jgroup.creditos.model.PlanPagosContrato"/>
+            <attributes autoDisplay="289" accessVisible="true"/>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="2">
+            <x>941</x>
+            <y>11</y>
+            <class class="com.jgroup.creditos.model.PlanPagosCotizacion"/>
+            <attributes autoDisplay="289" accessVisible="true"/>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="6">
             <x>32</x>
             <y>582</y>
             <class class="com.jgroup.creditos.endpoint.ServicioCredito"/>
@@ -959,27 +926,26 @@ super.tearDown();
               <operation>getContrato(java.lang.String)</operation>
             </operations>
           </classSymbol>
-          <classSymbol id="2">
-            <x>666</x>
-            <y>51</y>
+          <classSymbol id="7">
+            <x>598</x>
+            <y>6</y>
             <class class="com.jgroup.creditos.model.Cotizacion"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>estado</attribute>
             </attributes>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
           </classSymbol>
-          <classSymbol id="3">
-            <x>658</x>
-            <y>280</y>
+          <classSymbol id="11">
+            <x>585</x>
+            <y>408</y>
             <class class="com.jgroup.creditos.model.Contrato"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>nroPrestamo</attribute>
-              <attribute>fechaEmision</attribute>
               <attribute>fechaLiquidacion</attribute>
             </attributes>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
           </classSymbol>
-          <classSymbol id="4">
+          <classSymbol id="13">
             <x>29</x>
             <y>410</y>
             <class class="com.jgroup.creditos.endpoint.ServicioCotizacion"/>
@@ -987,13 +953,14 @@ super.tearDown();
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
               <operation>buscarCotizacion(java.lang.String)</operation>
               <operation>getCotizacion(java.lang.String)</operation>
-              <operation>tarifarCotizacion(Cotizacion)</operation>
+              <operation>nuevaCotizacion(com.jgroup.creditos.model.Cotizacion)</operation>
               <operation>emitirCredito(java.lang.Long)</operation>
               <operation>getBancos()</operation>
             </operations>
           </classSymbol>
-          <classSymbol id="5">
-            <y>55</y>
+          <classSymbol id="14">
+            <x>11</x>
+            <y>30</y>
             <class class="com.jgroup.creditos.model.CotizacionPersistentTest"/>
             <attributes autoDisplay="289" accessVisible="true"/>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
@@ -1003,8 +970,8 @@ super.tearDown();
               <operation>test1()</operation>
             </operations>
           </classSymbol>
-          <classSymbol id="6">
-            <x>8</x>
+          <classSymbol id="15">
+            <x>5</x>
             <y>251</y>
             <class class="com.jgroup.creditos.model.Banco"/>
             <attributes autoDisplay="353" accessVisible="true">
@@ -1015,9 +982,9 @@ super.tearDown();
             </attributes>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
           </classSymbol>
-          <classSymbol id="7">
-            <x>354</x>
-            <y>502</y>
+          <classSymbol id="16">
+            <x>1244</x>
+            <y>130</y>
             <class class="com.jgroup.creditos.model.PlanPagos"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>id</attribute>
@@ -1033,9 +1000,9 @@ super.tearDown();
             </attributes>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
           </classSymbol>
-          <classSymbol id="8">
-            <x>342</x>
-            <y>49</y>
+          <classSymbol id="17">
+            <x>284</x>
+            <y>68</y>
             <class class="com.jgroup.creditos.model.Prestamo"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>id</attribute>
@@ -1053,233 +1020,342 @@ super.tearDown();
             </attributes>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
           </classSymbol>
-          <association id="9">
-            <x>493</x>
-            <y>204</y>
+          <association id="19">
+            <x>435</x>
+            <y>223</y>
             <assocEnd-0 class="com.jgroup.creditos.model.Banco" name="cotizacion"/>
             <assocEnd-1 class="com.jgroup.creditos.model.Prestamo" name="banco"/>
             <showMultiplicity>true</showMultiplicity>
             <point>
-              <connectX symbol="8"/>
-              <connectY symbol="8"/>
+              <connectX symbol="17"/>
+              <connectY symbol="17"/>
               <x>0</x>
               <y>0</y>
               <atX>0.9127517</atX>
               <atY>0.6257669</atY>
             </point>
             <point>
-              <connectX symbol="6"/>
-              <connectY symbol="6"/>
+              <connectX symbol="15"/>
+              <connectY symbol="15"/>
               <x>1</x>
               <y>0</y>
               <atX>0.17763157</atX>
               <atY>0.6339286</atY>
             </point>
             <end-1>
-              <x>342</x>
-              <y>242</y>
+              <x>284</x>
+              <y>260</y>
               <w>62</w>
               <h>34</h>
-              <connectedSymbol symbol="8"/>
+              <connectedSymbol symbol="17"/>
               <text>+cotizacion</text>
               <text>*</text>
             </end-1>
             <end-2>
-              <x>160</x>
-              <y>289</y>
+              <x>157</x>
+              <y>291</y>
               <w>41</w>
               <h>34</h>
-              <connectedSymbol symbol="6"/>
+              <connectedSymbol symbol="15"/>
               <text>+banco</text>
               <text>0..1</text>
             </end-2>
             <style>STRAIGHT</style>
           </association>
-          <association id="10">
-            <x>74</x>
-            <y>111</y>
+          <association id="20">
+            <x>85</x>
+            <y>86</y>
             <assocEnd-0 class="com.jgroup.creditos.model.Prestamo" name="PERSISTENT_TEST_CLASS"/>
             <assocEnd-1 class="com.jgroup.creditos.model.CotizacionPersistentTest" name="PERSISTENT_TEST_TARGET"/>
             <showMultiplicity>true</showMultiplicity>
             <point>
-              <connectX symbol="5"/>
-              <connectY symbol="5"/>
+              <connectX symbol="14"/>
+              <connectY symbol="14"/>
               <x>0</x>
               <y>0</y>
               <atX>0.5</atX>
               <atY>0.5</atY>
             </point>
             <point>
-              <connectX symbol="8"/>
-              <connectY symbol="8"/>
+              <connectX symbol="17"/>
+              <connectY symbol="17"/>
               <x>0</x>
               <y>0</y>
               <atX>0.4966443</atX>
               <atY>0.49746192</atY>
             </point>
             <end-1>
-              <x>149</x>
-              <y>124</y>
-              <connectedSymbol symbol="5"/>
+              <x>160</x>
+              <y>114</y>
+              <connectedSymbol symbol="14"/>
               <text>0..1</text>
             </end-1>
             <end-2>
-              <x>342</x>
-              <y>157</y>
-              <connectedSymbol symbol="8"/>
+              <x>284</x>
+              <y>160</y>
+              <connectedSymbol symbol="17"/>
               <symbolType>2</symbolType>
               <symbolLength>8</symbolLength>
             </end-2>
             <dashed>true</dashed>
             <style>STRAIGHT</style>
           </association>
-          <association id="11">
-            <x>448</x>
-            <y>238</y>
-            <assocEnd-0 class="com.jgroup.creditos.model.PlanPagos" name="prestamo"/>
-            <assocEnd-1 class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
-            <showMultiplicity>true</showMultiplicity>
-            <point>
-              <connectX symbol="8"/>
-              <connectY symbol="8"/>
-              <x>0</x>
-              <y>0</y>
-              <atX>0.6385542</atX>
-              <atY>0.76603776</atY>
-            </point>
+          <generalization id="21">
+            <x>627</x>
+            <y>38</y>
             <point>
               <connectX symbol="7"/>
               <connectY symbol="7"/>
-              <x>0</x>
-              <y>0</y>
-              <atX>0.6513158</atX>
-              <atY>0.17222223</atY>
-            </point>
-            <end-1>
-              <x>448</x>
-              <y>297</y>
-              <w>58</w>
-              <h>34</h>
-              <connectedSymbol symbol="8"/>
-              <text>+prestamo</text>
-              <text>0..1</text>
-            </end-1>
-            <end-2>
-              <x>452</x>
-              <y>502</y>
-              <w>74</w>
-              <h>34</h>
-              <connectedSymbol symbol="7"/>
-              <text>+planesPagos</text>
-              <text>*</text>
-            </end-2>
-            <style>STRAIGHT</style>
-          </association>
-          <generalization id="12">
-            <x>695</x>
-            <y>83</y>
-            <point>
-              <connectX symbol="2"/>
-              <connectY symbol="2"/>
               <x>-24</x>
               <y>2</y>
               <atX>0.4952381</atX>
               <atY>0.4918033</atY>
             </point>
             <point>
-              <connectX symbol="8"/>
-              <connectY symbol="8"/>
+              <connectX symbol="17"/>
+              <connectY symbol="17"/>
               <x>0</x>
               <y>0</y>
               <atX>0.8674699</atX>
               <atY>0.36226416</atY>
             </point>
             <end-1>
-              <x>666</x>
-              <y>90</y>
-              <connectedSymbol symbol="2"/>
+              <x>598</x>
+              <y>55</y>
+              <connectedSymbol symbol="7"/>
             </end-1>
             <end-2>
-              <x>508</x>
-              <y>132</y>
-              <connectedSymbol symbol="8"/>
+              <x>450</x>
+              <y>143</y>
+              <connectedSymbol symbol="17"/>
               <symbolType>1</symbolType>
               <symbolLength>12</symbolLength>
             </end-2>
             <style>STRAIGHT</style>
           </generalization>
-          <generalization id="13">
-            <x>748</x>
-            <y>327</y>
+          <generalization id="22">
+            <x>675</x>
+            <y>447</y>
             <point>
-              <connectX symbol="3"/>
-              <connectY symbol="3"/>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
               <x>22</x>
               <y>1</y>
               <atX>0.4952381</atX>
               <atY>0.4918033</atY>
             </point>
             <point>
-              <connectX symbol="8"/>
-              <connectY symbol="8"/>
+              <connectX symbol="17"/>
+              <connectY symbol="17"/>
               <x>0</x>
               <y>0</y>
               <atX>0.6626506</atX>
               <atY>0.6037736</atY>
             </point>
             <end-1>
-              <x>658</x>
-              <y>287</y>
-              <connectedSymbol symbol="3"/>
+              <x>627</x>
+              <y>408</y>
+              <connectedSymbol symbol="11"/>
             </end-1>
             <end-2>
-              <x>508</x>
-              <y>222</y>
-              <connectedSymbol symbol="8"/>
+              <x>450</x>
+              <y>262</y>
+              <connectedSymbol symbol="17"/>
               <symbolType>1</symbolType>
               <symbolLength>12</symbolLength>
             </end-2>
             <style>STRAIGHT</style>
           </generalization>
-          <association id="14">
-            <x>727</x>
-            <y>317</y>
+          <association id="23">
+            <x>654</x>
+            <y>438</y>
             <assocEnd-0 class="com.jgroup.creditos.model.Cotizacion" name="contrato"/>
             <assocEnd-1 class="com.jgroup.creditos.model.Contrato" name="cotizacion"/>
             <showMultiplicity>true</showMultiplicity>
             <point>
-              <connectX symbol="3"/>
-              <connectY symbol="3"/>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
               <x>0</x>
               <y>0</y>
               <atX>0.50526315</atX>
               <atY>0.39215687</atY>
             </point>
             <point>
-              <connectX symbol="2"/>
-              <connectY symbol="2"/>
+              <connectX symbol="7"/>
+              <connectY symbol="7"/>
               <x>0</x>
               <y>0</y>
               <atX>0.5473684</atX>
               <atY>0.8039216</atY>
             </point>
             <end-1>
-              <x>726</x>
-              <y>280</y>
+              <x>654</x>
+              <y>408</y>
               <w>53</w>
               <h>34</h>
-              <connectedSymbol symbol="3"/>
+              <connectedSymbol symbol="11"/>
               <text>+contrato</text>
               <text>0..1</text>
             </end-1>
             <end-2>
-              <x>725</x>
-              <y>112</y>
+              <x>656</x>
+              <y>67</y>
               <w>62</w>
               <h>34</h>
-              <connectedSymbol symbol="2"/>
+              <connectedSymbol symbol="7"/>
               <text>+cotizacion</text>
               <text>0..1</text>
+            </end-2>
+            <style>STRAIGHT</style>
+          </association>
+          <generalization id="28">
+            <x>1039</x>
+            <y>39</y>
+            <highlited>true</highlited>
+            <point>
+              <connectX symbol="2"/>
+              <connectY symbol="2"/>
+              <x>36</x>
+              <y>3</y>
+              <atX>0.5</atX>
+              <atY>0.49019608</atY>
+            </point>
+            <point>
+              <connectX symbol="16"/>
+              <connectY symbol="16"/>
+              <x>1</x>
+              <y>0</y>
+              <atX>0.17763157</atX>
+              <atY>0.42990655</atY>
+            </point>
+            <end-1>
+              <x>1065</x>
+              <y>59</y>
+              <connectedSymbol symbol="2"/>
+            </end-1>
+            <end-2>
+              <x>1244</x>
+              <y>200</y>
+              <connectedSymbol symbol="16"/>
+              <symbolType>1</symbolType>
+              <symbolLength>12</symbolLength>
+            </end-2>
+            <style>STRAIGHT</style>
+          </generalization>
+          <generalization id="29">
+            <x>1030</x>
+            <y>416</y>
+            <point>
+              <connectX symbol="1"/>
+              <connectY symbol="1"/>
+              <x>41</x>
+              <y>-18</y>
+              <atX>0.5</atX>
+              <atY>0.49019608</atY>
+            </point>
+            <point>
+              <connectX symbol="16"/>
+              <connectY symbol="16"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.065789476</atX>
+              <atY>0.7616823</atY>
+            </point>
+            <end-1>
+              <x>1042</x>
+              <y>409</y>
+              <connectedSymbol symbol="1"/>
+            </end-1>
+            <end-2>
+              <x>1244</x>
+              <y>298</y>
+              <connectedSymbol symbol="16"/>
+              <symbolType>1</symbolType>
+              <symbolLength>12</symbolLength>
+            </end-2>
+            <style>STRAIGHT</style>
+          </generalization>
+          <association id="30">
+            <x>701</x>
+            <y>33</y>
+            <assocEnd-0 class="com.jgroup.creditos.model.PlanPagosCotizacion" name="cotizacion"/>
+            <assocEnd-1 class="com.jgroup.creditos.model.Cotizacion" name="planPagosCotizacion"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="7"/>
+              <connectY symbol="7"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.94495416</atX>
+              <atY>0.44262296</atY>
+            </point>
+            <point>
+              <connectX symbol="2"/>
+              <connectY symbol="2"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.16935484</atX>
+              <atY>0.4117647</atY>
+            </point>
+            <end-1>
+              <x>707</x>
+              <y>32</y>
+              <w>62</w>
+              <h>34</h>
+              <connectedSymbol symbol="7"/>
+              <text>+cotizacion</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>941</x>
+              <y>32</y>
+              <w>119</w>
+              <h>34</h>
+              <connectedSymbol symbol="2"/>
+              <text>+planPagosCotizacion</text>
+              <text>*</text>
+            </end-2>
+            <style>STRAIGHT</style>
+          </association>
+          <association id="31">
+            <x>709</x>
+            <y>436</y>
+            <assocEnd-0 class="com.jgroup.creditos.model.PlanPagosContrato" name="contrato"/>
+            <assocEnd-1 class="com.jgroup.creditos.model.Contrato" name="planPagosCotnrato"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.89855075</atX>
+              <atY>0.35897437</atY>
+            </point>
+            <point>
+              <connectX symbol="1"/>
+              <connectY symbol="1"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.31034482</atX>
+              <atY>0.5882353</atY>
+            </point>
+            <end-1>
+              <x>723</x>
+              <y>436</y>
+              <w>53</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+contrato</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>931</x>
+              <y>438</y>
+              <w>110</w>
+              <h>34</h>
+              <connectedSymbol symbol="1"/>
+              <text>+planPagosCotnrato</text>
+              <text>*</text>
             </end-2>
             <style>STRAIGHT</style>
           </association>
@@ -1325,14 +1401,14 @@ super.tearDown();
                 </variable>
               </parameters>
             </operation>
-            <operation name="tarifarCotizacion">
-              <type>Cotizacion</type>
+            <operation name="nuevaCotizacion">
+              <type class="com.jgroup.creditos.model.Cotizacion"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
-              <generatedName>tarifarCotizacion</generatedName>
+              <generatedName>nuevaCotizacion</generatedName>
               <parameters>
                 <variable name="cotizacion">
-                  <type>Cotizacion</type>
+                  <type class="com.jgroup.creditos.model.Cotizacion"/>
                   <multiplicity>0..1</multiplicity>
                 </variable>
               </parameters>

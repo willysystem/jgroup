@@ -119,12 +119,6 @@ public class CotizacionPersistentTest extends junit.framework.TestCase {
 		entityManager.persist(cotizacion1);
 		cotizacion1.setBanco(banco);
 		banco.getCotizacion().add(cotizacion1);
-		cotizacion1.getPlanesPagos().add(planPagos);
-		planPagos.setPrestamo(cotizacion1);
-		cotizacion1.getPlanesPagos().add(planPagos1);
-		planPagos1.setPrestamo(cotizacion1);
-		cotizacion1.getPlanesPagos().add(planPagos2);
-		planPagos2.setPrestamo(cotizacion1);
 		tx.commit();
 		entityManager.close();
 	}
