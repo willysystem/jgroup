@@ -16,12 +16,12 @@ public interface ServicioCotizacion {
 	/**
 	 * @generated
 	 */
-	com.jgroup.creditos.model.Cotizacion getCotizacion(String nroCotizacion);
+	Cotizacion getCotizacion(String nroCotizacion);
 
 	/**
 	 * @generated
 	 */
-	Cotizacion tarifarCotizacion(Cotizacion cotizacion);
+	com.jgroup.creditos.model.Cotizacion nuevaCotizacion(com.jgroup.creditos.model.Cotizacion cotizacion);
 
 	/**
 	 * @generated

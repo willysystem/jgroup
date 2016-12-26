@@ -73,6 +73,12 @@ public class PlanPagos implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
+	public PlanPagos() {
+	}
+
+	/**
+	 * @generated
+	 */
 	@javax.persistence.Id
 	@javax.persistence.GeneratedValue
 	public Long getId() {
@@ -225,11 +231,5 @@ public class PlanPagos implements java.io.Serializable {
 	 */
 	public void setFechaPago(java.util.Date fechaPago) {
 		this.fechaPago = fechaPago;
-	}
-
-	/**
-	 * @generated
-	 */
-	public PlanPagos() {
 	}
 }

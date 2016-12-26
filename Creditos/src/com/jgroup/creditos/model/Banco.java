@@ -30,7 +30,13 @@ public class Banco implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	private java.util.Set<Prestamo> cotizacion = new java.util.HashSet<Prestamo>();
+	private java.util.List<Prestamo> cotizacion = new java.util.ArrayList<Prestamo>();
+
+	/**
+	 * @generated
+	 */
+	public Banco() {
+	}
 
 	/**
 	 * @generated
@@ -102,14 +108,14 @@ public class Banco implements java.io.Serializable {
 	 * @generated
 	 */
 	@javax.persistence.OneToMany(mappedBy = "banco")
-	public java.util.Set<Prestamo> getCotizacion() {
+	public java.util.List<Prestamo> getCotizacion() {
 		return this.cotizacion;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setCotizacion(java.util.Set<Prestamo> cotizacion) {
+	public void setCotizacion(java.util.List<Prestamo> cotizacion) {
 		this.cotizacion = cotizacion;
 	}
 
@@ -127,11 +133,5 @@ public class Banco implements java.io.Serializable {
 	public void removeCotizacion(Prestamo cotizacion) {
 		getCotizacion().remove(cotizacion);
 		cotizacion.setBanco(null);
-	}
-
-	/**
-	 * @generated
-	 */
-	public Banco() {
 	}
 }

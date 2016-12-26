@@ -23,6 +23,12 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
+	public Cotizacion() {
+	}
+
+	/**
+	 * @generated
+	 */
 	@javax.persistence.OneToOne(mappedBy = "cotizacion")
 	public Contrato getContrato() {
 		return this.contrato;
@@ -68,12 +74,6 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	 */
 	public void setEstado(Character estado) {
 		this.estado = estado;
-	}
-
-	/**
-	 * @generated
-	 */
-	public Cotizacion() {
 	}
 	
 	

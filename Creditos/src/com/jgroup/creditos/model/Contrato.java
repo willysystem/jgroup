@@ -28,7 +28,8 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	private java.util.Date fechaEmision;
+	public Contrato() {
+	}
 
 	/**
 	 * @generated
@@ -49,8 +50,8 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	 * @generated
 	 */
 	public String toString() {
-		return "Contrato" + " nroPrestamo=" + nroPrestamo + " fechaEmision="
-				+ fechaEmision + " fechaLiquidacion=" + fechaLiquidacion;
+		return "Contrato" + " nroPrestamo=" + nroPrestamo
+				+ " fechaLiquidacion=" + fechaLiquidacion;
 	}
 
 	/**
@@ -79,25 +80,5 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	 */
 	public void setFechaLiquidacion(java.util.Date fechaLiquidacion) {
 		this.fechaLiquidacion = fechaLiquidacion;
-	}
-
-	/**
-	 * @generated
-	 */
-	public java.util.Date getFechaEmision() {
-		return this.fechaEmision;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setFechaEmision(java.util.Date fechaEmision) {
-		this.fechaEmision = fechaEmision;
-	}
-
-	/**
-	 * @generated
-	 */
-	public Contrato() {
 	}
 }
