@@ -118,10 +118,10 @@
                 <statements>
                   <javaCode>org.hibernate.cfg.AnnotationConfiguration config = new org.hibernate.cfg.AnnotationConfiguration();</javaCode>
                   <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Prestamo.class);</javaCode>
-                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.PlanPagos.class);</javaCode>
-                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Banco.class);</javaCode>
-                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Contrato.class);</javaCode>
-                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.Cotizacion.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.J_PlanPagos.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.J_Banco.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.J_Contrato.class);</javaCode>
+                  <javaCode>config.addAnnotatedClass(com.jgroup.creditos.model.J_Cotizacion.class);</javaCode>
                   <javaCode>return config;</javaCode>
                 </statements>
               </method>
@@ -220,10 +220,10 @@
               <access>1</access>
             </variable>
             <variable name="banco">
-              <type class="com.jgroup.creditos.model.Banco"/>
+              <type class="com.jgroup.creditos.model.J_Banco"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
-              <inverse class="com.jgroup.creditos.model.Banco" name="cotizacion"/>
+              <inverse class="com.jgroup.creditos.model.J_Banco" name="cotizacion"/>
             </variable>
             <variable name="nroCotizacion">
               <type class="java.lang.String"/>
@@ -259,11 +259,11 @@
               <access>1</access>
             </variable>
             <variable name="planesPagos">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <type class="com.jgroup.creditos.model.J_PlanPagos"/>
               <multiplicity>*</multiplicity>
               <access>1</access>
               <value>new com.jgroup.creditos.model.PlanPagos()</value>
-              <inverse class="com.jgroup.creditos.model.PlanPagos" name="prestamo"/>
+              <inverse class="com.jgroup.creditos.model.J_PlanPagos" name="prestamo"/>
             </variable>
           </variables>
           <operations>
@@ -283,7 +283,7 @@
             <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Prestamo.java</compilationUnitId>
           </generatedFiles>
         </classifier>
-        <classifier name="PlanPagos">
+        <classifier name="J_PlanPagos">
           <stereotype>Persistent</stereotype>
           <interfaces>
             <type>java.io.Serializable</type>
@@ -294,7 +294,7 @@
               <multiplicity>1</multiplicity>
               <modifiers>24</modifiers>
               <access>2</access>
-              <value>-1828800409</value>
+              <value>-654579406</value>
             </variable>
             <variable name="id">
               <type>Long</type>
@@ -362,7 +362,7 @@
             <operation name="constructor">
               <multiplicity>1</multiplicity>
               <access>1</access>
-              <generatedName>PlanPagos</generatedName>
+              <generatedName>J_PlanPagos</generatedName>
               <method>
                 <statements>
                   <javaCode></javaCode>
@@ -371,11 +371,11 @@
             </operation>
           </operations>
           <generatedFiles>
-            <name>PlanPagos.java</name>
-            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{PlanPagos.java</compilationUnitId>
+            <name>J_PlanPagos.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{J_PlanPagos.java</compilationUnitId>
           </generatedFiles>
         </classifier>
-        <classifier name="Banco">
+        <classifier name="J_Banco">
           <stereotype>Persistent</stereotype>
           <interfaces>
             <type>java.io.Serializable</type>
@@ -386,7 +386,7 @@
               <multiplicity>1</multiplicity>
               <modifiers>24</modifiers>
               <access>2</access>
-              <value>-1491374895</value>
+              <value>-280052964</value>
             </variable>
             <variable name="id">
               <type>Long</type>
@@ -425,7 +425,7 @@
             <operation name="constructor">
               <multiplicity>1</multiplicity>
               <access>1</access>
-              <generatedName>Banco</generatedName>
+              <generatedName>J_Banco</generatedName>
               <method>
                 <statements>
                   <javaCode></javaCode>
@@ -434,8 +434,8 @@
             </operation>
           </operations>
           <generatedFiles>
-            <name>Banco.java</name>
-            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Banco.java</compilationUnitId>
+            <name>J_Banco.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{J_Banco.java</compilationUnitId>
           </generatedFiles>
         </classifier>
         <classifier name="CotizacionPersistentTest">
@@ -456,37 +456,37 @@
               <access>2</access>
             </variable>
             <variable name="banco">
-              <type class="com.jgroup.creditos.model.Banco"/>
+              <type class="com.jgroup.creditos.model.J_Banco"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
             <variable name="banco1">
-              <type class="com.jgroup.creditos.model.Banco"/>
+              <type class="com.jgroup.creditos.model.J_Banco"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
             <variable name="banco2">
-              <type class="com.jgroup.creditos.model.Banco"/>
+              <type class="com.jgroup.creditos.model.J_Banco"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
             <variable name="planPagos">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <type class="com.jgroup.creditos.model.J_PlanPagos"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
             <variable name="planPagos1">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <type class="com.jgroup.creditos.model.J_PlanPagos"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
             <variable name="planPagos2">
-              <type class="com.jgroup.creditos.model.PlanPagos"/>
+              <type class="com.jgroup.creditos.model.J_PlanPagos"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
             <variable name="cotizacion1">
-              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <type class="com.jgroup.creditos.model.J_Cotizacion"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
@@ -509,7 +509,7 @@
               <generatedName>initObjects</generatedName>
               <objects>
                 <object name="banco">
-                  <type class="com.jgroup.creditos.model.Banco"/>
+                  <type class="com.jgroup.creditos.model.J_Banco"/>
                   <values>
                     <nombre>&quot;BNB&quot;</nombre>
                     <tasaInteres>0.20</tasaInteres>
@@ -517,7 +517,7 @@
                   </values>
                 </object>
                 <object name="banco1">
-                  <type class="com.jgroup.creditos.model.Banco"/>
+                  <type class="com.jgroup.creditos.model.J_Banco"/>
                   <values>
                     <nombre>&quot;Mercantil Santa Cruz&quot;</nombre>
                     <tasaInteres>0.19</tasaInteres>
@@ -525,7 +525,7 @@
                   </values>
                 </object>
                 <object name="banco2">
-                  <type class="com.jgroup.creditos.model.Banco"/>
+                  <type class="com.jgroup.creditos.model.J_Banco"/>
                   <values>
                     <nombre>&quot;Bisa&quot;</nombre>
                     <tasaInteres>0.18</tasaInteres>
@@ -533,7 +533,7 @@
                   </values>
                 </object>
                 <object name="planPagos">
-                  <type class="com.jgroup.creditos.model.PlanPagos"/>
+                  <type class="com.jgroup.creditos.model.J_PlanPagos"/>
                   <values>
                     <nroCuota>1</nroCuota>
                     <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/2/2017&quot;)</fechaVencimiento>
@@ -545,7 +545,7 @@
                   </values>
                 </object>
                 <object name="planPagos1">
-                  <type class="com.jgroup.creditos.model.PlanPagos"/>
+                  <type class="com.jgroup.creditos.model.J_PlanPagos"/>
                   <values>
                     <nroCuota>2</nroCuota>
                     <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/3/2017&quot;)</fechaVencimiento>
@@ -557,7 +557,7 @@
                   </values>
                 </object>
                 <object name="planPagos2">
-                  <type class="com.jgroup.creditos.model.PlanPagos"/>
+                  <type class="com.jgroup.creditos.model.J_PlanPagos"/>
                   <values>
                     <nroCuota>3</nroCuota>
                     <fechaVencimiento>new java.util.Date(&quot;00:00:00 1/4/2017&quot;)</fechaVencimiento>
@@ -569,7 +569,7 @@
                   </values>
                 </object>
                 <object name="cotizacion1">
-                  <type class="com.jgroup.creditos.model.Cotizacion"/>
+                  <type class="com.jgroup.creditos.model.J_Cotizacion"/>
                   <values>
                     <estado>&apos;P&apos;</estado>
                     <nombreCompleto>&quot;Juan Perez&quot;</nombreCompleto>
@@ -669,12 +669,16 @@
                     <end-1>
                       <x>620</x>
                       <y>125</y>
+                      <w>54</w>
+                      <h>17</h>
                       <connectedSymbol symbol="1"/>
                       <text>cotizacion</text>
                     </end-1>
                     <end-2>
                       <x>821</x>
                       <y>114</y>
+                      <w>33</w>
+                      <h>17</h>
                       <connectedSymbol symbol="7"/>
                       <text>banco</text>
                     </end-2>
@@ -703,12 +707,16 @@
                     <end-1>
                       <x>379</x>
                       <y>300</y>
+                      <w>50</w>
+                      <h>17</h>
                       <connectedSymbol symbol="1"/>
                       <text>prestamo</text>
                     </end-1>
                     <end-2>
                       <x>139</x>
                       <y>468</y>
+                      <w>66</w>
+                      <h>17</h>
                       <connectedSymbol symbol="4"/>
                       <text>planesPagos</text>
                     </end-2>
@@ -737,12 +745,16 @@
                     <end-1>
                       <x>488</x>
                       <y>300</y>
+                      <w>50</w>
+                      <h>17</h>
                       <connectedSymbol symbol="1"/>
                       <text>prestamo</text>
                     </end-1>
                     <end-2>
                       <x>481</x>
                       <y>474</y>
+                      <w>66</w>
+                      <h>17</h>
                       <connectedSymbol symbol="3"/>
                       <text>planesPagos</text>
                     </end-2>
@@ -771,12 +783,16 @@
                     <end-1>
                       <x>620</x>
                       <y>210</y>
+                      <w>50</w>
+                      <h>17</h>
                       <connectedSymbol symbol="1"/>
                       <text>prestamo</text>
                     </end-1>
                     <end-2>
                       <x>723</x>
                       <y>486</y>
+                      <w>66</w>
+                      <h>17</h>
                       <connectedSymbol symbol="2"/>
                       <text>planesPagos</text>
                     </end-2>
@@ -832,7 +848,7 @@ super.tearDown();
             <compilationUnitId>=Creditos/test&lt;com.jgroup.creditos.model{CotizacionPersistentTest.java</compilationUnitId>
           </generatedFiles>
         </classifier>
-        <classifier name="Contrato">
+        <classifier name="J_Contrato">
           <superclass class="com.jgroup.creditos.model.Prestamo"/>
           <stereotype>Persistent</stereotype>
           <interfaces>
@@ -844,16 +860,21 @@ super.tearDown();
               <multiplicity>1</multiplicity>
               <modifiers>24</modifiers>
               <access>2</access>
-              <value>-1108940986</value>
+              <value>-932515557</value>
             </variable>
             <variable name="cotizacion">
-              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <type class="com.jgroup.creditos.model.J_Cotizacion"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
-              <inverse class="com.jgroup.creditos.model.Cotizacion" name="contrato"/>
+              <inverse class="com.jgroup.creditos.model.J_Cotizacion" name="contrato"/>
             </variable>
             <variable name="nroPrestamo">
               <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="fechaEmision">
+              <type class="java.util.Date"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
             </variable>
@@ -867,7 +888,7 @@ super.tearDown();
             <operation name="constructor">
               <multiplicity>1</multiplicity>
               <access>1</access>
-              <generatedName>Contrato</generatedName>
+              <generatedName>J_Contrato</generatedName>
               <method>
                 <statements>
                   <javaCode></javaCode>
@@ -876,11 +897,11 @@ super.tearDown();
             </operation>
           </operations>
           <generatedFiles>
-            <name>Contrato.java</name>
-            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Contrato.java</compilationUnitId>
+            <name>J_Contrato.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{J_Contrato.java</compilationUnitId>
           </generatedFiles>
         </classifier>
-        <classifier name="Cotizacion">
+        <classifier name="J_Cotizacion">
           <superclass class="com.jgroup.creditos.model.Prestamo"/>
           <stereotype>Persistent</stereotype>
           <interfaces>
@@ -892,13 +913,13 @@ super.tearDown();
               <multiplicity>1</multiplicity>
               <modifiers>24</modifiers>
               <access>2</access>
-              <value>382447927</value>
+              <value>-1871406644</value>
             </variable>
             <variable name="contrato">
-              <type class="com.jgroup.creditos.model.Contrato"/>
+              <type class="com.jgroup.creditos.model.J_Contrato"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
-              <inverse class="com.jgroup.creditos.model.Contrato" name="cotizacion"/>
+              <inverse class="com.jgroup.creditos.model.J_Contrato" name="cotizacion"/>
             </variable>
             <variable name="estado">
               <type class="java.lang.Character"/>
@@ -910,7 +931,7 @@ super.tearDown();
             <operation name="constructor">
               <multiplicity>1</multiplicity>
               <access>1</access>
-              <generatedName>Cotizacion</generatedName>
+              <generatedName>J_Cotizacion</generatedName>
               <method>
                 <statements>
                   <javaCode></javaCode>
@@ -919,8 +940,8 @@ super.tearDown();
             </operation>
           </operations>
           <generatedFiles>
-            <name>Cotizacion.java</name>
-            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{Cotizacion.java</compilationUnitId>
+            <name>J_Cotizacion.java</name>
+            <compilationUnitId>=Creditos/src&lt;com.jgroup.creditos.model{J_Cotizacion.java</compilationUnitId>
           </generatedFiles>
         </classifier>
       </classes>
@@ -939,20 +960,21 @@ super.tearDown();
             </operations>
           </classSymbol>
           <classSymbol id="2">
-            <x>665</x>
+            <x>666</x>
             <y>51</y>
-            <class class="com.jgroup.creditos.model.Cotizacion"/>
+            <class class="com.jgroup.creditos.model.J_Cotizacion"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>estado</attribute>
             </attributes>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
           </classSymbol>
           <classSymbol id="3">
-            <x>662</x>
-            <y>309</y>
-            <class class="com.jgroup.creditos.model.Contrato"/>
+            <x>658</x>
+            <y>280</y>
+            <class class="com.jgroup.creditos.model.J_Contrato"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>nroPrestamo</attribute>
+              <attribute>fechaEmision</attribute>
               <attribute>fechaLiquidacion</attribute>
             </attributes>
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
@@ -965,7 +987,7 @@ super.tearDown();
             <operations autoDisplay="37" accessVisible="true" parametersVisible="true">
               <operation>buscarCotizacion(java.lang.String)</operation>
               <operation>getCotizacion(java.lang.String)</operation>
-              <operation>nuevaCotizacion(com.jgroup.creditos.model.Cotizacion)</operation>
+              <operation>tarifarCotizacion(Cotizacion)</operation>
               <operation>emitirCredito(java.lang.Long)</operation>
               <operation>getBancos()</operation>
             </operations>
@@ -984,7 +1006,7 @@ super.tearDown();
           <classSymbol id="6">
             <x>8</x>
             <y>251</y>
-            <class class="com.jgroup.creditos.model.Banco"/>
+            <class class="com.jgroup.creditos.model.J_Banco"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>id</attribute>
               <attribute>nombre</attribute>
@@ -996,7 +1018,7 @@ super.tearDown();
           <classSymbol id="7">
             <x>354</x>
             <y>502</y>
-            <class class="com.jgroup.creditos.model.PlanPagos"/>
+            <class class="com.jgroup.creditos.model.J_PlanPagos"/>
             <attributes autoDisplay="353" accessVisible="true">
               <attribute>id</attribute>
               <attribute>nroCuota</attribute>
@@ -1034,7 +1056,7 @@ super.tearDown();
           <association id="9">
             <x>493</x>
             <y>204</y>
-            <assocEnd-0 class="com.jgroup.creditos.model.Banco" name="cotizacion"/>
+            <assocEnd-0 class="com.jgroup.creditos.model.J_Banco" name="cotizacion"/>
             <assocEnd-1 class="com.jgroup.creditos.model.Prestamo" name="banco"/>
             <showMultiplicity>true</showMultiplicity>
             <point>
@@ -1114,7 +1136,7 @@ super.tearDown();
           <association id="11">
             <x>448</x>
             <y>238</y>
-            <assocEnd-0 class="com.jgroup.creditos.model.PlanPagos" name="prestamo"/>
+            <assocEnd-0 class="com.jgroup.creditos.model.J_PlanPagos" name="prestamo"/>
             <assocEnd-1 class="com.jgroup.creditos.model.Prestamo" name="planesPagos"/>
             <showMultiplicity>true</showMultiplicity>
             <point>
@@ -1154,7 +1176,7 @@ super.tearDown();
             <style>STRAIGHT</style>
           </association>
           <generalization id="12">
-            <x>694</x>
+            <x>695</x>
             <y>83</y>
             <point>
               <connectX symbol="2"/>
@@ -1173,7 +1195,7 @@ super.tearDown();
               <atY>0.36226416</atY>
             </point>
             <end-1>
-              <x>665</x>
+              <x>666</x>
               <y>90</y>
               <connectedSymbol symbol="2"/>
             </end-1>
@@ -1187,8 +1209,8 @@ super.tearDown();
             <style>STRAIGHT</style>
           </generalization>
           <generalization id="13">
-            <x>752</x>
-            <y>348</y>
+            <x>748</x>
+            <y>327</y>
             <point>
               <connectX symbol="3"/>
               <connectY symbol="3"/>
@@ -1206,13 +1228,13 @@ super.tearDown();
               <atY>0.6037736</atY>
             </point>
             <end-1>
-              <x>674</x>
-              <y>309</y>
+              <x>658</x>
+              <y>287</y>
               <connectedSymbol symbol="3"/>
             </end-1>
             <end-2>
               <x>508</x>
-              <y>226</y>
+              <y>222</y>
               <connectedSymbol symbol="8"/>
               <symbolType>1</symbolType>
               <symbolLength>12</symbolLength>
@@ -1220,10 +1242,10 @@ super.tearDown();
             <style>STRAIGHT</style>
           </generalization>
           <association id="14">
-            <x>731</x>
-            <y>339</y>
-            <assocEnd-0 class="com.jgroup.creditos.model.Cotizacion" name="contrato"/>
-            <assocEnd-1 class="com.jgroup.creditos.model.Contrato" name="cotizacion"/>
+            <x>727</x>
+            <y>317</y>
+            <assocEnd-0 class="com.jgroup.creditos.model.J_Cotizacion" name="contrato"/>
+            <assocEnd-1 class="com.jgroup.creditos.model.J_Contrato" name="cotizacion"/>
             <showMultiplicity>true</showMultiplicity>
             <point>
               <connectX symbol="3"/>
@@ -1242,8 +1264,8 @@ super.tearDown();
               <atY>0.8039216</atY>
             </point>
             <end-1>
-              <x>730</x>
-              <y>309</y>
+              <x>726</x>
+              <y>280</y>
               <w>53</w>
               <h>34</h>
               <connectedSymbol symbol="3"/>
@@ -1251,7 +1273,7 @@ super.tearDown();
               <text>0..1</text>
             </end-1>
             <end-2>
-              <x>724</x>
+              <x>725</x>
               <y>112</y>
               <w>62</w>
               <h>34</h>
@@ -1292,7 +1314,7 @@ super.tearDown();
               </parameters>
             </operation>
             <operation name="getCotizacion">
-              <type class="com.jgroup.creditos.model.Cotizacion"/>
+              <type class="com.jgroup.creditos.model.J_Cotizacion"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
               <generatedName>getCotizacion</generatedName>
@@ -1303,14 +1325,14 @@ super.tearDown();
                 </variable>
               </parameters>
             </operation>
-            <operation name="nuevaCotizacion">
-              <type class="com.jgroup.creditos.model.Cotizacion"/>
+            <operation name="tarifarCotizacion">
+              <type>Cotizacion</type>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
-              <generatedName>nuevaCotizacion</generatedName>
+              <generatedName>tarifarCotizacion</generatedName>
               <parameters>
                 <variable name="cotizacion">
-                  <type class="com.jgroup.creditos.model.Cotizacion"/>
+                  <type>Cotizacion</type>
                   <multiplicity>0..1</multiplicity>
                 </variable>
               </parameters>
@@ -1359,7 +1381,7 @@ super.tearDown();
               </parameters>
             </operation>
             <operation name="getContrato">
-              <type class="com.jgroup.creditos.model.Contrato"/>
+              <type class="com.jgroup.creditos.model.J_Contrato"/>
               <multiplicity>0..1</multiplicity>
               <access>1</access>
               <generatedName>getContrato</generatedName>
