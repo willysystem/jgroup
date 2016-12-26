@@ -18,7 +18,6 @@
 	<classpathentry kind="var" path="HIBEROBJECTS_HIBERNATE/hibernate3.jar"/>
 	<classpathentry kind="var" path="HIBEROBJECTS_HIBERNATE/xml-apis.jar"/>
 	<classpathentry kind="var" path="HIBEROBJECTS_HIBERNATE/commons-lang-2.1.jar"/>
-	<classpathentry kind="var" path="HSQLDB/hsqldb.jar"/>
 	<classpathentry kind="var" path="HIBEROBJECTS_JPA/ejb3-persistence.jar"/>
 	<classpathentry kind="var" path="HIBEROBJECTS_JPA/hibernate-entitymanager.jar"/>
 	<classpathentry kind="var" path="HIBEROBJECTS_JPA/hibernate-annotations.jar"/>
