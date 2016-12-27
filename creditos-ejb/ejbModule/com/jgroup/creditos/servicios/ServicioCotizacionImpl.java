@@ -14,7 +14,7 @@ import javax.persistence.Query;
 import com.jgroup.creditos.endpoint.ServicioCotizacion;
 import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Cotizacion;
-import com.jgroup.creditos.model.PlanPagos;
+import com.jgroup.creditos.model.PlanPagosCotizacion;
 import com.jgroup.creditos.utils.Tools;
 
 @Stateless
@@ -77,18 +77,18 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		double capacidadPago = cotizacion.getCapacidadPago();
 		Double montoBaseCuota = ingresoBase * capacidadPago;
 		cotizacion.setMontoBaseCouta(montoBaseCuota.floatValue());
-		double tasaInteres = 18.00d;
+		double tasaInteres = 0.18d;
 		// DEfinir el monto de prestamo por VA = 0
 		Double montoPrestamo = montoBaseCuota * cuotas;
 		Double saldoCapital = montoPrestamo;
-		List<PlanPagos> planPagos = new ArrayList<PlanPagos>();
+		List<PlanPagosCotizacion> planPagos = new ArrayList<PlanPagosCotizacion>();
 		for (int quota = 1; quota <= cuotas; quota++) {
 			Double montoInteres = saldoCapital * (tasaInteres / 12);
 			Double montoCapital = montoBaseCuota - montoInteres;
 			Double primaDesgravamen = 1.21D;
 			Double montoCuota = montoCapital + montoInteres + primaDesgravamen;
 			saldoCapital = saldoCapital - montoCapital;
-			PlanPagos pago = new PlanPagos();
+			PlanPagosCotizacion pago = new PlanPagosCotizacion();
 			pago.setFechaPago(new Date());
 			pago.setFechaVencimiento(new Date());
 			pago.setInteres(montoInteres.floatValue());
@@ -99,7 +99,7 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			pago.setMontoCapital(montoCapital.floatValue());
 			planPagos.add(pago);
 		}
-		cotizacion.setPlanesPagos(planPagos);
+		cotizacion.setPlanPagosCotizacion(planPagos);
 		return cotizacion;
 	}
 }

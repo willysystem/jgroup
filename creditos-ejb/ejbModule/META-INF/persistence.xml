@@ -4,8 +4,8 @@
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 	<persistence-unit name="PUnitCreditos" >
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:jboss/datasources/CreditosDS</jta-data-source>
-		<non-jta-data-source>java:jboss/datasources/CreditosDS</non-jta-data-source>
+		<jta-data-source>java:jboss/datasources/PostgressDS</jta-data-source>
+		<non-jta-data-source>java:jboss/datasources/PostgressDS</non-jta-data-source>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.show_sql" value="false" />

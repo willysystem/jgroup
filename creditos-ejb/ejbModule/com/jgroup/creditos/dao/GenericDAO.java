@@ -11,12 +11,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 /**
- * Clase genérica para todos de la cual hereda todos los DAOs del proyecto. Además este 
+ * Clase genï¿½rica para todos de la cual hereda todos los DAOs del proyecto. Ademï¿½s este 
  * inyecta <code>EntityManager</code> y lo hace disponible a todos los DAOs
  * @author Willy Hurtado
  * @param <E>
  */
-@Stateless
+//@Stateless
 public abstract class GenericDAO<E> {
 	
 	@PersistenceContext(unitName="PUnitCreditos")
