@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.jgroup.creditos.endpoint.ServicioCotizacion;
+import com.jgroup.creditos.finance.FinanceCalculator;
 import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Cotizacion;
 import com.jgroup.creditos.model.PlanPagosCotizacion;
@@ -79,7 +80,8 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		cotizacion.setMontoBaseCouta(montoBaseCuota.floatValue());
 		double tasaInteres = 0.18d;
 		// DEfinir el monto de prestamo por VA = 0
-		Double montoPrestamo = montoBaseCuota * cuotas;
+		// Double montoPrestamo = montoBaseCuota * cuotas;
+		Double montoPrestamo = FinanceCalculator.getInstance().calculateVA(ingresoBase, capacidadPago, tasaInteres, cuotas, 0);
 		Double saldoCapital = montoPrestamo;
 		List<PlanPagosCotizacion> planPagos = new ArrayList<PlanPagosCotizacion>();
 		for (int quota = 1; quota <= cuotas; quota++) {
