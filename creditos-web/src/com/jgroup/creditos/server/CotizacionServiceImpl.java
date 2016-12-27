@@ -5,6 +5,8 @@ import com.jgroup.creditos.endpoint.ServicioCotizacion;
 import com.jgroup.creditos.model.Cotizacion;
 import com.jgroup.creditos.util.ServiceLocator;
 
+import java.util.List;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -20,5 +22,11 @@ public class CotizacionServiceImpl extends RemoteServiceServlet implements Cotiz
 	public Cotizacion getCotizacion(Cotizacion cotizacion) throws IllegalArgumentException {
 		cotizacion = servicioCotizacion.tarifarCotizacion(cotizacion);
 		return cotizacion;
+	}
+
+
+	@Override
+	public List<Cotizacion> buscarCotizacion(String nroDocumento) throws IllegalArgumentException {
+		return servicioCotizacion.buscarCotizacion(nroDocumento);
 	}
 }

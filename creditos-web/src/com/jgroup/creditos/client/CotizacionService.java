@@ -1,5 +1,7 @@
 package com.jgroup.creditos.client;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -25,6 +27,8 @@ public interface CotizacionService extends RemoteService {
 		}
 	}
 
-	Cotizacion getCotizacion(Cotizacion cotizacion) throws IllegalArgumentException;
+	public Cotizacion getCotizacion(Cotizacion cotizacion) throws IllegalArgumentException;
+	
+	public List<Cotizacion> buscarCotizacion(String nroDocumento) throws IllegalArgumentException; 
 
 }

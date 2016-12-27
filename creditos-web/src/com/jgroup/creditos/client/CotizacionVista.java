@@ -59,6 +59,8 @@ public class CotizacionVista extends VerticalPanel {
     
     private ListDataProvider<Cotizacion> dataProvider = new ListDataProvider<Cotizacion>();
     
+    private TextBox buscarTextBox;
+    
     public void init(){
     	    	
     
@@ -99,13 +101,31 @@ public class CotizacionVista extends VerticalPanel {
 		CaptionPanel captionPanel = new CaptionPanel();
 		captionPanel.setCaptionHTML("<b>Buscar</b>");
 		
+		buscarTextBox = new TextBox();
 		Button buscarButton = new Button("Buscar");
 		Button buscarNuevo = new Button("Nuevo");
-		TextBox textBox = new TextBox();
+		buscarButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				CotizacionService.Util.getInstance().buscarCotizacion(buscarTextBox.getValue() , new AsyncCallback<List<Cotizacion>>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+
+					@Override
+					public void onSuccess(List<Cotizacion> result) {
+						new Busqueda(CotizacionVista.this, result);
+					}
+				});
+	
+			}
+		});
+		
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.add(new Label("Documento Identidad: "));
-		horizontalPanel.add(textBox);
+		horizontalPanel.add(buscarTextBox);
 		horizontalPanel.add(buscarButton);
 		horizontalPanel.add(buscarNuevo);
 		captionPanel.add(horizontalPanel);
@@ -336,6 +356,22 @@ public class CotizacionVista extends VerticalPanel {
 		captionPanel.add(verticalPanel2);
 		
 		this.add(captionPanel);
+	}
+
+	public void setCotizacion(Cotizacion cotizacion) {
+		nombreTextBox.setValue(cotizacion.getNombreCompleto());
+		capacidadPagoTextBox.setValue(cotizacion.getCapacidadPago() + "");
+		edadActualTextBox.setValue(cotizacion.getEdadActual()+"");
+		nroCotizacion.setText(cotizacion.getNroCotizacion());
+		fechaNacimientoDateBox.setValue(cotizacion.getFechaNacimiento());
+		fechaCotizacionLabel.setText(cotizacion.getFechaCotizacion().toLocaleString());
+		ingresoBaseTextBox.setValue(cotizacion.getIngresoBase()+"");
+		montoBaseCuotaTextBox.setValue(cotizacion.getMontoBaseCouta()+"");
+		nroCuotasTextBox.setValue(cotizacion.getNroCuotas()+"");
+		montoPrestamoLabel.setText(cotizacion.getMontoPrestamo()+"");
+		// TODO falta banco
+		
+		this.cotizacion = cotizacion;
 	}
 	
 }
