@@ -17,7 +17,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -31,7 +30,7 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.jgroup.creditos.model.Cotizacion;
-import com.jgroup.creditos.model.PlanPagos;
+import com.jgroup.creditos.model.PlanPagosCotizacion;
 import com.jgroup.creditos.pdf.PlanPagosPDF;
 import com.jgroup.creditos.validacion.KeyUpFloatValidation;
 import com.jgroup.creditos.validacion.KeyUpIntegerValidation;
@@ -41,7 +40,7 @@ import com.jgroup.creditos.validacion.KeyUpIntegerValidation;
  */
 public class CotizacionVista extends VerticalPanel {
 	
-	private DataGrid<PlanPagos> dataGrid = null;
+	private DataGrid<PlanPagosCotizacion> dataGrid = null;
 	
 	private TextBox nombreTextBox          = new TextBox();
 	private TextBox capacidadPagoTextBox   = new TextBox();
@@ -54,8 +53,9 @@ public class CotizacionVista extends VerticalPanel {
 	private TextBox nroCuotasTextBox       = new TextBox();
 	private Label montoPrestamoLabel       = new Label();
 	private ListBox bancoListBox           = new ListBox();
-    
+	
     private Cotizacion cotizacion;
+    private PlanPagosPDF planPagosPDF;
     
     private ListDataProvider<Cotizacion> dataProvider = new ListDataProvider<Cotizacion>();
     
@@ -76,6 +76,9 @@ public class CotizacionVista extends VerticalPanel {
     	bancoListBox.addItem("Seleccione un Banco ...");
 	    bancoListBox.addItem("UNION");
 	    bancoListBox.addItem("BCP");
+	    
+	    // Cargar script
+	    planPagosPDF = new PlanPagosPDF();
 	    
 	    // Valores de prueba
 	    nombreTextBox.setValue("Willy Hurtado");
@@ -176,7 +179,7 @@ public class CotizacionVista extends VerticalPanel {
 				CotizacionService.Util.getInstance().getCotizacion(cotizacion, new AsyncCallback<Cotizacion>() {
 					@Override
 					public void onSuccess(Cotizacion result) {
-						List<PlanPagos> planes = new ArrayList<>(result.getPlanesPagos());
+						List<PlanPagosCotizacion> planes = new ArrayList<>(result.getPlanPagosCotizacion());
 						dataGrid.setRowData(planes);
 					}
 					
@@ -197,7 +200,7 @@ public class CotizacionVista extends VerticalPanel {
 	    captionPanel = new CaptionPanel();
 		captionPanel.setCaptionHTML("<b>Plan de Pagos</b>");
 		
-		dataGrid = new DataGrid<PlanPagos>();
+		dataGrid = new DataGrid<PlanPagosCotizacion>();
 		dataGrid.setWidth("100%");
 		dataGrid.setColumnWidth(0, "100px");
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
@@ -205,16 +208,16 @@ public class CotizacionVista extends VerticalPanel {
 		ListHandler<Cotizacion> sortHandler = new ListHandler<Cotizacion>(dataProvider.getList());
 		dataGrid.addColumnSortHandler(sortHandler);
 		
-		TextColumn<PlanPagos> nroCuota = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> nroCuota = new TextColumn<PlanPagosCotizacion>() {
 		   @Override
-		   public String getValue(PlanPagos object) {
+		   public String getValue(PlanPagosCotizacion object) {
 			    return ""+object.getNroCuota();
 	    }};
 		dataGrid.addColumn(nroCuota, "Nro Cuota");
 		
-		TextColumn<PlanPagos> montoCapital = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> montoCapital = new TextColumn<PlanPagosCotizacion>() {
 		   @Override
-		   public String getValue(PlanPagos object) {
+		   public String getValue(PlanPagosCotizacion object) {
 			   String value = "";
 			   if(object.getMontoCapital() != null){
 				  value = NumberFormat.getFormat("#.00").format(object.getMontoCapital());   
@@ -223,9 +226,9 @@ public class CotizacionVista extends VerticalPanel {
 		}};
 		dataGrid.addColumn(montoCapital, "Monto Capital");
 		
-		TextColumn<PlanPagos> intereses = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> intereses = new TextColumn<PlanPagosCotizacion>() {
 			@Override
-			public String getValue(PlanPagos object) {
+			public String getValue(PlanPagosCotizacion object) {
 				String value = "";
 				if(object.getInteres() != null){
 				   value = NumberFormat.getFormat("#.00").format(object.getInteres());   
@@ -234,9 +237,9 @@ public class CotizacionVista extends VerticalPanel {
 			}};
 		dataGrid.addColumn(intereses, "Intereses");
 		
-		TextColumn<PlanPagos> desgravamen = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> desgravamen = new TextColumn<PlanPagosCotizacion>() {
 			@Override
-			public String getValue(PlanPagos object) {
+			public String getValue(PlanPagosCotizacion object) {
 				String value = "";
 				if(object.getPrimaDesgravamen() != null){
 				   value = NumberFormat.getFormat("#.00").format(object.getPrimaDesgravamen());   
@@ -245,9 +248,9 @@ public class CotizacionVista extends VerticalPanel {
 			}};
 		dataGrid.addColumn(desgravamen, "Desgravamen");
 		
-		TextColumn<PlanPagos> totalCuota = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> totalCuota = new TextColumn<PlanPagosCotizacion>() {
 			@Override
-			public String getValue(PlanPagos object) {
+			public String getValue(PlanPagosCotizacion object) {
 				String value = "";
 				if(object.getTotalCuota() != null){
 				   value = NumberFormat.getFormat("#.00").format(object.getTotalCuota());   
@@ -256,9 +259,9 @@ public class CotizacionVista extends VerticalPanel {
 			}};
 		dataGrid.addColumn(totalCuota, "Total Cuota");
 		
-		TextColumn<PlanPagos> fechaVencimiento = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> fechaVencimiento = new TextColumn<PlanPagosCotizacion>() {
 			@Override
-			public String getValue(PlanPagos object) {
+			public String getValue(PlanPagosCotizacion object) {
 				String value = "";
 				if(object.getFechaVencimiento() != null){
 					value = DateTimeFormat.getShortDateFormat().format(object.getFechaVencimiento());
@@ -267,9 +270,9 @@ public class CotizacionVista extends VerticalPanel {
 			}};
 		dataGrid.addColumn(fechaVencimiento, "Fecha Vencimiento");
 		
-		TextColumn<PlanPagos> saldoCapital = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> saldoCapital = new TextColumn<PlanPagosCotizacion>() {
 			@Override
-			public String getValue(PlanPagos object) {
+			public String getValue(PlanPagosCotizacion object) {
 				String value = "";
 				if(object.getSaldoCapital() != null){
 				   value = NumberFormat.getFormat("#.00").format(object.getSaldoCapital());   
@@ -278,9 +281,9 @@ public class CotizacionVista extends VerticalPanel {
 			}};
 		dataGrid.addColumn(saldoCapital, "Saldo Capital");
 		
-		TextColumn<PlanPagos> fechaPago = new TextColumn<PlanPagos>() {
+		TextColumn<PlanPagosCotizacion> fechaPago = new TextColumn<PlanPagosCotizacion>() {
 			@Override
-			public String getValue(PlanPagos object) {
+			public String getValue(PlanPagosCotizacion object) {
 				String value = "";
 				if(object.getFechaPago() != null){
 					value = DateTimeFormat.getShortDateFormat().format(object.getFechaPago());
@@ -290,11 +293,11 @@ public class CotizacionVista extends VerticalPanel {
 		dataGrid.addColumn(fechaPago, "Fecha Pago");
 		
 		// Add a selection model to handle user selection.
-  	    final SingleSelectionModel<PlanPagos> selectionModel = new SingleSelectionModel<PlanPagos>();
+  	    final SingleSelectionModel<PlanPagosCotizacion> selectionModel = new SingleSelectionModel<PlanPagosCotizacion>();
   	    dataGrid.setSelectionModel(selectionModel);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 		    public void onSelectionChange(SelectionChangeEvent event) {
-			    PlanPagos selected = selectionModel.getSelectedObject();
+		    	PlanPagosCotizacion selected = selectionModel.getSelectedObject();
 			    GWT.log("selected: " + selected);
 		    }
 		});
@@ -318,7 +321,9 @@ public class CotizacionVista extends VerticalPanel {
 		exportPdfButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				new PlanPagosPDF().generarPDF();
+				String titulos[] = {"ID", "Country", "Rank", "Capital2222"};
+				String data[][] = {{"1", "aa", "bb", "cc"}};
+				planPagosPDF.generarPDF(titulos, data);
 			}
 		});
 		horizontalPanel2.add(exportPdfButton);
