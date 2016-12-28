@@ -3,6 +3,7 @@ package com.jgroup.creditos.server;
 import com.jgroup.creditos.client.CotizacionService;
 import com.jgroup.creditos.endpoint.ServicioCotizacion;
 import com.jgroup.creditos.model.Cotizacion;
+import com.jgroup.creditos.model.PlanPagosCotizacion;
 import com.jgroup.creditos.util.ServiceLocator;
 
 import java.util.List;
@@ -17,16 +18,19 @@ public class CotizacionServiceImpl extends RemoteServiceServlet implements Cotiz
 	 
 	private ServicioCotizacion servicioCotizacion = ServiceLocator.lookupService(ServicioCotizacion.class); 
 
-
 	@Override
 	public Cotizacion getCotizacion(Cotizacion cotizacion) throws IllegalArgumentException {
 		cotizacion = servicioCotizacion.tarifarCotizacion(cotizacion);
 		return cotizacion;
 	}
 
-
 	@Override
 	public List<Cotizacion> buscarCotizacion(String nroDocumento) throws IllegalArgumentException {
 		return servicioCotizacion.buscarCotizacion(nroDocumento);
+	}
+
+	@Override
+	public List<PlanPagosCotizacion> getPlanPagosCotizacion(Long cotizacionId) throws IllegalArgumentException {
+		return servicioCotizacion.getPlanPagosCotizacion(cotizacionId);
 	}
 }

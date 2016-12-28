@@ -6,6 +6,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.jgroup.creditos.model.Cotizacion;
+import com.jgroup.creditos.model.PlanPagosCotizacion;
 
 
 /**
@@ -31,4 +32,6 @@ public interface CotizacionService extends RemoteService {
 	
 	public List<Cotizacion> buscarCotizacion(String nroDocumento) throws IllegalArgumentException; 
 
+	public List<PlanPagosCotizacion> getPlanPagosCotizacion(Long cotizacionId) throws IllegalArgumentException;
+	
 }

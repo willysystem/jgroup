@@ -368,7 +368,7 @@ public class CotizacionVista extends VerticalPanel {
 		if(cotizacion.getNroCuotas() != null)       nroCuotasTextBox.setValue(cotizacion.getNroCuotas()+"");
 		if(cotizacion.getMontoPrestamo() != null)   montoPrestamoLabel.setText(cotizacion.getMontoPrestamo()+"");
 		// TODO falta banco
-		
+		dataGrid.setRowData(cotizacion.getPlanPagosCotizacion());
 		this.cotizacion = cotizacion;
 	}
 	

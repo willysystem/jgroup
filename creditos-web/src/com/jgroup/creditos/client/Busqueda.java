@@ -9,7 +9,7 @@ import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.jgroup.creditos.model.Cotizacion;
+import com.jgroup.creditos.model.PlanPagosCotizacion;
 
 public class Busqueda extends DialogBox {
 	
@@ -29,14 +30,15 @@ public class Busqueda extends DialogBox {
 		this.cotizacionVista = cotizacionVista;
 		
 		setGlassEnabled(true);
-		setAnimationEnabled(true);
-		setSize("600px", "700px");
+		setAnimationEnabled(false);
+		//setSize("1000px", "700px");
+		//setPixelSize(1000, 500);
 		setText("Elija una Cotización");
 		
 		
 		DataGrid<Cotizacion> dataGrid = new DataGrid<Cotizacion>();
-		dataGrid.setWidth("100%");
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
+		//dataGrid.setPixelSize(500, 500);
 		
 		TextColumn<Cotizacion> nroCotizacion = new TextColumn<Cotizacion>() {
 		   @Override
@@ -67,10 +69,20 @@ public class Busqueda extends DialogBox {
 		    public void onDoubleClick(DoubleClickEvent event) {
 		        DataGrid<Cotizacion> grid = (DataGrid<Cotizacion>) event.getSource();
 		        int row = grid.getKeyboardSelectedRow();
-		        Cotizacion  item = grid.getVisibleItem(row);
+		        final Cotizacion item = grid.getVisibleItem(row);
 		        GWT.log("cotizacion: " + item);
-		        Busqueda.this.cotizacionVista.setCotizacion(item);
-		        Busqueda.this.hide();
+		        CotizacionService.Util.getInstance().getPlanPagosCotizacion(item.getId(), new AsyncCallback<List<PlanPagosCotizacion>>() {
+					@Override
+					public void onSuccess(List<PlanPagosCotizacion> result) {
+						item.setPlanPagosCotizacion(result);
+						Busqueda.this.cotizacionVista.setCotizacion(item);
+						Busqueda.this.hide();
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
 		    }    
 		}, DoubleClickEvent.getType());
 		
@@ -80,9 +92,12 @@ public class Busqueda extends DialogBox {
 		verticalPanel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		
 		SimpleLayoutPanel slp = new SimpleLayoutPanel();
-		slp.setSize("100%", "400px");
+		//slp.setWidth(width);
+		slp.setSize("500px", "400px");
+		//slp.setPixelSize(1000, 500);
 		slp.add(dataGrid);
 		verticalPanel2.add(slp);
+		//verticalPanel2.add(dataGrid);
 		
 		HorizontalPanel horizontalPanel2 = new HorizontalPanel();
 		horizontalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -96,8 +111,9 @@ public class Busqueda extends DialogBox {
 			}
 		});
 		verticalPanel2.add(cancelarButton);
-		
+		//verticalPanel2.setSize("600px", "600px");
 		setWidget(verticalPanel2);
+		
 		center();
 		
 	}
