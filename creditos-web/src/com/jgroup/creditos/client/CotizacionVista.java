@@ -63,7 +63,6 @@ public class CotizacionVista extends VerticalPanel {
     
     public void init(){
     	    	
-    
     	// Estilos
     	setSize("100%", "100%");
     	
@@ -118,7 +117,6 @@ public class CotizacionVista extends VerticalPanel {
 						new Busqueda(CotizacionVista.this, result);
 					}
 				});
-	
 			}
 		});
 		
@@ -359,16 +357,17 @@ public class CotizacionVista extends VerticalPanel {
 	}
 
 	public void setCotizacion(Cotizacion cotizacion) {
-		nombreTextBox.setValue(cotizacion.getNombreCompleto());
-		capacidadPagoTextBox.setValue(cotizacion.getCapacidadPago() + "");
-		edadActualTextBox.setValue(cotizacion.getEdadActual()+"");
-		nroCotizacion.setText(cotizacion.getNroCotizacion());
-		fechaNacimientoDateBox.setValue(cotizacion.getFechaNacimiento());
-		fechaCotizacionLabel.setText(cotizacion.getFechaCotizacion().toLocaleString());
-		ingresoBaseTextBox.setValue(cotizacion.getIngresoBase()+"");
-		montoBaseCuotaTextBox.setValue(cotizacion.getMontoBaseCouta()+"");
-		nroCuotasTextBox.setValue(cotizacion.getNroCuotas()+"");
-		montoPrestamoLabel.setText(cotizacion.getMontoPrestamo()+"");
+		if(cotizacion.getNombreCompleto() != null)  nombreTextBox.setValue(cotizacion.getNombreCompleto());
+		if(cotizacion.getCapacidadPago() != null)   capacidadPagoTextBox.setValue(cotizacion.getCapacidadPago() + "");
+		if(cotizacion.getEdadActual() != null)      edadActualTextBox.setValue(cotizacion.getEdadActual()+"");
+		if(cotizacion.getNroCotizacion() != null)   nroCotizacion.setText(cotizacion.getNroCotizacion());
+		if(cotizacion.getFechaNacimiento() != null) fechaNacimientoDateBox.setValue(cotizacion.getFechaNacimiento()); 
+		if(cotizacion.getFechaCotizacion() != null) fechaCotizacionLabel.setText(cotizacion.getFechaCotizacion().toLocaleString()); 
+		if(cotizacion.getIngresoBase() != null)     ingresoBaseTextBox.setValue(cotizacion.getIngresoBase()+"");
+		if(cotizacion.getMontoBaseCouta() != null)  montoBaseCuotaTextBox.setValue(cotizacion.getMontoBaseCouta()+"");
+		if(cotizacion.getNroCuotas() != null)       nroCuotasTextBox.setValue(cotizacion.getNroCuotas()+"");
+		if(cotizacion.getMontoPrestamo() != null)   montoPrestamoLabel.setText(cotizacion.getMontoPrestamo()+"");
+		
 		// TODO falta banco
 		
 		this.cotizacion = cotizacion;
