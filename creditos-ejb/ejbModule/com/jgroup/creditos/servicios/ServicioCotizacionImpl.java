@@ -2,9 +2,7 @@ package com.jgroup.creditos.servicios;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,9 +33,19 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		Cotizacion cotizacionDTO = null;
 		for (Cotizacion cotizacionP : cotizacionesP) {
 			cotizacionDTO = new Cotizacion();
+			cotizacionDTO.setId(cotizacionP.getId());
 			cotizacionDTO.setNombreCompleto(cotizacionP.getNombreCompleto());
+			cotizacionDTO.setCapacidadPago(cotizacionP.getCapacidadPago());
 			cotizacionDTO.setEdadActual(cotizacionP.getEdadActual());
+			cotizacionDTO.setNroCotizacion(cotizacionP.getNroCotizacion());
 			cotizacionDTO.setFechaNacimiento(cotizacionP.getFechaNacimiento());
+			cotizacionDTO.setFechaCotizacion(cotizacionP.getFechaCotizacion());
+			cotizacionDTO.setIngresoBase(cotizacionP.getIngresoBase());
+			cotizacionDTO.setMontoBaseCouta(cotizacionP.getMontoBaseCouta());
+			cotizacionDTO.setNroCuotas(cotizacionP.getNroCuotas());
+			cotizacionDTO.setMontoPrestamo(cotizacionP.getMontoPrestamo());
+			// TODO falta Banco
+			cotizacionDTO.setDocumentoIdentidad(cotizacionP.getDocumentoIdentidad());
 			cotizacionesDTO.add(cotizacionDTO);
 		}
 
