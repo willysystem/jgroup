@@ -1,6 +1,9 @@
 package com.jgroup.creditos.endpoint;
 
+import java.util.List;
+
 import com.jgroup.creditos.model.Cotizacion;
+import com.jgroup.creditos.model.PlanPagosCotizacion;
 
 /**
  * @generated
@@ -31,4 +34,7 @@ public interface ServicioCotizacion {
 	 * @generated
 	 */
 	java.util.List getBancos();
+	
+	
+	public List<PlanPagosCotizacion> getPlanPagosCotizacion(Long cotizacionId);
 }

@@ -24,8 +24,14 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 
 	@Override
 	public List<Cotizacion> buscarCotizacion(String nroDocumento) {
-		Query query = em.createQuery("SELECT c FROM Cotizacion c WHERE c.documentoIdentidad LIKE :documentoIdentidad");
-		query.setParameter("documentoIdentidad", "%" + nroDocumento + "%");
+		Query query = null; 
+		if(nroDocumento.trim().trim().equals("")){
+			query = em.createQuery("SELECT c FROM Cotizacion c ");
+		} else {
+			query = em.createQuery("SELECT c FROM Cotizacion c WHERE c.documentoIdentidad LIKE :documentoIdentidad");
+			query.setParameter("documentoIdentidad", "%" + nroDocumento + "%");
+		}
+		
 
 		@SuppressWarnings("unchecked")
 		List<Cotizacion> cotizacionesP = (List<Cotizacion>) query.getResultList();
@@ -111,5 +117,27 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		}
 		cotizacion.setPlanPagosCotizacion(planPagos);
 		return cotizacion;
+	}
+
+	@Override
+	public List<PlanPagosCotizacion> getPlanPagosCotizacion(Long cotizacionId) {
+		Cotizacion cotizacion = em.find(Cotizacion.class, cotizacionId);
+		List<PlanPagosCotizacion> planes = cotizacion.getPlanPagosCotizacion();
+		List<PlanPagosCotizacion>  planesDTO = new ArrayList<PlanPagosCotizacion>();
+		for (PlanPagosCotizacion pP : planes) {
+			PlanPagosCotizacion pDTO = new PlanPagosCotizacion();
+			pDTO.setId(pP.getId());
+			pDTO.setNroCuota(pP.getNroCuota());
+			pDTO.setMontoCapital(pP.getMontoCapital());
+			pDTO.setInteres(pP.getInteres());
+			pDTO.setPrimaDesgravamen(pP.getPrimaDesgravamen());
+			pDTO.setTotalCuota(pP.getTotalCuota());
+			pDTO.setFechaVencimiento(pP.getFechaVencimiento());
+			pDTO.setSaldoCapital(pP.getSaldoCapital());
+			pDTO.setFechaPago(pP.getFechaPago());
+			planesDTO.add(pDTO);
+		}
+		
+		return planesDTO;
 	}
 }
