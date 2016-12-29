@@ -219,12 +219,15 @@ public class CotizacionVista extends VerticalPanel {
 				cotizacion.setNroCuotas(nroCuotas);
 				int indexSelected = bancoListBox.getSelectedIndex();
 				String id = bancoListBox.getValue(indexSelected);
-				//String id
-				//cotizacion.setBanco();
+				Long idBanco = Long.parseLong(id);
+				Banco bancoDTO = new Banco();
+				bancoDTO.setId(idBanco);
+				cotizacion.setBanco(bancoDTO);
 				
 				CotizacionService.Util.getInstance().getCotizacion(cotizacion, new AsyncCallback<Cotizacion>() {
 					@Override
 					public void onSuccess(Cotizacion result) {
+						CotizacionVista.this.setCotizacion(result);
 						List<PlanPagosCotizacion> planes = new ArrayList<>(result.getPlanPagosCotizacion());
 						dataGrid.setRowData(planes);
 						emitirButton.setEnabled(true);
