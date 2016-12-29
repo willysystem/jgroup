@@ -31,14 +31,11 @@ public class Busqueda extends DialogBox {
 		
 		setGlassEnabled(true);
 		setAnimationEnabled(false);
-		//setSize("1000px", "700px");
-		//setPixelSize(1000, 500);
 		setText("Elija una Cotización");
 		
 		
 		DataGrid<Cotizacion> dataGrid = new DataGrid<Cotizacion>();
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
-		//dataGrid.setPixelSize(500, 500);
 		
 		TextColumn<Cotizacion> nroCotizacion = new TextColumn<Cotizacion>() {
 		   @Override

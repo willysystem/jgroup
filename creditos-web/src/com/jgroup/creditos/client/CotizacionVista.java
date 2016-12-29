@@ -29,6 +29,10 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.jgroup.creditos.endpoint.ServicioCotizacion;
+import com.jgroup.creditos.mensajes.MensageConfirmacion;
+import com.jgroup.creditos.mensajes.MensageError;
+import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Cotizacion;
 import com.jgroup.creditos.model.PlanPagosCotizacion;
 import com.jgroup.creditos.pdf.PlanPagosPDF;
@@ -54,12 +58,16 @@ public class CotizacionVista extends VerticalPanel {
 	private Label montoPrestamoLabel       = new Label();
 	private ListBox bancoListBox           = new ListBox();
 	
+	private Button emitirButton;
+	
     private Cotizacion cotizacion;
     private PlanPagosPDF planPagosPDF;
     
     private ListDataProvider<Cotizacion> dataProvider = new ListDataProvider<Cotizacion>();
     
     private TextBox buscarTextBox;
+    
+    private static final String BANCOS_SELECCIONAR_ITEM = "Seleccione un Banco";
     
     public void init(){
     	    	
@@ -74,9 +82,19 @@ public class CotizacionVista extends VerticalPanel {
     	nroCuotasTextBox.addKeyUpHandler(new KeyUpIntegerValidation(nroCuotasTextBox));
     	
     	// Valores iniciales
-    	bancoListBox.addItem("Seleccione un Banco ...");
-	    bancoListBox.addItem("UNION");
-	    bancoListBox.addItem("BCP");
+    	bancoListBox.addItem(BANCOS_SELECCIONAR_ITEM, "0");
+    	CotizacionService.Util.getInstance().getBancos(new AsyncCallback<List<Banco>>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				new MensageError(caught.getMessage()).show();
+			}
+			@Override
+			public void onSuccess(List<Banco> result) {
+				for (Banco banco : result) {
+					bancoListBox.addItem(banco.getNombre(), banco.getId()+"");
+				}
+			}} 
+    	);
 	    
 	    // Cargar script
 	    planPagosPDF = new PlanPagosPDF();
@@ -101,17 +119,22 @@ public class CotizacionVista extends VerticalPanel {
 		captionPanel.setCaptionHTML("<b>Buscar</b>");
 		
 		buscarTextBox = new TextBox();
+		Button nuevoButton = new Button("Nuevo");
+		nuevoButton.addClickHandler(new ClickHandler() {		
+			@Override
+			public void onClick(ClickEvent event) {
+				setCotizacion(new Cotizacion());
+			}
+		});
 		Button buscarButton = new Button("Buscar");
-		Button buscarNuevo = new Button("Nuevo");
 		buscarButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				CotizacionService.Util.getInstance().buscarCotizacion(buscarTextBox.getValue() , new AsyncCallback<List<Cotizacion>>() {
 					@Override
 					public void onFailure(Throwable caught) {
-						
+						new MensageError(caught.getMessage()).show();
 					}
-
 					@Override
 					public void onSuccess(List<Cotizacion> result) {
 						new Busqueda(CotizacionVista.this, result);
@@ -125,7 +148,7 @@ public class CotizacionVista extends VerticalPanel {
 		horizontalPanel.add(new Label("Documento Identidad: "));
 		horizontalPanel.add(buscarTextBox);
 		horizontalPanel.add(buscarButton);
-		horizontalPanel.add(buscarNuevo);
+		horizontalPanel.add(nuevoButton);
 		captionPanel.add(horizontalPanel);
 		
 		this.add(captionPanel);
@@ -199,11 +222,13 @@ public class CotizacionVista extends VerticalPanel {
 					public void onSuccess(Cotizacion result) {
 						List<PlanPagosCotizacion> planes = new ArrayList<>(result.getPlanPagosCotizacion());
 						dataGrid.setRowData(planes);
+						emitirButton.setEnabled(true);
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						
+						new MensageError(caught.getMessage()).show();
+						emitirButton.setEnabled(false);
 					}
 				});
 			}
@@ -346,8 +371,25 @@ public class CotizacionVista extends VerticalPanel {
 		});
 		horizontalPanel2.add(exportPdfButton);
 		
-		Button emitirEmitir = new Button("Emitir");
-		horizontalPanel2.add(emitirEmitir);
+		emitirButton = new Button("Emitir");
+		emitirButton.setEnabled(false);
+		emitirButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//new MensageConfirmacion("Decea emitir ");
+				CotizacionService.Util.getInstance().emitirCredito(cotizacion.getId(), new AsyncCallback<Void>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						new MensageError(caught.getMessage()).show();
+					}
+					@Override
+					public void onSuccess(Void result) {
+						
+					}
+				});
+			}
+		});
+		horizontalPanel2.add(emitirButton);
 		
 		verticalPanel2.add(horizontalPanel2);
 
@@ -357,17 +399,34 @@ public class CotizacionVista extends VerticalPanel {
 	}
 
 	public void setCotizacion(Cotizacion cotizacion) {
-		if(cotizacion.getNombreCompleto() != null)  nombreTextBox.setValue(cotizacion.getNombreCompleto());
-		if(cotizacion.getCapacidadPago() != null)   capacidadPagoTextBox.setValue(cotizacion.getCapacidadPago() + "");
-		if(cotizacion.getEdadActual() != null)      edadActualTextBox.setValue(cotizacion.getEdadActual()+"");
-		if(cotizacion.getNroCotizacion() != null)   nroCotizacion.setText(cotizacion.getNroCotizacion());
-		if(cotizacion.getFechaNacimiento() != null) fechaNacimientoDateBox.setValue(cotizacion.getFechaNacimiento()); 
-		if(cotizacion.getFechaCotizacion() != null) fechaCotizacionLabel.setText(cotizacion.getFechaCotizacion().toLocaleString()); 
-		if(cotizacion.getIngresoBase() != null)     ingresoBaseTextBox.setValue(cotizacion.getIngresoBase()+"");
-		if(cotizacion.getMontoBaseCouta() != null)  montoBaseCuotaTextBox.setValue(cotizacion.getMontoBaseCouta()+"");
-		if(cotizacion.getNroCuotas() != null)       nroCuotasTextBox.setValue(cotizacion.getNroCuotas()+"");
-		if(cotizacion.getMontoPrestamo() != null)   montoPrestamoLabel.setText(cotizacion.getMontoPrestamo()+"");
-		// TODO falta banco
+		if(cotizacion.getNombreCompleto() != null)  nombreTextBox.setValue(cotizacion.getNombreCompleto()); else nombreTextBox.setValue("");
+		if(cotizacion.getCapacidadPago() != null)   capacidadPagoTextBox.setValue(cotizacion.getCapacidadPago() + ""); else capacidadPagoTextBox.setValue(""); 
+		if(cotizacion.getEdadActual() != null)      edadActualTextBox.setValue(cotizacion.getEdadActual()+""); else edadActualTextBox.setValue(""); 
+		if(cotizacion.getNroCotizacion() != null)   nroCotizacion.setText(cotizacion.getNroCotizacion()); else nroCotizacion.setText(""); 
+		if(cotizacion.getFechaNacimiento() != null) fechaNacimientoDateBox.setValue(cotizacion.getFechaNacimiento()); else fechaNacimientoDateBox.setValue(null);; 
+		if(cotizacion.getFechaCotizacion() != null) fechaCotizacionLabel.setText(cotizacion.getFechaCotizacion().toLocaleString()); else fechaCotizacionLabel.setText("");  
+		if(cotizacion.getIngresoBase() != null)     ingresoBaseTextBox.setValue(cotizacion.getIngresoBase()+""); else ingresoBaseTextBox.setValue(""); 
+		if(cotizacion.getMontoBaseCouta() != null)  montoBaseCuotaTextBox.setValue(cotizacion.getMontoBaseCouta()+""); else montoBaseCuotaTextBox.setValue(""); 
+		if(cotizacion.getNroCuotas() != null)       nroCuotasTextBox.setValue(cotizacion.getNroCuotas()+""); else nroCuotasTextBox.setValue(""); 
+		if(cotizacion.getMontoPrestamo() != null)   montoPrestamoLabel.setText(cotizacion.getMontoPrestamo()+""); else montoPrestamoLabel.setText("");
+		if(cotizacion.getBanco() != null) {
+			Banco bancoDTO = cotizacion.getBanco();
+			int totalItems = bancoListBox.getItemCount();
+			GWT.log("totalItems: " + totalItems);
+			GWT.log("bancoDTO.getId():" + bancoDTO.getId());
+			for (int i = 0; i < totalItems; i++) {
+				String id = bancoListBox.getValue(i);
+				GWT.log("id: " + id);
+				if(id.equals(bancoDTO.getId()+"")){
+					bancoListBox.addItem("Seleccione u");
+					bancoListBox.setSelectedIndex(i);
+					GWT.log("i: " + i);
+					break;
+				}
+			}
+		} else {
+		    bancoListBox.setSelectedIndex(0);
+		}
 		dataGrid.setRowData(cotizacion.getPlanPagosCotizacion());
 		this.cotizacion = cotizacion;
 	}

@@ -32,7 +32,6 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			query.setParameter("documentoIdentidad", "%" + nroDocumento + "%");
 		}
 		
-
 		@SuppressWarnings("unchecked")
 		List<Cotizacion> cotizacionesP = (List<Cotizacion>) query.getResultList();
 		List<Cotizacion> cotizacionesDTO = new ArrayList<Cotizacion>();
@@ -50,7 +49,12 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			cotizacionDTO.setMontoBaseCouta(cotizacionP.getMontoBaseCouta());
 			cotizacionDTO.setNroCuotas(cotizacionP.getNroCuotas());
 			cotizacionDTO.setMontoPrestamo(cotizacionP.getMontoPrestamo());
-			// TODO falta Banco
+			if(cotizacionP.getBanco() != null){
+				Banco bancoDTO =  new Banco();
+				bancoDTO.setId(cotizacionP.getBanco().getId());
+				bancoDTO.setNombre(cotizacionP.getBanco().getNombre());
+				cotizacionDTO.setBanco(bancoDTO);
+			}
 			cotizacionDTO.setDocumentoIdentidad(cotizacionP.getDocumentoIdentidad());
 			cotizacionesDTO.add(cotizacionDTO);
 		}
@@ -66,9 +70,49 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 	}
 
 	@Override
-	public Cotizacion tarifarCotizacion(Cotizacion cotizacion) {
-
-		return calcularPrestamo(cotizacion);
+	public Cotizacion tarifarCotizacion(Cotizacion cotizacion) throws Exception {
+		Cotizacion cotizacionP = calcularPrestamo(cotizacion);
+		
+		em.persist(cotizacionP);
+		
+		// Cotizacion
+		Cotizacion cotizacionDTO = new Cotizacion();
+		cotizacionDTO.setId(cotizacionP.getId());
+		cotizacionDTO.setNombreCompleto(cotizacionP.getNombreCompleto());
+		cotizacionDTO.setCapacidadPago(cotizacionP.getCapacidadPago());
+		cotizacionDTO.setEdadActual(cotizacionP.getEdadActual());
+		cotizacionDTO.setNroCotizacion(cotizacionP.getNroCotizacion());
+		cotizacionDTO.setFechaNacimiento(cotizacionP.getFechaNacimiento());
+		cotizacionDTO.setFechaCotizacion(cotizacionP.getFechaCotizacion());
+		cotizacionDTO.setIngresoBase(cotizacionP.getIngresoBase());
+		cotizacionDTO.setMontoBaseCouta(cotizacionP.getMontoBaseCouta());
+		cotizacionDTO.setNroCuotas(cotizacionP.getNroCuotas());
+		cotizacionDTO.setMontoPrestamo(cotizacionP.getMontoPrestamo());
+		if(cotizacionP.getBanco() != null){
+			Banco bancoDTO =  new Banco();
+			bancoDTO.setId(cotizacionP.getBanco().getId());
+			bancoDTO.setNombre(cotizacionP.getBanco().getNombre());
+			cotizacionDTO.setBanco(bancoDTO);
+		}
+		// Plan de pagos
+		List<PlanPagosCotizacion> planes = cotizacionP.getPlanPagosCotizacion();
+		List<PlanPagosCotizacion>  planesDTO = new ArrayList<PlanPagosCotizacion>();
+		for (PlanPagosCotizacion pP : planes) {
+			PlanPagosCotizacion pDTO = new PlanPagosCotizacion();
+			pDTO.setId(pP.getId());
+			pDTO.setNroCuota(pP.getNroCuota());
+			pDTO.setMontoCapital(pP.getMontoCapital());
+			pDTO.setInteres(pP.getInteres());
+			pDTO.setPrimaDesgravamen(pP.getPrimaDesgravamen());
+			pDTO.setTotalCuota(pP.getTotalCuota());
+			pDTO.setFechaVencimiento(pP.getFechaVencimiento());
+			pDTO.setSaldoCapital(pP.getSaldoCapital());
+			pDTO.setFechaPago(pP.getFechaPago());
+			planesDTO.add(pDTO);
+		}
+		cotizacionDTO.setPlanPagosCotizacion(planesDTO);
+		
+		return cotizacionDTO;
 	}
 
 	@Override
@@ -79,11 +123,25 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 
 	@Override
 	public List<Banco> getBancos() {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("SELECT b FROM Banco b", Banco.class);
+		List<Banco> bancosP = query.getResultList();
+		List<Banco> bancosDTO = new ArrayList<Banco>();
+		for (Banco bancoP : bancosP) {
+			Banco bancoDTO = new Banco();
+			bancoDTO.setId(bancoP.getId());
+			bancoDTO.setNombre(bancoP.getNombre());
+			bancoDTO.setPrimaDesgravamen(bancoP.getPrimaDesgravamen());
+			bancoDTO.setTasaInteres(bancoP.getTasaInteres());
+			bancosDTO.add(bancoDTO);
+		}
+		return bancosDTO;
 	}
 
-	private Cotizacion calcularPrestamo(Cotizacion cotizacion) {
+	private Cotizacion calcularPrestamo(Cotizacion cotizacion) throws Exception {
+		if(cotizacion.getNroCuotas() == 1) {
+			throw new Exception("Número de cuotas no puede ser 1");
+		}
+		
 		if (cotizacion.getNroCotizacion() != null) {
 			cotizacion.setNroCotizacion("COT" + Tools.getInstance().date2String(cotizacion.getFechaCotizacion()));
 		}
@@ -113,6 +171,7 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			pago.setSaldoCapital(saldoCapital.floatValue());
 			pago.setTotalCuota(montoCuota.floatValue());
 			pago.setMontoCapital(montoCapital.floatValue());
+			pago.setCotizacion(cotizacion);
 			planPagos.add(pago);
 		}
 		cotizacion.setPlanPagosCotizacion(planPagos);

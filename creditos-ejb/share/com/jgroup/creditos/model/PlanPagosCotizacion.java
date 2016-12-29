@@ -1,5 +1,6 @@
 package com.jgroup.creditos.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Table;
 
 
@@ -28,7 +29,7 @@ public class PlanPagosCotizacion extends PlanPagos implements
 	/**
 	 * @generated
 	 */
-	@javax.persistence.ManyToOne
+	@javax.persistence.ManyToOne(cascade=CascadeType.PERSIST)
 	public Cotizacion getCotizacion() {
 		return this.cotizacion;
 	}

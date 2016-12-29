@@ -1,5 +1,6 @@
 package com.jgroup.creditos.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Table;
 
 
@@ -72,7 +73,7 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	@javax.persistence.OneToMany(mappedBy = "cotizacion")
+	@javax.persistence.OneToMany(mappedBy = "cotizacion", cascade=CascadeType.PERSIST)
 	public java.util.List<PlanPagosCotizacion> getPlanPagosCotizacion() {
 		return this.planPagosCotizacion;
 	}
