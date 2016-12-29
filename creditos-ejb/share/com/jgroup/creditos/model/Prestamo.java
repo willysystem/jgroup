@@ -7,8 +7,8 @@ import javax.persistence.InheritanceType;
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@javax.persistence.Entity
 public abstract class Prestamo implements java.io.Serializable {
 	/**
 	 * @generated

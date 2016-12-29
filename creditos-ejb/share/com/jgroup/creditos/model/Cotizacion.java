@@ -7,17 +7,13 @@ import javax.persistence.Table;
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Table(name = "J_Cotizacion")
+@javax.persistence.Entity
 public class Cotizacion extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
 	private static final long serialVersionUID = 382447927L;
-	/**
-	 * @generated
-	 */
-	private Contrato contrato;
 	/**
 	 * @generated
 	 */
@@ -32,21 +28,6 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	 * @generated
 	 */
 	public Cotizacion() {
-	}
-
-	/**
-	 * @generated
-	 */
-	@javax.persistence.OneToOne(mappedBy = "cotizacion")
-	public Contrato getContrato() {
-		return this.contrato;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setContrato(Contrato contrato) {
-		this.contrato = contrato;
 	}
 
 	/**
@@ -73,7 +54,7 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	@javax.persistence.OneToMany(mappedBy = "cotizacion", cascade=CascadeType.PERSIST)
+	@javax.persistence.OneToMany(mappedBy = "cotizacion", cascade = CascadeType.MERGE)
 	public java.util.List<PlanPagosCotizacion> getPlanPagosCotizacion() {
 		return this.planPagosCotizacion;
 	}
@@ -83,8 +64,8 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	 */
 	public void setPlanPagosCotizacion(
 			java.util.List<PlanPagosCotizacion> planPagosCotizacion) {
-		this.planPagosCotizacion = planPagosCotizacion;
-	}
+				this.planPagosCotizacion = planPagosCotizacion;
+			}
 
 	/**
 	 * @generated
@@ -99,7 +80,7 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	 */
 	public void removePlanPagosCotizacion(
 			PlanPagosCotizacion planPagosCotizacion) {
-		getPlanPagosCotizacion().remove(planPagosCotizacion);
-		planPagosCotizacion.setCotizacion(null);
-	}
+				getPlanPagosCotizacion().remove(planPagosCotizacion);
+				planPagosCotizacion.setCotizacion(null);
+			}
 }

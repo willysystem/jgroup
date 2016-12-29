@@ -7,8 +7,8 @@ import javax.persistence.Table;
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Table(name = "J_PlanPagosCotizacion")
+@javax.persistence.Entity
 public class PlanPagosCotizacion extends PlanPagos implements
 		java.io.Serializable {
 	/**
@@ -29,7 +29,7 @@ public class PlanPagosCotizacion extends PlanPagos implements
 	/**
 	 * @generated
 	 */
-	@javax.persistence.ManyToOne(cascade=CascadeType.PERSIST)
+	@javax.persistence.ManyToOne(cascade = CascadeType.MERGE)
 	public Cotizacion getCotizacion() {
 		return this.cotizacion;
 	}

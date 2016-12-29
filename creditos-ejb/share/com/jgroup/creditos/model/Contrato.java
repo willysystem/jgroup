@@ -1,22 +1,19 @@
 package com.jgroup.creditos.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Table;
 
 
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Table(name = "J_Contrato")
+@javax.persistence.Entity
 public class Contrato extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
 	private static final long serialVersionUID = -1108940986L;
-	/**
-	 * @generated
-	 */
-	private Cotizacion cotizacion;
 	/**
 	 * @generated
 	 */
@@ -34,22 +31,12 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
+	private java.util.Date fechaEmision;
+
+	/**
+	 * @generated
+	 */
 	public Contrato() {
-	}
-
-	/**
-	 * @generated
-	 */
-	@javax.persistence.OneToOne
-	public Cotizacion getCotizacion() {
-		return this.cotizacion;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setCotizacion(Cotizacion cotizacion) {
-		this.cotizacion = cotizacion;
 	}
 
 	/**
@@ -85,13 +72,14 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	 */
 	public String toString() {
 		return "Contrato" + " nroPrestamo=" + nroPrestamo
-				+ " fechaLiquidacion=" + fechaLiquidacion;
+				+ " fechaLiquidacion=" + fechaLiquidacion + " fechaEmision="
+				+ fechaEmision;
 	}
 
 	/**
 	 * @generated
 	 */
-	@javax.persistence.OneToMany(mappedBy = "contrato")
+	@javax.persistence.OneToMany(mappedBy = "contrato", cascade = CascadeType.MERGE)
 	public java.util.List<PlanPagosContrato> getPlanPagosCotnrato() {
 		return this.planPagosCotnrato;
 	}
@@ -101,8 +89,8 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	 */
 	public void setPlanPagosCotnrato(
 			java.util.List<PlanPagosContrato> planPagosCotnrato) {
-		this.planPagosCotnrato = planPagosCotnrato;
-	}
+				this.planPagosCotnrato = planPagosCotnrato;
+			}
 
 	/**
 	 * @generated
@@ -118,5 +106,19 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	public void removePlanPagosCotnrato(PlanPagosContrato planPagosCotnrato) {
 		getPlanPagosCotnrato().remove(planPagosCotnrato);
 		planPagosCotnrato.setContrato(null);
+	}
+
+	/**
+	 * @generated
+	 */
+	public java.util.Date getFechaEmision() {
+		return this.fechaEmision;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setFechaEmision(java.util.Date fechaEmision) {
+		this.fechaEmision = fechaEmision;
 	}
 }

@@ -5,8 +5,8 @@ import javax.persistence.Table;
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Table(name = "J_Desgravamen")
+@javax.persistence.Entity
 public class Desgravamen implements java.io.Serializable {
 	/**
 	 * @generated

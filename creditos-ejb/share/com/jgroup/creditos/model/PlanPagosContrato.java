@@ -1,12 +1,13 @@
 package com.jgroup.creditos.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Table;
 
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Table(name = "J_PlanPagosContrato")
+@javax.persistence.Entity
 public class PlanPagosContrato extends PlanPagos implements
 		java.io.Serializable {
 	/**
@@ -21,13 +22,18 @@ public class PlanPagosContrato extends PlanPagos implements
 	/**
 	 * @generated
 	 */
+	private Float interesMora;
+
+	/**
+	 * @generated
+	 */
 	public PlanPagosContrato() {
 	}
 
 	/**
 	 * @generated
 	 */
-	@javax.persistence.ManyToOne
+	@javax.persistence.ManyToOne(cascade = CascadeType.MERGE)
 	public Contrato getContrato() {
 		return this.contrato;
 	}
@@ -43,6 +49,20 @@ public class PlanPagosContrato extends PlanPagos implements
 	 * @generated
 	 */
 	public String toString() {
-		return "PlanPagosContrato";
+		return "PlanPagosContrato" + " interesMora=" + interesMora;
+	}
+
+	/**
+	 * @generated
+	 */
+	public Float getInteresMora() {
+		return this.interesMora;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setInteresMora(Float interesMora) {
+		this.interesMora = interesMora;
 	}
 }

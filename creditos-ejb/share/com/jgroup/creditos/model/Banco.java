@@ -6,8 +6,8 @@ import javax.persistence.Table;
 /**
  * @generated
  */
-@javax.persistence.Entity
 @Table(name = "J_Banco")
+@javax.persistence.Entity
 public class Banco implements java.io.Serializable {
 	/**
 	 * @generated
