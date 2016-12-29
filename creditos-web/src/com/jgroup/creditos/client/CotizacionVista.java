@@ -203,7 +203,7 @@ public class CotizacionVista extends VerticalPanel {
 	    cotizarButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				cotizacion = new Cotizacion();
+				if(cotizacion == null) cotizacion = new Cotizacion(); 
 				cotizacion.setNombreCompleto(nombreTextBox.getValue());
 				String capacidadPago = capacidadPagoTextBox.getValue();
 				cotizacion.setCapacidadPago(Float.parseFloat(capacidadPago));
@@ -217,6 +217,11 @@ public class CotizacionVista extends VerticalPanel {
 				cotizacion.setMontoBaseCouta(montoBaseCuota);
 				Integer nroCuotas = Integer.parseInt(nroCuotasTextBox.getValue());
 				cotizacion.setNroCuotas(nroCuotas);
+				int indexSelected = bancoListBox.getSelectedIndex();
+				String id = bancoListBox.getValue(indexSelected);
+				//String id
+				//cotizacion.setBanco();
+				
 				CotizacionService.Util.getInstance().getCotizacion(cotizacion, new AsyncCallback<Cotizacion>() {
 					@Override
 					public void onSuccess(Cotizacion result) {
