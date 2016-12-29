@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class MensageError extends DialogBox {
@@ -22,8 +22,9 @@ public class MensageError extends DialogBox {
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		
-		Label label = new Label(mensaje);
-		label.setPixelSize(200, 100);
+		TextArea label = new TextArea();
+		label.setValue(mensaje);
+		label.setPixelSize(250, 50);
 		verticalPanel.add(label);
 		
 		Button aceptarButton = new Button("Aceptar");
