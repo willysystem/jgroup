@@ -1,7 +1,6 @@
 package com.jgroup.creditos.endpoint;
 
 import com.jgroup.creditos.model.Contrato;
-
 /**
  * @generated
  */
@@ -14,5 +13,6 @@ public interface ServicioCredito {
 	/**
 	 * @generated
 	 */
-	com.jgroup.creditos.model.Contrato getContrato(String nroContrato);
+	public Contrato getContrato(Long contratoId);
+	
 }

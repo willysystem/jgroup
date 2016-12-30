@@ -29,12 +29,12 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.jgroup.creditos.endpoint.ServicioCotizacion;
-import com.jgroup.creditos.exceptions.JGroupException;
 import com.jgroup.creditos.mensajes.MensageConfirmacion;
 import com.jgroup.creditos.mensajes.MensageError;
+import com.jgroup.creditos.mensajes.MensageExito;
 import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Cotizacion;
+import com.jgroup.creditos.model.PlanPagosContrato;
 import com.jgroup.creditos.model.PlanPagosCotizacion;
 import com.jgroup.creditos.pdf.PlanPagosPDF;
 import com.jgroup.creditos.validacion.KeyUpFloatValidation;
@@ -58,6 +58,8 @@ public class CotizacionVista extends VerticalPanel {
 	private TextBox nroCuotasTextBox = new TextBox();
 	private Label montoPrestamoLabel = new Label();
 	private ListBox bancoListBox = new ListBox();
+	private TextBox documentoIdentidadTextBox = new TextBox();
+	
 
 	private Button emitirButton;
 
@@ -69,6 +71,8 @@ public class CotizacionVista extends VerticalPanel {
 	private TextBox buscarTextBox;
 
 	private static final String BANCOS_SELECCIONAR_ITEM = "Seleccione un Banco";
+	
+	private MensageConfirmacion mensageConfirmacion = null;
 
 	public void init() {
 
@@ -111,7 +115,7 @@ public class CotizacionVista extends VerticalPanel {
 		ingresoBaseTextBox.setValue("5000");
 		montoBaseCuotaTextBox.setValue("2000");
 		nroCuotasTextBox.setValue("6");
-
+		documentoIdentidadTextBox.setValue("5134828 POTOSI");
 	}
 
 	public CotizacionVista() {
@@ -142,7 +146,7 @@ public class CotizacionVista extends VerticalPanel {
 
 					@Override
 					public void onSuccess(List<Cotizacion> result) {
-						new Busqueda(CotizacionVista.this, result);
+						new BusquedaCotizacion(CotizacionVista.this, result);
 					}
 				});
 			}
@@ -201,6 +205,10 @@ public class CotizacionVista extends VerticalPanel {
 
 		layout.setHTML(5, 0, "Banco:");
 		layout.setWidget(5, 1, bancoListBox);
+		
+		layout.setHTML(5, 2, "Documento Identidad:");
+		layout.setWidget(5, 3, documentoIdentidadTextBox);
+		
 		verticalPanel.add(layout);
 
 		Button cotizarButton = new Button("Cotizar");
@@ -232,6 +240,7 @@ public class CotizacionVista extends VerticalPanel {
 				Banco bancoDTO = new Banco();
 				bancoDTO.setId(idBanco);
 				cotizacion.setBanco(bancoDTO);
+				cotizacion.setDocumentoIdentidad(documentoIdentidadTextBox.getValue());
 
 				CotizacionService.Util.getInstance().getCotizacion(cotizacion, new AsyncCallback<Cotizacion>() {
 					@Override
@@ -325,6 +334,7 @@ public class CotizacionVista extends VerticalPanel {
 		dataGrid.addColumn(totalCuota, "Total Cuota");
 
 		TextColumn<PlanPagosCotizacion> fechaVencimiento = new TextColumn<PlanPagosCotizacion>() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public String getValue(PlanPagosCotizacion object) {
 				String value = "";
@@ -347,18 +357,6 @@ public class CotizacionVista extends VerticalPanel {
 			}
 		};
 		dataGrid.addColumn(saldoCapital, "Saldo Capital");
-
-		TextColumn<PlanPagosCotizacion> fechaPago = new TextColumn<PlanPagosCotizacion>() {
-			@Override
-			public String getValue(PlanPagosCotizacion object) {
-				String value = "";
-				if (object.getFechaPago() != null) {
-					value = DateTimeFormat.getShortDateFormat().format(object.getFechaPago());
-				}
-				return value;
-			}
-		};
-		dataGrid.addColumn(fechaPago, "Fecha Pago");
 
 		// Add a selection model to handle user selection.
 		final SingleSelectionModel<PlanPagosCotizacion> selectionModel = new SingleSelectionModel<PlanPagosCotizacion>();
@@ -389,8 +387,20 @@ public class CotizacionVista extends VerticalPanel {
 		exportPdfButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				String titulos[] = { "ID", "Country", "Rank", "Capital2222" };
-				String data[][] = { { "1", "aa", "bb", "cc" } };
+				String titulos[] = { "Nro Cuota", "Monto Capital", "Intereses", "Desgravamen", "Total Cuota", "Fecha Vencimiento", "Saldo Capital"};
+				String data[][] = new String[7][dataGrid.getRowCount()];
+				int i = 0;
+				for (PlanPagosCotizacion item : dataGrid.getVisibleItems()) {
+					data[i][0] = item.getNroCuota()+"";
+					data[i][1] = NumberFormat.getFormat("#.00").format(item.getMontoCapital());
+					data[i][2] = NumberFormat.getFormat("#.00").format(item.getInteres());
+					data[i][3] = NumberFormat.getFormat("#.00").format(item.getPrimaDesgravamen());
+					data[i][4] = NumberFormat.getFormat("#.00").format(item.getTotalCuota());
+					data[i][5] = DateTimeFormat.getFormat("dd/MM/yyyy").format(item.getFechaVencimiento());
+					data[i][6] = NumberFormat.getFormat("#.00").format(item.getSaldoCapital());
+					i++;
+				}
+				
 				planPagosPDF.generarPDF(titulos, data);
 			}
 		});
@@ -401,16 +411,20 @@ public class CotizacionVista extends VerticalPanel {
 		emitirButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				// new MensageConfirmacion("Decea emitir ");
-				CotizacionService.Util.getInstance().emitirCredito(cotizacion.getId(), new AsyncCallback<Void>() {
+				mensageConfirmacion = new MensageConfirmacion("¿Decea emitir crédito?", new ClickHandler() {
 					@Override
-					public void onFailure(Throwable caught) {
-						new MensageError(caught.getMessage()).show();
-					}
-
-					@Override
-					public void onSuccess(Void result) {
-
+					public void onClick(ClickEvent event) {
+						CotizacionService.Util.getInstance().emitirCredito(cotizacion, new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MensageError(caught.getMessage()).show();
+							}
+							@Override
+							public void onSuccess(Void result) {
+								new MensageExito("Emisión existosa").show();
+								mensageConfirmacion.hide();							
+							}
+						});
 					}
 				});
 			}

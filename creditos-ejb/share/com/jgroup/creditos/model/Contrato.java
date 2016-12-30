@@ -79,7 +79,7 @@ public class Contrato extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	@javax.persistence.OneToMany(mappedBy = "contrato", cascade = CascadeType.MERGE)
+	@javax.persistence.OneToMany(mappedBy = "contrato", cascade = CascadeType.ALL, orphanRemoval=true)
 	public java.util.List<PlanPagosContrato> getPlanPagosCotnrato() {
 		return this.planPagosCotnrato;
 	}

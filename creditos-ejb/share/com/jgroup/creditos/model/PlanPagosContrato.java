@@ -33,7 +33,7 @@ public class PlanPagosContrato extends PlanPagos implements
 	/**
 	 * @generated
 	 */
-	@javax.persistence.ManyToOne(cascade = CascadeType.MERGE)
+	@javax.persistence.ManyToOne(cascade = CascadeType.ALL)
 	public Contrato getContrato() {
 		return this.contrato;
 	}

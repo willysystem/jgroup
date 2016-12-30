@@ -6,10 +6,18 @@
     <servlet-name>cotizacionServlet</servlet-name>
     <servlet-class>com.jgroup.creditos.server.CotizacionServiceImpl</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>cotizacionServlet</servlet-name>
     <url-pattern>/cotizacion</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>contratoServlet</servlet-name>
+    <servlet-class>com.jgroup.creditos.server.ContratoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>contratoServlet</servlet-name>
+    <url-pattern>/contrato</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>

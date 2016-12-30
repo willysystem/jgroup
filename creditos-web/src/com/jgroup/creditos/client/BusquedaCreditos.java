@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -18,66 +19,64 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.jgroup.creditos.model.Cotizacion;
-import com.jgroup.creditos.model.PlanPagosCotizacion;
+import com.jgroup.creditos.model.Contrato;
 
-public class Busqueda extends DialogBox {
+public class BusquedaCreditos extends DialogBox {
 	
-	private CotizacionVista cotizacionVista;
+	private CreditosVista creditosVista;
 	
-	public Busqueda(CotizacionVista cotizacionVista,  List<Cotizacion> cotizaciones) {
+	public BusquedaCreditos(CreditosVista creditosVista,  List<Contrato> Contratoes) {
 		super();
-		this.cotizacionVista = cotizacionVista;
+		this.creditosVista = creditosVista;
 		
 		setGlassEnabled(true);
 		setAnimationEnabled(false);
-		setText("Elija una Cotización");
+		setText("Elija una Crédito");
 		
 		
-		DataGrid<Cotizacion> dataGrid = new DataGrid<Cotizacion>();
+		DataGrid<Contrato> dataGrid = new DataGrid<Contrato>();
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
 		
-		TextColumn<Cotizacion> nroCotizacion = new TextColumn<Cotizacion>() {
+		TextColumn<Contrato> nroPrestamo = new TextColumn<Contrato>() {
 		   @Override
-		   public String getValue(Cotizacion object) {
-			    return ""+object.getNroCotizacion();
+		   public String getValue(Contrato object) {
+			    return ""+object.getNroPrestamo();
 		   }};
-		dataGrid.addColumn(nroCotizacion, "Nro Cotización");
+		dataGrid.addColumn(nroPrestamo, "Nro Prestamo");
 		
-		TextColumn<Cotizacion> nombre = new TextColumn<Cotizacion>() {
+		TextColumn<Contrato> nombre = new TextColumn<Contrato>() {
 		   @Override
-		   public String getValue(Cotizacion object) {
+		   public String getValue(Contrato object) {
 			    return ""+object.getNombreCompleto();
 		   }};
 		dataGrid.addColumn(nombre, "Nombre");
 		
-		TextColumn<Cotizacion> documentoIdentidad = new TextColumn<Cotizacion>() {
+		TextColumn<Contrato> documentoIdentidad = new TextColumn<Contrato>() {
 		   @Override
-		   public String getValue(Cotizacion object) {
+		   public String getValue(Contrato object) {
 			    return ""+object.getDocumentoIdentidad();
 		   }};
 		dataGrid.addColumn(documentoIdentidad, "Documento Identidad");
 		dataGrid.setRowCount(0, true);
-		dataGrid.setRowData(cotizaciones);
+		dataGrid.setRowData(Contratoes);
 		
 		dataGrid.addDomHandler(new DoubleClickHandler() {
 		    @SuppressWarnings("unchecked")
 		    @Override
 		    public void onDoubleClick(DoubleClickEvent event) {
-		        DataGrid<Cotizacion> grid = (DataGrid<Cotizacion>) event.getSource();
+		        DataGrid<Contrato> grid = (DataGrid<Contrato>) event.getSource();
 		        int row = grid.getKeyboardSelectedRow();
-		        final Cotizacion item = grid.getVisibleItem(row);
-		        GWT.log("cotizacion: " + item);
-		        CotizacionService.Util.getInstance().getPlanPagosCotizacion(item.getId(), new AsyncCallback<List<PlanPagosCotizacion>>() {
-					@Override
-					public void onSuccess(List<PlanPagosCotizacion> result) {
-						item.setPlanPagosCotizacion(result);
-						Busqueda.this.cotizacionVista.setCotizacion(item);
-						Busqueda.this.hide();
-					}
+		        final Contrato item = grid.getVisibleItem(row);
+		        GWT.log("Contrato: " + item);
+		        ContratoService.Util.getInstance().getContrato(item.getId(), new AsyncCallback<Contrato>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						
+					}
+					@Override
+					public void onSuccess(Contrato result) { 
+						BusquedaCreditos.this.creditosVista.setContrato(result);
+						BusquedaCreditos.this.hide();
 					}
 				});
 		    }    
@@ -89,12 +88,9 @@ public class Busqueda extends DialogBox {
 		verticalPanel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		
 		SimpleLayoutPanel slp = new SimpleLayoutPanel();
-		//slp.setWidth(width);
 		slp.setSize("500px", "400px");
-		//slp.setPixelSize(1000, 500);
 		slp.add(dataGrid);
 		verticalPanel2.add(slp);
-		//verticalPanel2.add(dataGrid);
 		
 		HorizontalPanel horizontalPanel2 = new HorizontalPanel();
 		horizontalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -104,11 +100,10 @@ public class Busqueda extends DialogBox {
 		cancelarButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Busqueda.this.hide();
+				BusquedaCreditos.this.hide();
 			}
 		});
 		verticalPanel2.add(cancelarButton);
-		//verticalPanel2.setSize("600px", "600px");
 		setWidget(verticalPanel2);
 		
 		center();

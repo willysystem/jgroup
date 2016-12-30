@@ -41,7 +41,7 @@ public class CotizacionServiceImpl extends RemoteServiceServlet implements Cotiz
 	}
 
 	@Override
-	public void emitirCredito(Long idCotizacion) throws Exception {
-		servicioCotizacion.emitirCredito(idCotizacion);
+	public void emitirCredito(Cotizacion cotizacionI) throws Exception {
+		servicioCotizacion.emitirCredito(cotizacionI);
 	}
 }

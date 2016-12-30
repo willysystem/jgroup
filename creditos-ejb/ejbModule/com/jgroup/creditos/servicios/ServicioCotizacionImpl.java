@@ -14,6 +14,7 @@ import com.jgroup.creditos.finance.FinanceCalculator;
 import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Contrato;
 import com.jgroup.creditos.model.Cotizacion;
+import com.jgroup.creditos.model.PlanPagosContrato;
 import com.jgroup.creditos.model.PlanPagosCotizacion;
 import com.jgroup.creditos.utils.Tools;
 
@@ -72,26 +73,17 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 
 	@Override
 	public Cotizacion tarifarCotizacion(Cotizacion cotizacion) throws Exception {
+		// Previamente Borrar
 		if (cotizacion.getId() != null) {
-			// Cotizacion cot = new Cotizacion();
-			// cot.setId(cotizacion.getId());
-			// cot.setPlanPagosCotizacion(null);
-			// cot.setBanco(null);
 			for (PlanPagosCotizacion plan : cotizacion.getPlanPagosCotizacion()) {
 				plan.setCotizacion(null);
-				// PlanPagosCotizacion xyz = new PlanPagosCotizacion();
-				// xyz.setId(plan.getId());
-				// xyz.setCotizacion(cot);
 				plan = em.merge(plan);
 				em.remove(plan);
 			}
 		}
 		Cotizacion cotizacionP = calcularPrestamo(cotizacion);
 
-		// Previamente Borrar
-
 		cotizacionP = em.merge(cotizacionP);
-		// em.persist(cotizacionP);
 
 		// Cotizacion
 		Cotizacion cotizacionDTO = new Cotizacion();
@@ -134,18 +126,66 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 	}
 
 	@Override
-	public void emitirCredito(Long idCotizacion) {
+	public void emitirCredito(Cotizacion cotizacionI) throws Exception {
+		
+		Long idCotizacion = cotizacionI.getId();
+		Cotizacion cotiP = em.find(Cotizacion.class, idCotizacion);
+		if(cotiP.getEstado()!=null && cotiP.getEstado() != 'O'){
+			throw new Exception("No ha sido validado la cotización");
+		}
 		String nroPrestamo = "PRE" + Tools.getInstance().date2String(new Date());
 		Contrato contrato = new Contrato();
 		contrato.setNroPrestamo(nroPrestamo);
-		contrato.setFechaLiquidacion(new Date());
+		contrato.setFechaEmision(new Date());
+        
+		Cotizacion cotizacion = calcularPrestamo(cotiP);
+		contrato.setNombreCompleto(cotizacion.getNombreCompleto());
+		contrato.setCapacidadPago(cotizacion.getCapacidadPago());
+		contrato.setEdadActual(cotizacion.getEdadActual());
+		contrato.setNroCotizacion(cotizacion.getNroCotizacion());
+		contrato.setFechaNacimiento(cotizacion.getFechaNacimiento());
+		contrato.setFechaCotizacion(cotizacion.getFechaCotizacion());
+		contrato.setIngresoBase(cotizacion.getIngresoBase());
+		contrato.setMontoBaseCouta(cotizacion.getMontoBaseCouta());
+		contrato.setNroCuotas(cotizacion.getNroCuotas());
+		contrato.setMontoPrestamo(cotizacion.getMontoPrestamo());
+		Banco banco =  new Banco();
+		banco.setId(cotizacion.getBanco().getId());
+		contrato.setBanco(banco);
+		contrato.setDocumentoIdentidad(cotizacion.getDocumentoIdentidad());
+		List<PlanPagosContrato> planesContrato = new ArrayList<PlanPagosContrato>(); 
+		for (PlanPagosCotizacion planCoti : cotizacion.getPlanPagosCotizacion()) {
+			PlanPagosContrato plan = new PlanPagosContrato();
+			plan.setId(planCoti.getId());
+			plan.setNroCuota(planCoti.getNroCuota());
+			plan.setMontoCapital(planCoti.getMontoCapital());
+			plan.setInteres(planCoti.getInteres());
+			plan.setPrimaDesgravamen(planCoti.getPrimaDesgravamen());
+			plan.setTotalCuota(planCoti.getTotalCuota());
+			plan.setFechaVencimiento(planCoti.getFechaVencimiento());
+			plan.setSaldoCapital(planCoti.getSaldoCapital());
+			plan.setFechaPago(planCoti.getFechaPago());
+			plan.setContrato(contrato);
+			planesContrato.add(plan);
+		}
+		contrato.setPlanPagosCotnrato(planesContrato);
+		em.persist(contrato);
 		
+		// Borrar cotizacion
+		for (PlanPagosCotizacion plan : cotizacionI.getPlanPagosCotizacion()) {
+			plan.setCotizacion(null);
+			plan = em.merge(plan);
+			em.remove(plan);
+		}
+		cotiP.setPlanPagosCotizacion(new ArrayList<PlanPagosCotizacion>());
+		em.remove(cotiP);
 		
 	}
 
 	@Override
 	public List<Banco> getBancos() {
 		Query query = em.createQuery("SELECT b FROM Banco b", Banco.class);
+		@SuppressWarnings("unchecked")
 		List<Banco> bancosP = query.getResultList();
 		List<Banco> bancosDTO = new ArrayList<Banco>();
 		for (Banco bancoP : bancosP) {
@@ -186,7 +226,6 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			Double montoCuota = montoCapital + montoInteres + primaDesgravamen;
 			saldoCapital = saldoCapital - montoCapital;
 			PlanPagosCotizacion pago = new PlanPagosCotizacion();
-			// pago.setFechaPago();
 			pago.setFechaVencimiento(Tools.addToDate(cotizacion.getFechaCotizacion(), 0, quota, 0));
 			pago.setInteres(montoInteres.floatValue());
 			pago.setPrimaDesgravamen(primaDesgravamen.floatValue());

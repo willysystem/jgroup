@@ -20,5 +20,5 @@ public interface CotizacionServiceAsync {
 	
 	public void getBancos(AsyncCallback<List<Banco>> async);
 	
-	public void emitirCredito(Long idCotizacion, AsyncCallback<Void> async);
+	public void emitirCredito(Cotizacion cotizacion, AsyncCallback<Void> async);
 }

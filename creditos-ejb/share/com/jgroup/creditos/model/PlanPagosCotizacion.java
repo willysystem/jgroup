@@ -29,7 +29,7 @@ public class PlanPagosCotizacion extends PlanPagos implements
 	/**
 	 * @generated
 	 */
-	@javax.persistence.ManyToOne(cascade = CascadeType.MERGE)
+	@javax.persistence.ManyToOne(cascade = {CascadeType.ALL})
 	public Cotizacion getCotizacion() {
 		return this.cotizacion;
 	}

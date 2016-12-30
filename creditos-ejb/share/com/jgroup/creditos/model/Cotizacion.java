@@ -54,7 +54,7 @@ public class Cotizacion extends Prestamo implements java.io.Serializable {
 	/**
 	 * @generated
 	 */
-	@javax.persistence.OneToMany(mappedBy = "cotizacion", cascade = CascadeType.MERGE)
+	@javax.persistence.OneToMany(mappedBy = "cotizacion", cascade = {CascadeType.ALL})
 	public java.util.List<PlanPagosCotizacion> getPlanPagosCotizacion() {
 		return this.planPagosCotizacion;
 	}
