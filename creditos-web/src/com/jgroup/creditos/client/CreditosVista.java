@@ -10,10 +10,12 @@ import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -21,7 +23,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -29,8 +30,6 @@ import com.jgroup.creditos.mensajes.MensageError;
 import com.jgroup.creditos.model.Contrato;
 import com.jgroup.creditos.model.PlanPagosContrato;
 import com.jgroup.creditos.pdf.PlanPagosPDF;
-import com.jgroup.creditos.validacion.KeyUpFloatValidation;
-import com.jgroup.creditos.validacion.KeyUpIntegerValidation;
 
 /**
  * @author willy
@@ -39,18 +38,20 @@ public class CreditosVista extends VerticalPanel {
 
 	private DataGrid<PlanPagosContrato> dataGrid = null;
 
-	private TextBox nombreTextBox = new TextBox();
-	private TextBox capacidadPagoTextBox = new TextBox();
-	private TextBox edadActualTextBox = new TextBox();
-	private Label nroContrato = new Label();
-	private DateBox fechaNacimientoDateBox = new DateBox();
+	private Label nombreLabel = new Label();
+	private Label capacidadPagoLabel = new Label();
+	private Label edadActualLabel = new Label();
+	private Label nroContratoLabel = new Label();
+	private Label fechaNacimientoLabel = new Label();
 	private Label fechaContratoLabel = new Label();
-	private TextBox ingresoBaseTextBox = new TextBox();
-	private TextBox montoBaseCuotaTextBox = new TextBox();
-	private TextBox nroCuotasTextBox = new TextBox();
+	private Label ingresoBaseLabel = new Label();
+	private Label montoBaseCuotaLabel = new Label();
+	private Label nroCuotasLabel = new Label();
 	private Label montoPrestamoLabel = new Label();
 	private Label bancoLabel = new Label();
-	private TextBox documentoIdentidadTextBox = new TextBox();
+	private Label documentoIdentidadLabel = new Label();
+	private Label fechaEmisionLabel = new Label();
+	private Label nroPrestamoLabel = new Label();
 	
 	private PlanPagosPDF planPagosPDF;
 
@@ -62,13 +63,6 @@ public class CreditosVista extends VerticalPanel {
 
 		// Estilos
 		setSize("100%", "100%");
-
-		// Adicion de escuchadores para validacion
-		capacidadPagoTextBox.addKeyUpHandler(new KeyUpFloatValidation(capacidadPagoTextBox));
-		edadActualTextBox.addKeyUpHandler(new KeyUpIntegerValidation(edadActualTextBox));
-		ingresoBaseTextBox.addKeyUpHandler(new KeyUpFloatValidation(ingresoBaseTextBox));
-		montoBaseCuotaTextBox.addKeyUpHandler(new KeyUpFloatValidation(montoBaseCuotaTextBox));
-		nroCuotasTextBox.addKeyUpHandler(new KeyUpIntegerValidation(nroCuotasTextBox));
 		
 		// Cargar script
 		planPagosPDF = new PlanPagosPDF();
@@ -120,35 +114,36 @@ public class CreditosVista extends VerticalPanel {
 		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
 		FlexTable layout = new FlexTable();
-		// FlexCellFormatter formatter = layout.getFlexCellFormatter();
+		FlexCellFormatter formatter = layout.getFlexCellFormatter();
+		formatter.setWidth(0, 1, "200px");
 		layout.setCellSpacing(5);
 
 		layout.setHTML(0, 0, "Nombre Completo:");
-		layout.setWidget(0, 1, nombreTextBox);
+		layout.setWidget(0, 1, nombreLabel);
 
 		layout.setHTML(0, 2, "Capacidad de Pago:");
-		layout.setWidget(0, 3, capacidadPagoTextBox);
+		layout.setWidget(0, 3, capacidadPagoLabel);
 
 		layout.setHTML(1, 0, "Edad Actual:");
-		layout.setWidget(1, 1, edadActualTextBox);
+		layout.setWidget(1, 1, edadActualLabel);
 
 		layout.setHTML(1, 2, "Nro Cotización:");
-		layout.setWidget(1, 3, nroContrato);
+		layout.setWidget(1, 3, nroContratoLabel);
 
 		layout.setHTML(2, 0, "Fecha Nacimiento:");
-		layout.setWidget(2, 1, fechaNacimientoDateBox);
+		layout.setWidget(2, 1, fechaNacimientoLabel);
 
 		layout.setHTML(2, 2, "Fecha Cotización:");
 		layout.setWidget(2, 3, fechaContratoLabel);
 
 		layout.setHTML(3, 0, "Ingreso Base:");
-		layout.setWidget(3, 1, ingresoBaseTextBox);
+		layout.setWidget(3, 1, ingresoBaseLabel);
 
 		layout.setHTML(3, 2, "Monto Base Couta:");
-		layout.setWidget(3, 3, montoBaseCuotaTextBox);
+		layout.setWidget(3, 3, montoBaseCuotaLabel);
 
 		layout.setHTML(4, 0, "Numero Cuotas:");
-		layout.setWidget(4, 1, nroCuotasTextBox);
+		layout.setWidget(4, 1, nroCuotasLabel);
 
 		layout.setHTML(4, 2, "Monto Prestamo:");
 		layout.setWidget(4, 3, montoPrestamoLabel);
@@ -157,7 +152,13 @@ public class CreditosVista extends VerticalPanel {
 		layout.setWidget(5, 1, bancoLabel);
 		
 		layout.setHTML(5, 2, "Documento Identidad:");
-		layout.setWidget(5, 3, documentoIdentidadTextBox);
+		layout.setWidget(5, 3, documentoIdentidadLabel);
+		
+		layout.setHTML(6, 0, "Fecha Emisión:");
+		layout.setWidget(6, 1, fechaEmisionLabel);
+		
+		layout.setHTML(6, 2, "Nro Prestamo:");
+		layout.setWidget(6, 3, nroPrestamoLabel);
 		
 		verticalPanel.add(layout);
 
@@ -234,12 +235,11 @@ public class CreditosVista extends VerticalPanel {
 		dataGrid.addColumn(totalCuota, "Total Cuota");
 
 		TextColumn<PlanPagosContrato> fechaVencimiento = new TextColumn<PlanPagosContrato>() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public String getValue(PlanPagosContrato object) {
 				String value = "";
 				if (object.getFechaVencimiento() != null) {
-					value = DateTimeFormat.getShortDateFormat().format(object.getFechaVencimiento());
+					value = DateTimeFormat.getFormat("dd/MM/yyyy").format(object.getFechaVencimiento());
 				}
 				return value;
 			}
@@ -259,17 +259,28 @@ public class CreditosVista extends VerticalPanel {
 		dataGrid.addColumn(saldoCapital, "Saldo Capital");
 
 		TextColumn<PlanPagosContrato> fechaPago = new TextColumn<PlanPagosContrato>() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public String getValue(PlanPagosContrato object) {
 				String value = "";
 				if (object.getFechaPago() != null) {
-					value = DateTimeFormat.getShortDateFormat().format(object.getFechaPago());
+					value = DateTimeFormat.getFormat("dd/MM/yyyy").format(object.getFechaPago());
 				}
 				return value;
 			}
 		};
 		dataGrid.addColumn(fechaPago, "Fecha Pago");
+		
+		TextColumn<PlanPagosContrato> nroRecibo = new TextColumn<PlanPagosContrato>() {
+			@Override
+			public String getValue(PlanPagosContrato object) {
+				String value = "";
+				if (object.getNroRecibo() != null) {
+					value = object.getNroRecibo();
+				}
+				return value;
+			}
+		};
+		dataGrid.addColumn(nroRecibo, "Nro Recibo");
 
 		// Add a selection model to handle user selection.
 		final SingleSelectionModel<PlanPagosContrato> selectionModel = new SingleSelectionModel<PlanPagosContrato>();
@@ -306,6 +317,15 @@ public class CreditosVista extends VerticalPanel {
 			}
 		});
 		horizontalPanel2.add(exportPdfButton);
+		
+		Button imprimirButton = new Button("Imprimir");
+		imprimirButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.open("http://www.google.com", "_black", "");
+			}
+		});
+		horizontalPanel2.add(imprimirButton);
 
 		verticalPanel2.add(horizontalPanel2);
 
@@ -316,42 +336,41 @@ public class CreditosVista extends VerticalPanel {
 
 	public void setContrato(Contrato contrato) {
 		if (contrato.getNombreCompleto() != null)
-			nombreTextBox.setValue(contrato.getNombreCompleto());
+			nombreLabel.setText(contrato.getNombreCompleto());
 		else
-			nombreTextBox.setValue("");
+			nombreLabel.setText("");
 		if (contrato.getCapacidadPago() != null)
-			capacidadPagoTextBox.setValue(contrato.getCapacidadPago() + "");
+			capacidadPagoLabel.setText(NumberFormat.getFormat("#.00").format(contrato.getCapacidadPago()));
 		else
-			capacidadPagoTextBox.setValue("");
+			capacidadPagoLabel.setText("");
 		if (contrato.getEdadActual() != null)
-			edadActualTextBox.setValue(contrato.getEdadActual() + "");
+			edadActualLabel.setText(contrato.getEdadActual() + "");
 		else
-			edadActualTextBox.setValue("");
+			edadActualLabel.setText("");
 		if (contrato.getNroPrestamo() != null)
-			nroContrato.setText(contrato.getNroPrestamo());
+			nroContratoLabel.setText(contrato.getNroPrestamo());
 		else
-			nroContrato.setText("");
+			nroContratoLabel.setText("");
 		if (contrato.getFechaNacimiento() != null)
-			fechaNacimientoDateBox.setValue(contrato.getFechaNacimiento());
+			fechaNacimientoLabel.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(contrato.getFechaNacimiento()));
 		else
-			fechaNacimientoDateBox.setValue(null);
-		;
+			fechaNacimientoLabel.setText("");
 		if (contrato.getFechaEmision() != null)
 			fechaContratoLabel.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(contrato.getFechaEmision()));
 		else
 			fechaContratoLabel.setText("");
 		if (contrato.getIngresoBase() != null)
-			ingresoBaseTextBox.setValue(contrato.getIngresoBase() + "");
+			ingresoBaseLabel.setText(NumberFormat.getFormat("#.00").format(contrato.getIngresoBase()));
 		else
-			ingresoBaseTextBox.setValue("");
+			ingresoBaseLabel.setText("");
 		if (contrato.getMontoBaseCouta() != null)
-			montoBaseCuotaTextBox.setValue(contrato.getMontoBaseCouta() + "");
+			montoBaseCuotaLabel.setText(NumberFormat.getFormat("#.00").format(contrato.getMontoBaseCouta()));
 		else
-			montoBaseCuotaTextBox.setValue("");
+			montoBaseCuotaLabel.setText("");
 		if (contrato.getNroCuotas() != null)
-			nroCuotasTextBox.setValue(contrato.getNroCuotas() + "");
+			nroCuotasLabel.setText(contrato.getNroCuotas()+"");
 		else
-			nroCuotasTextBox.setValue("");
+			nroCuotasLabel.setText("");
 		if (contrato.getMontoPrestamo() != null)
 			montoPrestamoLabel.setText(contrato.getMontoPrestamo() + "");
 		else
@@ -361,6 +380,18 @@ public class CreditosVista extends VerticalPanel {
 			bancoLabel.setText(contrato.getBanco().getNombre());
 		else
 			bancoLabel.setText("");
+		if(contrato.getDocumentoIdentidad() != null)
+			documentoIdentidadLabel.setText(contrato.getDocumentoIdentidad());
+		else 
+			documentoIdentidadLabel.setText("");
+		if(contrato.getFechaEmision() != null)
+			fechaEmisionLabel.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(contrato.getFechaEmision()));
+		else 
+			fechaEmisionLabel.setText("");
+		if(contrato.getNroPrestamo() != null)
+			nroPrestamoLabel.setText(contrato.getNroPrestamo());
+		else 
+			nroPrestamoLabel.setText("");
 		
 		dataGrid.setRowData(contrato.getPlanPagosCotnrato());
 	}

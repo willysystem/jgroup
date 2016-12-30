@@ -12,6 +12,7 @@ import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
@@ -34,7 +35,6 @@ import com.jgroup.creditos.mensajes.MensageError;
 import com.jgroup.creditos.mensajes.MensageExito;
 import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Cotizacion;
-import com.jgroup.creditos.model.PlanPagosContrato;
 import com.jgroup.creditos.model.PlanPagosCotizacion;
 import com.jgroup.creditos.pdf.PlanPagosPDF;
 import com.jgroup.creditos.validacion.KeyUpFloatValidation;
@@ -75,7 +75,7 @@ public class CotizacionVista extends VerticalPanel {
 	private MensageConfirmacion mensageConfirmacion = null;
 
 	public void init() {
-
+		
 		// Estilos
 		setSize("100%", "100%");
 
@@ -405,6 +405,15 @@ public class CotizacionVista extends VerticalPanel {
 			}
 		});
 		horizontalPanel2.add(exportPdfButton);
+		
+		Button imprimirButton = new Button("Imprimir");
+		imprimirButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.open("http://www.google.com", "_black", "");
+			}
+		});
+		horizontalPanel2.add(imprimirButton);
 
 		emitirButton = new Button("Emitir");
 		emitirButton.setEnabled(false);
@@ -422,7 +431,19 @@ public class CotizacionVista extends VerticalPanel {
 							@Override
 							public void onSuccess(Void result) {
 								new MensageExito("Emisión existosa").show();
-								mensageConfirmacion.hide();							
+								nombreTextBox.setValue("");
+								capacidadPagoTextBox.setValue("");
+								edadActualTextBox.setValue("");
+								nroCotizacion.setText("");
+								fechaNacimientoDateBox.setValue(null);
+								fechaCotizacionLabel.setText("");
+								ingresoBaseTextBox.setText("");
+								montoBaseCuotaTextBox.setText("");
+								nroCuotasTextBox.setValue("");
+								montoPrestamoLabel.setText("");
+								bancoListBox.setSelectedIndex(0);
+								documentoIdentidadTextBox.setValue("");
+								mensageConfirmacion.hide();
 							}
 						});
 					}
@@ -497,6 +518,11 @@ public class CotizacionVista extends VerticalPanel {
 		} else {
 			bancoListBox.setSelectedIndex(0);
 		}
+		if(cotizacion.getDocumentoIdentidad() != null)
+			documentoIdentidadTextBox.setValue(cotizacion.getDocumentoIdentidad());
+		else 
+			documentoIdentidadTextBox.setValue("");
+		
 		dataGrid.setRowData(cotizacion.getPlanPagosCotizacion());
 		this.cotizacion = cotizacion;
 	}

@@ -76,9 +76,13 @@ public class ServicioCreditoImpl implements ServicioCredito {
 		contrato.setMontoBaseCouta(contratoP.getMontoBaseCouta());
 		contrato.setNroCuotas(contratoP.getNroCuotas());
 		contrato.setMontoPrestamo(contratoP.getMontoPrestamo());
-		
-		contrato.setFechaEmision(contrato.getFechaEmision());
-		contrato.setNroPrestamo(contrato.getNroPrestamo());
+		contrato.setDocumentoIdentidad(contratoP.getDocumentoIdentidad());
+		Banco banco =  new Banco();
+		banco.setId(contratoP.getBanco().getId());
+		banco.setNombre(contratoP.getBanco().getNombre());
+		contrato.setBanco(banco);
+		contrato.setFechaEmision(contratoP.getFechaEmision());
+		contrato.setNroPrestamo(contratoP.getNroPrestamo());
 		
 		List<PlanPagosContrato> planes = contratoP.getPlanPagosCotnrato();
 		List<PlanPagosContrato> planesDTO = new ArrayList<PlanPagosContrato>();
