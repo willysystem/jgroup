@@ -31,6 +31,7 @@ import com.jgroup.creditos.model.Contrato;
 import com.jgroup.creditos.model.PlanPagosContrato;
 import com.jgroup.creditos.pdf.PlanPagosPDF;
 
+
 /**
  * @author willy
  */
