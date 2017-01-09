@@ -3,7 +3,12 @@ package com.sinergia.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.RootPanel;
-
+/**
+ * Módulo de prueba GWT. 
+ * 
+ * @author willy
+ *
+ */
 public class Index implements EntryPoint {
 
 	@Override
