@@ -130,7 +130,34 @@ html>body .gwt-DecoratedTabBar {
   border-width: 0px 1px 1px;
   overflow: hidden;
   padding: 6px;
+} 
+
+.gwt-DisclosurePanel {
 }
 
- 
+.gwt-DisclosurePanel-open {
+}
 
+.gwt-DisclosurePanel-closed {
+}
+
+.gwt-DisclosurePanel .header,
+.gwt-DisclosurePanel .header a,
+.gwt-DisclosurePanel .header td {
+  text-decoration: none;  /* Remove underline from header */
+  color: black;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-DisclosurePanel .content {
+  border-left: 3px solid #e7e7e7;
+  padding: 4px 0px 4px 8px;
+  margin-left: 6px;
+}
+
+.bordeFormulario {
+	border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}

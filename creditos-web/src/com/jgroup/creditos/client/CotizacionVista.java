@@ -15,7 +15,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -60,7 +60,6 @@ public class CotizacionVista extends VerticalPanel {
 	private ListBox bancoListBox = new ListBox();
 	private TextBox documentoIdentidadTextBox = new TextBox();
 	
-
 	private Button emitirButton;
 
 	private Cotizacion cotizacion;
@@ -77,7 +76,7 @@ public class CotizacionVista extends VerticalPanel {
 	public void init() {
 		
 		// Estilos
-		setSize("100%", "100%");
+		//setSize("100%", "100%");
 
 		// Adicion de escuchadores para validacion
 		capacidadPagoTextBox.addKeyUpHandler(new KeyUpFloatValidation(capacidadPagoTextBox));
@@ -121,10 +120,14 @@ public class CotizacionVista extends VerticalPanel {
 	public CotizacionVista() {
 
 		init();
+		this.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
 
 		// 1. Busqueda
-		CaptionPanel captionPanel = new CaptionPanel();
-		captionPanel.setCaptionHTML("<b>Buscar</b>");
+		DisclosurePanel captionPanel = new DisclosurePanel("Buscar");
+		captionPanel.setOpen(true);
+		captionPanel.setAnimationEnabled(true);
+		captionPanel.ensureDebugId("cwDisclosurePanel");
+		
 
 		buscarTextBox = new TextBox();
 		Button nuevoButton = new Button("Nuevo");
@@ -143,7 +146,6 @@ public class CotizacionVista extends VerticalPanel {
 					public void onFailure(Throwable caught) {
 						new MensageError(caught.getMessage()).show();
 					}
-
 					@Override
 					public void onSuccess(List<Cotizacion> result) {
 						new BusquedaCotizacion(CotizacionVista.this, result);
@@ -157,20 +159,19 @@ public class CotizacionVista extends VerticalPanel {
 		horizontalPanel.add(buscarTextBox);
 		horizontalPanel.add(buscarButton);
 		horizontalPanel.add(nuevoButton);
-		captionPanel.add(horizontalPanel);
+		captionPanel.setContent(horizontalPanel);
 
 		this.add(captionPanel);
 
 		// 2. Cotización
-		captionPanel = new CaptionPanel();
-		captionPanel.setCaptionHTML("<b>Cotización</b>");
+		captionPanel = new DisclosurePanel("Cotización");
+		captionPanel.setOpen(true);
+		captionPanel.setAnimationEnabled(true);
 
 		VerticalPanel verticalPanel = new VerticalPanel();
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
 		FlexTable layout = new FlexTable();
-		// FlexCellFormatter formatter = layout.getFlexCellFormatter();
 		layout.setCellSpacing(5);
 
 		layout.setHTML(0, 0, "Nombre Completo:");
@@ -261,17 +262,17 @@ public class CotizacionVista extends VerticalPanel {
 		});
 		verticalPanel.add(cotizarButton);
 
-		captionPanel.add(verticalPanel);
+		captionPanel.setContent(verticalPanel);
 
 		this.add(captionPanel);
 
 		// 3. Plan de Pagos
-		captionPanel = new CaptionPanel();
-		captionPanel.setCaptionHTML("<b>Plan de Pagos</b>");
-
+		captionPanel = new DisclosurePanel("Plan de Pagos");
+		captionPanel.setOpen(true);
+		captionPanel.setAnimationEnabled(true);
+		
 		dataGrid = new DataGrid<PlanPagosCotizacion>();
 		dataGrid.setWidth("100%");
-		dataGrid.setColumnWidth(0, "100px");
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
 
 		ListHandler<Cotizacion> sortHandler = new ListHandler<Cotizacion>(dataProvider.getList());
@@ -283,6 +284,7 @@ public class CotizacionVista extends VerticalPanel {
 				return "" + object.getNroCuota();
 			}
 		};
+		dataGrid.setColumnWidth(0, "80px");
 		dataGrid.addColumn(nroCuota, "Nro Cuota");
 
 		TextColumn<PlanPagosCotizacion> montoCapital = new TextColumn<PlanPagosCotizacion>() {
@@ -295,6 +297,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		dataGrid.setColumnWidth(1, "100px");
 		dataGrid.addColumn(montoCapital, "Monto Capital");
 
 		TextColumn<PlanPagosCotizacion> intereses = new TextColumn<PlanPagosCotizacion>() {
@@ -307,6 +310,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		dataGrid.setColumnWidth(2, "100px");
 		dataGrid.addColumn(intereses, "Intereses");
 
 		TextColumn<PlanPagosCotizacion> desgravamen = new TextColumn<PlanPagosCotizacion>() {
@@ -319,6 +323,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		dataGrid.setColumnWidth(3, "100px");
 		dataGrid.addColumn(desgravamen, "Desgravamen");
 
 		TextColumn<PlanPagosCotizacion> totalCuota = new TextColumn<PlanPagosCotizacion>() {
@@ -331,6 +336,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		dataGrid.setColumnWidth(4, "100px");
 		dataGrid.addColumn(totalCuota, "Total Cuota");
 
 		TextColumn<PlanPagosCotizacion> fechaVencimiento = new TextColumn<PlanPagosCotizacion>() {
@@ -344,6 +350,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		dataGrid.setColumnWidth(5, "100px");
 		dataGrid.addColumn(fechaVencimiento, "Fecha Vencimiento");
 
 		TextColumn<PlanPagosCotizacion> saldoCapital = new TextColumn<PlanPagosCotizacion>() {
@@ -356,6 +363,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		dataGrid.setColumnWidth(6, "100px");
 		dataGrid.addColumn(saldoCapital, "Saldo Capital");
 
 		// Add a selection model to handle user selection.
@@ -370,21 +378,19 @@ public class CotizacionVista extends VerticalPanel {
 		dataGrid.setRowCount(0, true);
 
 		VerticalPanel verticalPanel2 = new VerticalPanel();
-		verticalPanel2.setSize("100%", "100%");
-		verticalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
 		SimpleLayoutPanel slp = new SimpleLayoutPanel();
-		slp.setSize("100%", "400px");
+		slp.setSize("900px", "400px");
 		slp.add(dataGrid);
 		verticalPanel2.add(slp);
 
 		HorizontalPanel horizontalPanel2 = new HorizontalPanel();
+		horizontalPanel2.setWidth("900px");
 		horizontalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		horizontalPanel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
 		Button exportPdfButton = new Button("Exportar en PDF");
 		exportPdfButton.addClickHandler(new ClickHandler() {
+	
 			@Override
 			public void onClick(ClickEvent event) {
 				String titulos[] = { "Nro Cuota", "Monto Capital", "Intereses", "Desgravamen", "Total Cuota", "Fecha Vencimiento", "Saldo Capital"};
@@ -454,7 +460,7 @@ public class CotizacionVista extends VerticalPanel {
 
 		verticalPanel2.add(horizontalPanel2);
 
-		captionPanel.add(verticalPanel2);
+		captionPanel.setContent(verticalPanel2);
 
 		this.add(captionPanel);
 	}
@@ -525,6 +531,8 @@ public class CotizacionVista extends VerticalPanel {
 		
 		dataGrid.setRowData(cotizacion.getPlanPagosCotizacion());
 		this.cotizacion = cotizacion;
+		emitirButton.setEnabled(true);
 	}
+
 
 }

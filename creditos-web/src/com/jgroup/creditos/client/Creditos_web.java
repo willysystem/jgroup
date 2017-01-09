@@ -2,6 +2,7 @@ package com.jgroup.creditos.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
@@ -13,8 +14,9 @@ public class Creditos_web implements EntryPoint {
 	public void onModuleLoad() {
 		
 	    TabLayoutPanel tabPanel = new TabLayoutPanel(2.5, Unit.EM);
-	    tabPanel.setSize("1000px", "1000px");
-	    tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
+	    
+	    tabPanel.setPixelSize(Window.getClientWidth()-30, Window.getClientHeight()+100);
+	    //tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 
 	    String[] tabTitles = {"Cotización", "Crédito"};
 	    tabPanel.add(new CotizacionVista(), tabTitles[0]);

@@ -63,7 +63,7 @@ public class CreditosVista extends VerticalPanel {
 	public void init() {
 
 		// Estilos
-		setSize("100%", "100%");
+		//setSize("100%", "100%");
 		
 		// Cargar script
 		planPagosPDF = new PlanPagosPDF();
@@ -295,12 +295,12 @@ public class CreditosVista extends VerticalPanel {
 		dataGrid.setRowCount(0, true);
 
 		VerticalPanel verticalPanel2 = new VerticalPanel();
-		verticalPanel2.setSize("100%", "100%");
+		//verticalPanel2.setSize("100%", "100%");
 		verticalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
 		SimpleLayoutPanel slp = new SimpleLayoutPanel();
-		slp.setSize("100%", "400px");
+		slp.setSize("900px", "400px");
 		slp.add(dataGrid);
 		verticalPanel2.add(slp);
 
