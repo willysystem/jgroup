@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.jgroup.creditos.dao.BancoDAO;
 import com.jgroup.creditos.endpoint.ServicioCotizacion;
 import com.jgroup.creditos.finance.FinanceCalculator;
 import com.jgroup.creditos.model.Banco;
@@ -23,6 +25,9 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 
 	@PersistenceContext(unitName = "PUnitCreditos")
 	private EntityManager em;
+
+	@EJB
+	private BancoDAO bancoDao; 
 
 	@Override
 	public List<Cotizacion> buscarCotizacion(String nroDocumento) {
@@ -261,5 +266,42 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 		}
 
 		return planesDTO;
+	}
+
+	@Override
+	public void nuevoBanco(Banco banco) throws Exception {
+		bancoDao.persist(banco);
+	}
+
+	@Override
+	public Banco actualizarBanco(Banco banco) throws Exception {
+		
+		Banco bancoP = em.find(Banco.class, banco.getId());
+		bancoP.setNombre(banco.getNombre());
+		bancoP.setTasaInteres(banco.getTasaInteres());
+		bancoP.setPrimaDesgravamen(banco.getPrimaDesgravamen());
+		
+		Banco bancoM = bancoDao.merge(bancoP);
+		
+		// Serializacion
+		Banco bancoDTO = new Banco();
+		bancoDTO.setId(bancoM.getId());
+		bancoDTO.setNombre(bancoM.getNombre());
+		bancoDTO.setTasaInteres(bancoM.getTasaInteres());
+		bancoDTO.setPrimaDesgravamen(bancoM.getPrimaDesgravamen());
+		return bancoDTO;
+	}
+
+	@Override
+	public void eliminarBanco(Long bancoId) throws Exception {
+		Banco bancoP = em.find(Banco.class, bancoId);
+		if(bancoP == null) {
+			throw new Exception("Banco no existe en la base de datos");
+		}
+		if(bancoP.getCotizacion().size() > 0){
+			throw new Exception("Este banco ya tiene cotizaciones o créditos asociados");
+		}
+		bancoDao.delete(Banco.class, bancoId);
+		
 	}
 }

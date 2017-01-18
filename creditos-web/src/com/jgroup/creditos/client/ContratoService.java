@@ -1,5 +1,6 @@
 package com.jgroup.creditos.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -30,5 +31,9 @@ public interface ContratoService extends RemoteService {
 	public List<Contrato> buscarContrato(String nroDocumento) throws Exception; 
 
 	public Contrato getContrato(Long contratoId);
+	
+	public void modificarCredito(Long contratoId, Date fechaEmision, Date fechaLiquidacion, String nroPrestamo) throws Exception;
+	
+	public void modificarPlanPagosCredito(Long planPagosId, Date fechaPago, String nroRecibo) throws Exception;
 	
 }

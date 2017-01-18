@@ -1,13 +1,16 @@
 package com.jgroup.creditos.servicios;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.jgroup.creditos.dao.ContratoDAO;
 import com.jgroup.creditos.endpoint.ServicioCredito;
 import com.jgroup.creditos.model.Banco;
 import com.jgroup.creditos.model.Contrato;
@@ -18,6 +21,9 @@ public class ServicioCreditoImpl implements ServicioCredito {
 
 	@PersistenceContext(unitName = "PUnitCreditos")
 	private EntityManager em;
+	
+	@EJB
+	private ContratoDAO contratoDAO;
 
 	@Override
 	public List<Contrato> buscarCredito(String nroDocumento) {
@@ -103,5 +109,21 @@ public class ServicioCreditoImpl implements ServicioCredito {
 		contrato.setPlanPagosCotnrato(planesDTO);
 		
 		return contrato;
+	}
+
+	@Override
+	public void modificarCredito(Long contratoId, Date fechaEmision, Date fechaLiquidacion, String nroPrestamo) throws Exception {
+		Contrato contrato = em.find(Contrato.class, contratoId);
+		contrato.setFechaEmision(fechaEmision);
+		contrato.setFechaLiquidacion(fechaLiquidacion);
+		contrato.setNroPrestamo(nroPrestamo);
+		contratoDAO.merge(contrato);
+	}
+
+	@Override
+	public void modificarPlanPagosCredito(Long planPagosId, Date fechaPago, String nroRecibo) throws Exception {
+		PlanPagosContrato planPagosContrato = em.find(PlanPagosContrato.class, planPagosId);
+		planPagosContrato.setFechaPago(fechaPago);
+		planPagosContrato.setNroRecibo(nroRecibo);
 	}
 }

@@ -39,6 +39,11 @@ public interface CotizacionService extends RemoteService {
 	
 	public void emitirCredito(Cotizacion cotizacionI) throws Exception;
 	
+	public void nuevoBanco(Banco banco) throws Exception;
+	
+	public Banco actualizarBanco(Banco banco) throws Exception;
+	
+	public void eliminarBanco(Long bancoId) throws Exception;
 	
 	
 }

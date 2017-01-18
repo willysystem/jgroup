@@ -1,4 +1,4 @@
-package com.jgroup.creditos.client;
+package com.jgroup.creditos.view;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -26,6 +27,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.jgroup.creditos.client.BusquedaCreditos;
+import com.jgroup.creditos.client.ContratoService;
 import com.jgroup.creditos.mensajes.MensageError;
 import com.jgroup.creditos.model.Contrato;
 import com.jgroup.creditos.model.PlanPagosContrato;
@@ -51,19 +54,23 @@ public class CreditosVista extends VerticalPanel {
 	private Label montoPrestamoLabel = new Label();
 	private Label bancoLabel = new Label();
 	private Label documentoIdentidadLabel = new Label();
-	private Label fechaEmisionLabel = new Label();
-	private Label nroPrestamoLabel = new Label();
+	private DateBox fechaEmisionLabel = new DateBox();
+	private TextBox nroPrestamoTextBox = new TextBox();
+	private DateBox fechaLiquidacionDateBox = new DateBox();
 	
 	private PlanPagosPDF planPagosPDF;
 
 	private ListDataProvider<Contrato> dataProvider = new ListDataProvider<Contrato>();
 
 	private TextBox buscarTextBox;
+	
+	private PlanPagosContrato pagoSeleccionado;
 
 	public void init() {
 
-		// Estilos
-		//setSize("100%", "100%");
+		fechaEmisionLabel.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd/MM/yyyy")));
+		fechaLiquidacionDateBox.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd/MM/yyyy")));
+		nroPrestamoTextBox.setWidth("200px");
 		
 		// Cargar script
 		planPagosPDF = new PlanPagosPDF();
@@ -159,9 +166,13 @@ public class CreditosVista extends VerticalPanel {
 		layout.setWidget(6, 1, fechaEmisionLabel);
 		
 		layout.setHTML(6, 2, "Nro Prestamo:");
-		layout.setWidget(6, 3, nroPrestamoLabel);
+		layout.setWidget(6, 3, nroPrestamoTextBox);
+		
+		layout.setHTML(7, 0, "Fecha Liquidación:");
+		layout.setWidget(7, 1, fechaLiquidacionDateBox);
 		
 		verticalPanel.add(layout);
+		verticalPanel.add(new Button("Guardar"));
 
 		captionPanel.add(verticalPanel);
 
@@ -171,10 +182,19 @@ public class CreditosVista extends VerticalPanel {
 		captionPanel = new CaptionPanel();
 		captionPanel.setCaptionHTML("<b>Plan de Pagos</b>");
 
+		final SingleSelectionModel<PlanPagosContrato> selectionModel = new SingleSelectionModel<PlanPagosContrato>();
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				pagoSeleccionado = selectionModel.getSelectedObject();
+			}
+		});
+		
 		dataGrid = new DataGrid<PlanPagosContrato>();
 		dataGrid.setWidth("100%");
 		dataGrid.setColumnWidth(0, "100px");
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
+		dataGrid.setSelectionModel(selectionModel);
 
 		ListHandler<Contrato> sortHandler = new ListHandler<Contrato>(dataProvider.getList());
 		dataGrid.addColumnSortHandler(sortHandler);
@@ -282,16 +302,6 @@ public class CreditosVista extends VerticalPanel {
 			}
 		};
 		dataGrid.addColumn(nroRecibo, "Nro Recibo");
-
-		// Add a selection model to handle user selection.
-		final SingleSelectionModel<PlanPagosContrato> selectionModel = new SingleSelectionModel<PlanPagosContrato>();
-		dataGrid.setSelectionModel(selectionModel);
-		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-			public void onSelectionChange(SelectionChangeEvent event) {
-				PlanPagosContrato selected = selectionModel.getSelectedObject();
-				GWT.log("selected: " + selected);
-			}
-		});
 		dataGrid.setRowCount(0, true);
 
 		VerticalPanel verticalPanel2 = new VerticalPanel();
@@ -307,7 +317,21 @@ public class CreditosVista extends VerticalPanel {
 		HorizontalPanel horizontalPanel2 = new HorizontalPanel();
 		horizontalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		horizontalPanel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-
+		
+		Button modificarPagoButton = new Button("Modificar Pago");
+		modificarPagoButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(pagoSeleccionado == null){
+					new MensageError("Necesita elegir un pago").show();
+					return;
+				}
+				
+				
+			}
+		});
+		horizontalPanel2.add(modificarPagoButton);
+		
 		Button exportPdfButton = new Button("Exportar en PDF");
 		exportPdfButton.addClickHandler(new ClickHandler() {
 			@Override
@@ -386,13 +410,13 @@ public class CreditosVista extends VerticalPanel {
 		else 
 			documentoIdentidadLabel.setText("");
 		if(contrato.getFechaEmision() != null)
-			fechaEmisionLabel.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(contrato.getFechaEmision()));
+			fechaEmisionLabel.setValue(contrato.getFechaEmision());
 		else 
-			fechaEmisionLabel.setText("");
+			fechaEmisionLabel.setValue(null);
 		if(contrato.getNroPrestamo() != null)
-			nroPrestamoLabel.setText(contrato.getNroPrestamo());
+			nroPrestamoTextBox.setText(contrato.getNroPrestamo());
 		else 
-			nroPrestamoLabel.setText("");
+			nroPrestamoTextBox.setText("");
 		
 		dataGrid.setRowData(contrato.getPlanPagosCotnrato());
 	}

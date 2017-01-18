@@ -10,13 +10,15 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
+import com.jgroup.creditos.model.Banco;
+
 /**
  * Clase gen�rica para todos de la cual hereda todos los DAOs del proyecto. Adem�s este 
  * inyecta <code>EntityManager</code> y lo hace disponible a todos los DAOs
  * @author Willy Hurtado
  * @param <E>
  */
-//@Stateless
+@Stateless
 public abstract class GenericDAO<E> {
 	
 	@PersistenceContext(unitName="PUnitCreditos")
@@ -41,8 +43,9 @@ public abstract class GenericDAO<E> {
 		return em.createQuery(q).getResultList();
 	}
 	
-	public void delete(E e, Object id){
-		em.find(e.getClass(), id);
+	public void delete(Class clazz, Object id){
+		Banco banco = em.find(clazz, id);
+		em.remove(banco);
 	}
 	
 }

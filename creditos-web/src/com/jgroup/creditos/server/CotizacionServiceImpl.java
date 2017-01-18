@@ -44,4 +44,19 @@ public class CotizacionServiceImpl extends RemoteServiceServlet implements Cotiz
 	public void emitirCredito(Cotizacion cotizacionI) throws Exception {
 		servicioCotizacion.emitirCredito(cotizacionI);
 	}
+
+	@Override
+	public void nuevoBanco(Banco banco) throws Exception {
+		servicioCotizacion.nuevoBanco(banco);
+	}
+
+	@Override
+	public Banco actualizarBanco(Banco banco) throws Exception {
+		return servicioCotizacion.actualizarBanco(banco);
+	}
+
+	@Override
+	public void eliminarBanco(Long bancoId) throws Exception {
+		servicioCotizacion.eliminarBanco(bancoId);
+	}
 }

@@ -39,4 +39,10 @@ public interface ServicioCotizacion {
 	
 	public List<PlanPagosCotizacion> getPlanPagosCotizacion(Long cotizacionId) throws Exception;
 	
+	public void nuevoBanco(Banco banco) throws Exception;
+	
+	public Banco actualizarBanco(Banco banco) throws Exception;
+	
+	public void eliminarBanco(Long bancoId) throws Exception;
+	
 }

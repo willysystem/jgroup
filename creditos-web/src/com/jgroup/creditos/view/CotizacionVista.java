@@ -1,4 +1,4 @@
-package com.jgroup.creditos.client;
+package com.jgroup.creditos.view;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +30,8 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.jgroup.creditos.client.BusquedaCotizacion;
+import com.jgroup.creditos.client.CotizacionService;
 import com.jgroup.creditos.mensajes.MensageConfirmacion;
 import com.jgroup.creditos.mensajes.MensageError;
 import com.jgroup.creditos.mensajes.MensageExito;
@@ -204,8 +206,19 @@ public class CotizacionVista extends VerticalPanel {
 		layout.setHTML(4, 2, "Monto Prestamo:");
 		layout.setWidget(4, 3, montoPrestamoLabel);
 
+		Button bancoCrudModificar = new Button("+");
+		bancoCrudModificar.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				new BancoVista(CotizacionVista.this).show();
+			}
+		});
+		HorizontalPanel horizontalPanel3 = new HorizontalPanel();
+		horizontalPanel3.add(bancoListBox);
+		horizontalPanel3.add(bancoCrudModificar);
+		
 		layout.setHTML(5, 0, "Banco:");
-		layout.setWidget(5, 1, bancoListBox);
+		layout.setWidget(5, 1, horizontalPanel3);
 		
 		layout.setHTML(5, 2, "Documento Identidad:");
 		layout.setWidget(5, 3, documentoIdentidadTextBox);
@@ -323,6 +336,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		desgravamen.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		dataGrid.setColumnWidth(3, "100px");
 		dataGrid.addColumn(desgravamen, "Desgravamen");
 
@@ -363,6 +377,7 @@ public class CotizacionVista extends VerticalPanel {
 				return value;
 			}
 		};
+		saldoCapital.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		dataGrid.setColumnWidth(6, "100px");
 		dataGrid.addColumn(saldoCapital, "Saldo Capital");
 

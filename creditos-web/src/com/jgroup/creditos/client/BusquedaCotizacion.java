@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.jgroup.creditos.model.Cotizacion;
 import com.jgroup.creditos.model.PlanPagosCotizacion;
+import com.jgroup.creditos.view.CotizacionVista;
 
 public class BusquedaCotizacion extends DialogBox {
 	

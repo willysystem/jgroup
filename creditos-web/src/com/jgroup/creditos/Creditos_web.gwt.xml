@@ -30,7 +30,8 @@
   <source path='shared'/>
   <source path='validacion'/>
   <source path='pdf'/>
-  <source path='mensajes'/>  
+  <source path='mensajes'/>
+  <source path='view'/>   
   
   <!-- allow Super Dev Mode -->
   <add-linker name="xsiframe"/>

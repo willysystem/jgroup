@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.jgroup.creditos.model.Contrato;
+import com.jgroup.creditos.view.CreditosVista;
 
 public class BusquedaCreditos extends DialogBox {
 	
