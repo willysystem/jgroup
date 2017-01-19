@@ -45,4 +45,6 @@ public interface ServicioCotizacion {
 	
 	public void eliminarBanco(Long bancoId) throws Exception;
 	
+	public void eliminarCotizacion(Long cotizacionId) throws Exception;
+	
 }

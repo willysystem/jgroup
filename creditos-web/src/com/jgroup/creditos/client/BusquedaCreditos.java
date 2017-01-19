@@ -8,7 +8,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -37,6 +39,12 @@ public class BusquedaCreditos extends DialogBox {
 		
 		DataGrid<Contrato> dataGrid = new DataGrid<Contrato>();
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
+		
+		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+		pager.setPageSize(10);
+		pager.setDisplay(dataGrid);
+		pager.setVisible(true);
 		
 		TextColumn<Contrato> nroPrestamo = new TextColumn<Contrato>() {
 		   @Override
@@ -92,6 +100,7 @@ public class BusquedaCreditos extends DialogBox {
 		slp.setSize("500px", "400px");
 		slp.add(dataGrid);
 		verticalPanel2.add(slp);
+		verticalPanel2.add(pager);
 		
 		HorizontalPanel horizontalPanel2 = new HorizontalPanel();
 		horizontalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);

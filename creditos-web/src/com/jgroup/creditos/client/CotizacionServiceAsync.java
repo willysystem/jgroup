@@ -22,11 +22,12 @@ public interface CotizacionServiceAsync {
 	
 	public void emitirCredito(Cotizacion cotizacion, AsyncCallback<Void> async);
 	
-	
 	public void nuevoBanco(Banco banco, AsyncCallback<Void> call);
 	
 	public void actualizarBanco(Banco banco, AsyncCallback<Banco> call) ;
 	
 	public void eliminarBanco(Long bancoId, AsyncCallback<Void> call);
+	
+	public void eliminarCotizacion(Long cotizacionId, AsyncCallback<Void> call);
 	
 }

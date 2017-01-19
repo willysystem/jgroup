@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "J_PlanPagosContrato")
 @javax.persistence.Entity
 public class PlanPagosContrato extends PlanPagos implements
-		java.io.Serializable {
+		java.io.Serializable, Comparable<PlanPagosContrato> {
 	/**
 	 * @generated
 	 */
@@ -64,5 +64,10 @@ public class PlanPagosContrato extends PlanPagos implements
 	 */
 	public void setInteresMora(Float interesMora) {
 		this.interesMora = interesMora;
+	}
+
+	@Override
+	public int compareTo(PlanPagosContrato o) {
+		return this.getNroCuota().compareTo(o.getNroCuota());
 	}
 }

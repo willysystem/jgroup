@@ -59,4 +59,11 @@ public class CotizacionServiceImpl extends RemoteServiceServlet implements Cotiz
 	public void eliminarBanco(Long bancoId) throws Exception {
 		servicioCotizacion.eliminarBanco(bancoId);
 	}
+
+	@Override
+	public void eliminarCotizacion(Long cotizacionId) throws Exception {
+		servicioCotizacion.eliminarCotizacion(cotizacionId);
+	}
+
+	
 }

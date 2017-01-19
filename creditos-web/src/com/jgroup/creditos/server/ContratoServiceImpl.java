@@ -30,12 +30,12 @@ public class ContratoServiceImpl extends RemoteServiceServlet implements Contrat
 
 	@Override
 	public void modificarCredito(Long contratoId, Date fechaEmision, Date fechaLiquidacion, String nroPrestamo) throws Exception {
-		
+		servicioCredito.modificarCredito(contratoId, fechaEmision, fechaLiquidacion, nroPrestamo);
 	}
 
 	@Override
 	public void modificarPlanPagosCredito(Long planPagosId, Date fechaPago, String nroRecibo) throws Exception {
-		
+		servicioCredito.modificarPlanPagosCredito(planPagosId, fechaPago, nroRecibo);
 	}
 
 }

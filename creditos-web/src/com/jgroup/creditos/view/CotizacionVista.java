@@ -143,16 +143,7 @@ public class CotizacionVista extends VerticalPanel {
 		buscarButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				CotizacionService.Util.getInstance().buscarCotizacion(buscarTextBox.getValue(), new AsyncCallback<List<Cotizacion>>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MensageError(caught.getMessage()).show();
-					}
-					@Override
-					public void onSuccess(List<Cotizacion> result) {
-						new BusquedaCotizacion(CotizacionVista.this, result);
-					}
-				});
+				new BusquedaCotizacion(CotizacionVista.this, buscarTextBox.getValue());
 			}
 		});
 

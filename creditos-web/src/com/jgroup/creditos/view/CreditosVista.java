@@ -1,5 +1,8 @@
 package com.jgroup.creditos.view;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -25,11 +28,13 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.jgroup.creditos.client.BusquedaCreditos;
 import com.jgroup.creditos.client.ContratoService;
 import com.jgroup.creditos.mensajes.MensageError;
+import com.jgroup.creditos.mensajes.MensageExito;
 import com.jgroup.creditos.model.Contrato;
 import com.jgroup.creditos.model.PlanPagosContrato;
 import com.jgroup.creditos.pdf.PlanPagosPDF;
@@ -60,11 +65,27 @@ public class CreditosVista extends VerticalPanel {
 	
 	private PlanPagosPDF planPagosPDF;
 
-	private ListDataProvider<Contrato> dataProvider = new ListDataProvider<Contrato>();
+	private ListDataProvider<PlanPagosContrato> dataProvider = new ListDataProvider<PlanPagosContrato>();
+	
+	private TextColumn<PlanPagosContrato> nroCuota;
+	
+	final ProvidesKey<PlanPagosContrato> KEY_PROVIDER = new ProvidesKey<PlanPagosContrato>() {
+        @Override
+        public Object getKey(PlanPagosContrato item) {
+            return item.getNroCuota();
+        }
+    };
+    
 
 	private TextBox buscarTextBox;
 	
 	private PlanPagosContrato pagoSeleccionado;
+
+	private Contrato contratoSeleccionado;
+	
+	public Contrato getContratoSeleccionado() {
+		return contratoSeleccionado;
+	}
 
 	public void init() {
 
@@ -171,8 +192,28 @@ public class CreditosVista extends VerticalPanel {
 		layout.setHTML(7, 0, "Fecha Liquidación:");
 		layout.setWidget(7, 1, fechaLiquidacionDateBox);
 		
+		Button buttonGuardar = new Button("Guardar");
+		buttonGuardar.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(contratoSeleccionado == null){
+					new MensageError("Tiene que elegir una cotización").show();
+				}
+				ContratoService.Util.getInstance().modificarCredito(contratoSeleccionado.getId(), fechaEmisionLabel.getValue(), fechaLiquidacionDateBox.getValue(), nroPrestamoTextBox.getValue(), new AsyncCallback<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						new MensageExito("Se guardo exitosamente").show();
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						new MensageError(caught.getMessage()).show();
+					}
+				});
+			}
+		});
+		
 		verticalPanel.add(layout);
-		verticalPanel.add(new Button("Guardar"));
+		verticalPanel.add(buttonGuardar);
 
 		captionPanel.add(verticalPanel);
 
@@ -190,23 +231,43 @@ public class CreditosVista extends VerticalPanel {
 			}
 		});
 		
-		dataGrid = new DataGrid<PlanPagosContrato>();
+		dataGrid = new DataGrid<PlanPagosContrato>(KEY_PROVIDER);
 		dataGrid.setWidth("100%");
 		dataGrid.setColumnWidth(0, "100px");
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
 		dataGrid.setSelectionModel(selectionModel);
 
-		ListHandler<Contrato> sortHandler = new ListHandler<Contrato>(dataProvider.getList());
+//		ListHandler<String> sortHandler = new ListHandler<String>(list);
+//		    sortHandler.setComparator(partnerIdColumn, new Comparator<String>() {
+//		        @Override
+//		        public int compare(String o1, String o2) {
+//		            return o1.compareTo(o2);
+//		        }
+//		});
+//		dataGrid.addColumnSortHandler(sortHandler);
+		
+		dataProvider.addDataDisplay(dataGrid);
+		
+		ListHandler<PlanPagosContrato> sortHandler = new ListHandler<PlanPagosContrato>(dataProvider.getList());
 		dataGrid.addColumnSortHandler(sortHandler);
 
-		TextColumn<PlanPagosContrato> nroCuota = new TextColumn<PlanPagosContrato>() {
+		nroCuota = new TextColumn<PlanPagosContrato>() {
 			@Override
 			public String getValue(PlanPagosContrato object) {
 				return "" + object.getNroCuota();
 			}
 		};
+		nroCuota.setSortable(true);
 		dataGrid.addColumn(nroCuota, "Nro Cuota");
 
+		sortHandler.setComparator(nroCuota, new Comparator<PlanPagosContrato>() {
+	        @Override
+	        public int compare(PlanPagosContrato o1, PlanPagosContrato o2) {
+	            return o1.getNroCuota().compareTo(o2.getNroCuota());
+	        }
+	    });
+		
+		
 		TextColumn<PlanPagosContrato> montoCapital = new TextColumn<PlanPagosContrato>() {
 			@Override
 			public String getValue(PlanPagosContrato object) {
@@ -326,7 +387,7 @@ public class CreditosVista extends VerticalPanel {
 					new MensageError("Necesita elegir un pago").show();
 					return;
 				}
-				
+				new PagoModificacionVista(CreditosVista.this, pagoSeleccionado).show();
 				
 			}
 		});
@@ -360,6 +421,7 @@ public class CreditosVista extends VerticalPanel {
 	}
 
 	public void setContrato(Contrato contrato) {
+		this.contratoSeleccionado = contrato;
 		if (contrato.getNombreCompleto() != null)
 			nombreLabel.setText(contrato.getNombreCompleto());
 		else
@@ -417,8 +479,23 @@ public class CreditosVista extends VerticalPanel {
 			nroPrestamoTextBox.setText(contrato.getNroPrestamo());
 		else 
 			nroPrestamoTextBox.setText("");
+		if(contrato.getFechaLiquidacion() != null)
+			fechaLiquidacionDateBox.setValue(contrato.getFechaLiquidacion());
+		else 
+			fechaLiquidacionDateBox.setValue(null);;
 		
-		dataGrid.setRowData(contrato.getPlanPagosCotnrato());
+		//dataGrid.setRowData(contrato.getPlanPagosCotnrato());
+		List<PlanPagosContrato> list = dataProvider.getList();
+		list.clear();
+		
+		List<PlanPagosContrato> pagos = contrato.getPlanPagosCotnrato();
+		
+		Collections.sort(pagos);
+		
+		for (PlanPagosContrato data : pagos) {
+	        list.add(data);
+	    }
+		
 	}
 
 }

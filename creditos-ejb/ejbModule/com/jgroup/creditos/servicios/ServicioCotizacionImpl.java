@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.jgroup.creditos.dao.BancoDAO;
+import com.jgroup.creditos.dao.CotizacionDAO;
 import com.jgroup.creditos.endpoint.ServicioCotizacion;
 import com.jgroup.creditos.finance.FinanceCalculator;
 import com.jgroup.creditos.model.Banco;
@@ -29,6 +30,9 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 	@EJB
 	private BancoDAO bancoDao; 
 
+	@EJB
+	private CotizacionDAO cotizacionDAO;
+	
 	@Override
 	public List<Cotizacion> buscarCotizacion(String nroDocumento) {
 		Query query = null;
@@ -302,6 +306,26 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			throw new Exception("Este banco ya tiene cotizaciones o créditos asociados");
 		}
 		bancoDao.delete(Banco.class, bancoId);
+		
+	}
+
+	@Override
+	public void eliminarCotizacion(Long cotizacionId) throws Exception {
+		Cotizacion cotizacionP = em.find(Cotizacion.class, cotizacionId);
+		if(cotizacionP == null){
+			throw new Exception("No existe cotizacion"); 
+		}
+		
+		List<PlanPagosCotizacion> pagos = getPlanPagosCotizacion(cotizacionId);
+		
+		// Borrar cotizacion
+		for (PlanPagosCotizacion plan : pagos) {
+			plan.setCotizacion(null);
+			plan = em.merge(plan);
+			em.remove(plan);
+		}
+		cotizacionP.setPlanPagosCotizacion(new ArrayList<PlanPagosCotizacion>());
+		em.remove(cotizacionP);
 		
 	}
 }

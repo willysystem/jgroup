@@ -72,6 +72,7 @@ public class ServicioCreditoImpl implements ServicioCredito {
 		Contrato contratoP = em.find(Contrato.class, contratoId);
 		
 		Contrato contrato = new Contrato();
+		contrato.setId(contratoP.getId());
 		contrato.setNombreCompleto(contratoP.getNombreCompleto());
 		contrato.setCapacidadPago(contratoP.getCapacidadPago());
 		contrato.setEdadActual(contratoP.getEdadActual());
@@ -83,11 +84,12 @@ public class ServicioCreditoImpl implements ServicioCredito {
 		contrato.setNroCuotas(contratoP.getNroCuotas());
 		contrato.setMontoPrestamo(contratoP.getMontoPrestamo());
 		contrato.setDocumentoIdentidad(contratoP.getDocumentoIdentidad());
+		contrato.setFechaEmision(contratoP.getFechaEmision());
 		Banco banco =  new Banco();
 		banco.setId(contratoP.getBanco().getId());
 		banco.setNombre(contratoP.getBanco().getNombre());
 		contrato.setBanco(banco);
-		contrato.setFechaEmision(contratoP.getFechaEmision());
+		contrato.setFechaLiquidacion(contratoP.getFechaLiquidacion());
 		contrato.setNroPrestamo(contratoP.getNroPrestamo());
 		
 		List<PlanPagosContrato> planes = contratoP.getPlanPagosCotnrato();
