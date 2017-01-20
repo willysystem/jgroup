@@ -399,7 +399,7 @@ public class CreditosVista extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				String titulos[] = { "ID", "Country", "Rank", "Capital2222" };
 				String data[][] = { { "1", "aa", "bb", "cc" } };
-				planPagosPDF.generarPDF(titulos, data);
+				//planPagosPDF.generarPDF(titulos, data, nombreLabel.getText());
 			}
 		});
 		horizontalPanel2.add(exportPdfButton);

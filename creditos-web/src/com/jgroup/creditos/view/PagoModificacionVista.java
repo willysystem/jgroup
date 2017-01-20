@@ -51,7 +51,7 @@ public class PagoModificacionVista extends DialogBox {
 			
 		setGlassEnabled(true);
 		setAnimationEnabled(false);
-		setText("Nuevo Banco");
+		setText("Modificar Pago");
 		
 		Button nuevoButton = new Button("Aceptar");
 		nuevoButton.addClickHandler(new ClickHandler() {

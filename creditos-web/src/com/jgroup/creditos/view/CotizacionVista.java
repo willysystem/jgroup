@@ -391,9 +391,7 @@ public class CotizacionVista extends VerticalPanel {
 		verticalPanel2.add(slp);
 
 		HorizontalPanel horizontalPanel2 = new HorizontalPanel();
-		horizontalPanel2.setWidth("900px");
-		horizontalPanel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-
+		horizontalPanel2.setWidth("250px");
 		Button exportPdfButton = new Button("Exportar en PDF");
 		exportPdfButton.addClickHandler(new ClickHandler() {
 	
@@ -413,7 +411,15 @@ public class CotizacionVista extends VerticalPanel {
 					i++;
 				}
 				
-				planPagosPDF.generarPDF(titulos, data);
+				int index = bancoListBox.getSelectedIndex();
+				String bancoValue = bancoListBox.getItemText(index);
+				String fechaNacimientoValue = DateTimeFormat.getFormat("dd/MM/yyyy").format(fechaNacimientoDateBox.getValue());
+				planPagosPDF.generarPDF(titulos, data, nombreTextBox.getValue(),          capacidadPagoTextBox.getValue(), 
+						                               edadActualTextBox.getValue(),      nroCotizacion.getText(),
+						                               fechaNacimientoValue,              fechaCotizacionLabel.getText(),
+						                               ingresoBaseTextBox.getValue(),     montoBaseCuotaTextBox.getValue(),
+						                               nroCuotasTextBox.getValue(),       montoPrestamoLabel.getText(),
+						                               bancoValue,                        documentoIdentidadTextBox.getValue());
 			}
 		});
 		horizontalPanel2.add(exportPdfButton);
@@ -456,6 +462,8 @@ public class CotizacionVista extends VerticalPanel {
 								bancoListBox.setSelectedIndex(0);
 								documentoIdentidadTextBox.setValue("");
 								mensageConfirmacion.hide();
+								dataGrid.setRowData(new ArrayList<PlanPagosCotizacion>());
+								emitirButton.setEnabled(false);
 							}
 						});
 					}
@@ -464,7 +472,12 @@ public class CotizacionVista extends VerticalPanel {
 		});
 		horizontalPanel2.add(emitirButton);
 
-		verticalPanel2.add(horizontalPanel2);
+		HorizontalPanel horizontalPanel4 = new HorizontalPanel();
+		horizontalPanel4.setWidth("900px");
+		horizontalPanel4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel4.add(horizontalPanel2);
+		
+		verticalPanel2.add(horizontalPanel4);
 
 		captionPanel.setContent(verticalPanel2);
 
@@ -509,9 +522,10 @@ public class CotizacionVista extends VerticalPanel {
 			nroCuotasTextBox.setValue(cotizacion.getNroCuotas() + "");
 		else
 			nroCuotasTextBox.setValue("");
-		if (cotizacion.getMontoPrestamo() != null)
-			montoPrestamoLabel.setText(cotizacion.getMontoPrestamo() + "");
-		else
+		if (cotizacion.getMontoPrestamo() != null){
+			String monto = NumberFormat.getFormat("#.00").format(cotizacion.getMontoPrestamo());
+			montoPrestamoLabel.setText(monto);
+		} else
 			montoPrestamoLabel.setText("");
 		if (cotizacion.getBanco() != null) {
 			Banco bancoDTO = cotizacion.getBanco();

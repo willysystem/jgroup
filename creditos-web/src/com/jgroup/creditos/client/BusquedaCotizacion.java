@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.HasRows;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.jgroup.creditos.mensajes.MensageConfirmacion;
 import com.jgroup.creditos.mensajes.MensageError;
 import com.jgroup.creditos.mensajes.MensageExito;
 import com.jgroup.creditos.model.Cotizacion;
@@ -39,6 +40,8 @@ public class BusquedaCotizacion extends DialogBox {
 	private DataGrid<Cotizacion> dataGrid;
 	
 	private String buscarTexto;
+	
+	private MensageConfirmacion mensageConfirmacion;
 	
 	public BusquedaCotizacion(CotizacionVista cotizacionVista, String buscarTexto) {
 		super();
@@ -138,18 +141,23 @@ public class BusquedaCotizacion extends DialogBox {
 					new MensageError("Requiere elegir una cotización");
 					return;
 				}
-				CotizacionService.Util.getInstance().eliminarCotizacion(cotizacionSeleccinada.getId(), new AsyncCallback<Void>() {
+				mensageConfirmacion = new MensageConfirmacion("¿Esta seguro de borrar esta cotización: " + cotizacionSeleccinada.getNroCotizacion() + " ?", new ClickHandler() {
 					@Override
-					public void onFailure(Throwable caught) {
-						new MensageError(caught.getMessage()).show();;
-					}
-					@Override
-					public void onSuccess(Void result) {
-						cargarDatos();
-						new MensageExito("Eliminado Exitosamente").show();
+					public void onClick(ClickEvent event) {
+						CotizacionService.Util.getInstance().eliminarCotizacion(cotizacionSeleccinada.getId(), new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MensageError(caught.getMessage()).show();;
+							}
+							@Override
+							public void onSuccess(Void result) {
+								cargarDatos();
+								new MensageExito("Eliminado Exitosamente").show();
+								mensageConfirmacion.hide();
+							}
+						});
 					}
 				});
-				
 			}
 		});
 		

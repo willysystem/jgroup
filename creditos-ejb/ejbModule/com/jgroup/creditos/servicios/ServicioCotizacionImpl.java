@@ -113,6 +113,8 @@ public class ServicioCotizacionImpl implements ServicioCotizacion {
 			bancoDTO.setNombre(cotizacionP.getBanco().getNombre());
 			cotizacionDTO.setBanco(bancoDTO);
 		}
+		cotizacionDTO.setDocumentoIdentidad(cotizacionP.getDocumentoIdentidad());
+		
 		// Plan de pagos
 		List<PlanPagosCotizacion> planes = cotizacionP.getPlanPagosCotizacion();
 		List<PlanPagosCotizacion> planesDTO = new ArrayList<PlanPagosCotizacion>();
