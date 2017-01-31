@@ -37,7 +37,7 @@ public class PlanPagosPDF {
 
 	public native void generarPDF(String[] titulos, String[][] data, String nombreCompleto, String capacidadPago,
 			                                                         String edadActual, String nroCotizacion,
-			                                                         String fechaNacimiento, String fechaCotizacion,
+			                                                     String fechaNacimiento, String fechaCotizacion,
 			                                                         String ingresoBase, String montoBaseCuota,
 			                                                         String nroCuotas, String montoPrestamo, 
 			                                                         String banco, String documentoIdentidad) /*-{

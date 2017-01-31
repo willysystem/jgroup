@@ -276,6 +276,7 @@ public class CotizacionVista extends VerticalPanel {
 		captionPanel.setAnimationEnabled(true);
 		
 		dataGrid = new DataGrid<PlanPagosCotizacion>();
+		dataGrid.getElement().setId("dataGridId");
 		dataGrid.setWidth("100%");
 		dataGrid.setEmptyTableWidget(new Label("Sin Datos"));
 
@@ -392,9 +393,8 @@ public class CotizacionVista extends VerticalPanel {
 
 		HorizontalPanel horizontalPanel2 = new HorizontalPanel();
 		horizontalPanel2.setWidth("250px");
-		Button exportPdfButton = new Button("Exportar en PDF");
+		Button exportPdfButton = new Button("Exportar PDF");
 		exportPdfButton.addClickHandler(new ClickHandler() {
-	
 			@Override
 			public void onClick(ClickEvent event) {
 				String titulos[] = { "Nro Cuota", "Monto Capital", "Intereses", "Desgravamen", "Total Cuota", "Fecha Vencimiento", "Saldo Capital"};
@@ -423,6 +423,15 @@ public class CotizacionVista extends VerticalPanel {
 			}
 		});
 		horizontalPanel2.add(exportPdfButton);
+		
+		Button exportExcelButton = new Button("Exportar Excel");
+		exportExcelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				exportToExcel();
+			}
+		});
+		horizontalPanel2.add(exportExcelButton);
 		
 		Button imprimirButton = new Button("Imprimir");
 		imprimirButton.addClickHandler(new ClickHandler() {
@@ -553,6 +562,9 @@ public class CotizacionVista extends VerticalPanel {
 		this.cotizacion = cotizacion;
 		emitirButton.setEnabled(true);
 	}
-
+	
+	private native void exportToExcel() /*-{
+		$wnd.tableToExcel('dataGridId', 'COTIZACION')
+	}-*/;
 
 }
